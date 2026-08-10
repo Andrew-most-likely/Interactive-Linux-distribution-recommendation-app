@@ -41,6 +41,26 @@
   line-height: 1.5;
 }
 
+.masthead-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.masthead-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out);
+}
+
+.masthead-link:hover {
+  color: var(--text);
+}
+
 .masthead-tag {
   flex-shrink: 0;
   font-size: 12px;
@@ -49,7 +69,106 @@
   border: 1px solid var(--border-soft);
   padding: 5px 12px;
   border-radius: var(--radius-pill);
-  margin-top: 4px;
+}
+
+/* ---------- Compatibility page ---------- */
+
+.compat-back-link {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 14px;
+  transition: color 0.2s var(--ease-out);
+}
+
+.compat-back-link:hover {
+  color: var(--accent);
+}
+
+.compat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.compat-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.compat-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.compat-card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text);
+}
+
+.compat-card-base {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin: 2px 0 0;
+}
+
+.compat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.compat-card-nvidia {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0 0 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.compat-card-nvidia .compat-label {
+  display: block;
+}
+
+.compat-card-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .compat-card-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compat-list-items {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.compat-list-items li {
+  margin-bottom: 5px;
+}
+
+.compat-list-items.strengths li::marker {
+  color: var(--accent);
 }
 
 /* ---------- Workspace: picker + sticky results ---------- */

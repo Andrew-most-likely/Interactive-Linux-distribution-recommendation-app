@@ -23,9 +23,10 @@ Then open the URL it prints (usually http://localhost:5173).
 \`\`\`
 src/
   data/
-    dimensions.ts   # the underlying axes distros are scored on
-    distros.ts       # distro list + attribute scores per dimension
+    dimensions.ts     # the underlying axes distros are scored on
+    distros.ts        # distro list + attribute scores per dimension
     items.ts          # draggable items + how much each cares about each dimension
+    compatibility.ts  # per-distro driver/hardware notes shown on /distros
   lib/
     scoring.ts        # turns picked items into distro scores + tradeoff text
   components/
@@ -34,8 +35,11 @@ src/
     DraggableItem.tsx
     DropZone.tsx
     SetupChip.tsx     # draggable picked-item chip inside DropZone
+    DragPreview.tsx   # the visual shown in dnd-kit's DragOverlay while dragging
     ScorePanel.tsx
-  App.tsx              # ties it all together
+  App.tsx              # the matcher (route "/")
+  CompatibilityPage.tsx # distro compatibility reference (route "/distros")
+  main.tsx             # HashRouter + route table
   theme.css            # design tokens (quiet dark palette, single muted accent)
 \`\`\`
 

@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { motion } from "framer-motion";
 import { Gamepad2, Briefcase, ShieldCheck } from "lucide-react";
@@ -63,7 +64,12 @@ export default function App() {
             Drag in what you actually use. Every pick re-scores all ten distros live.
           </p>
         </div>
-        <span className="masthead-tag">Phase 1 · MVP</span>
+        <div className="masthead-links">
+          <Link to="/distros" className="masthead-link">
+            Compatibility guide →
+          </Link>
+          <span className="masthead-tag">Phase 1 · MVP</span>
+        </div>
       </header>
 
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
