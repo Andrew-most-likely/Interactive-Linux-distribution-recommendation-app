@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { motion } from "framer-motion";
 import { Gamepad2, Briefcase, ShieldCheck } from "lucide-react";
 import { Pool } from "./components/Pool";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
+import { DragPreview } from "./components/DragPreview";
 import { items, type Category } from "./data/items";
 import { scoreDistros } from "./lib/scoring";
 import "./App.css";
@@ -18,16 +19,24 @@ const categories: { id: Category; label: string; Icon: typeof Gamepad2 }[] = [
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<Category>("games");
   const [pickedIds, setPickedIds] = useState<string[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const pickedItems = useMemo(
     () => pickedIds.map((id) => items.find((i) => i.id === id)!).filter(Boolean),
     [pickedIds],
   );
 
+  const activeItem = useMemo(() => items.find((i) => i.id === activeId) ?? null, [activeId]);
+
   const results = useMemo(() => scoreDistros(pickedIds), [pickedIds]);
+
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(event.active.id as string);
+  }
 
   function handleDragEnd(event: DragEndEvent) {
     const { over, active } = event;
+    setActiveId(null);
     if (!over) return;
 
     if (over.id === "setup-dropzone") {
@@ -57,7 +66,7 @@ export default function App() {
         <span className="masthead-tag">Phase 1 · MVP</span>
       </header>
 
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="workspace">
           <div className="picker">
             <nav className="tabs">
@@ -100,6 +109,8 @@ export default function App() {
             <ScorePanel results={results} />
           </aside>
         </div>
+
+        <DragOverlay>{activeItem && <DragPreview item={activeItem} />}</DragOverlay>
       </DndContext>
 
       <footer className="footer">

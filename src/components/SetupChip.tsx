@@ -10,7 +10,7 @@ interface SetupChipProps {
 }
 
 export function SetupChip({ item, onRemove }: SetupChipProps) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: item.id,
   });
 
@@ -24,7 +24,6 @@ export function SetupChip({ item, onRemove }: SetupChipProps) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      style={{ x: transform?.x ?? 0, y: transform?.y ?? 0, cursor: "grab" }}
       className={`setup-chip${isDragging ? " dragging" : ""}`}
     >
       <span className="setup-chip-label">

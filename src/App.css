@@ -201,6 +201,12 @@
   box-shadow: none;
 }
 
+.drag-preview {
+  cursor: grabbing;
+  box-shadow: var(--shadow-lg);
+  transform: rotate(-2deg);
+}
+
 .item-icon-badge {
   display: flex;
   align-items: center;
@@ -252,6 +258,11 @@
   border-radius: var(--radius-md);
   font-size: 12.5px;
   font-weight: 500;
+  cursor: grab;
+}
+
+.setup-chip.dragging {
+  opacity: 0.4;
 }
 
 .setup-chip-label {
