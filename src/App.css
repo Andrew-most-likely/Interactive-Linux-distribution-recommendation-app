@@ -1,4 +1,6 @@
 .page {
+  position: relative;
+  z-index: 1;
   max-width: 1160px;
   margin: 0 auto;
   padding: 40px 28px 64px;
@@ -19,11 +21,16 @@
 
 .masthead-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 30px;
-  letter-spacing: -0.02em;
-  margin: 0 0 6px;
+  font-weight: 800;
+  font-size: 38px;
+  letter-spacing: -0.03em;
+  margin: 0 0 8px;
   color: var(--text);
+}
+
+.masthead-title::after {
+  content: ".";
+  color: var(--accent);
 }
 
 .masthead-sub {
@@ -168,10 +175,11 @@
   user-select: none;
   touch-action: none;
   box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s var(--ease-out);
 }
 
 .item-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), 0 0 0 1px var(--accent-dim);
 }
 
 .item-card:active {
@@ -283,7 +291,8 @@
 
 .result-card.best {
   background: var(--surface-raised);
-  box-shadow: inset 2px 0 0 var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent);
+  padding-left: 13px;
 }
 
 .result-rank {
@@ -323,9 +332,12 @@
 .best-badge {
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--accent);
+  background: var(--accent-dim);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
 }
 
 .result-score {
