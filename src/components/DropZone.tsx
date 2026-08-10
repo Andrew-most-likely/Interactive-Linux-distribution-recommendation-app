@@ -1,8 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import type { Item } from "../data/items";
-import { itemIcons } from "../data/icons";
-import { Icon } from "./Icon";
+import { SetupChip } from "./SetupChip";
 
 interface DropZoneProps {
   pickedItems: Item[];
@@ -19,27 +18,7 @@ export function DropZone({ pickedItems, onRemove }: DropZoneProps) {
       )}
       <AnimatePresence initial={false}>
         {pickedItems.map((item) => (
-          <motion.div
-            key={item.id}
-            layout
-            initial={{ opacity: 0, scale: 0.9, y: -6 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="setup-chip"
-          >
-            <span className="setup-chip-label">
-              <Icon icon={itemIcons[item.id]} size={16} />
-              {item.label}
-            </span>
-            <button
-              aria-label={`Remove ${item.label}`}
-              onClick={() => onRemove(item.id)}
-              className="chip-remove"
-            >
-              ×
-            </button>
-          </motion.div>
+          <SetupChip key={item.id} item={item} onRemove={onRemove} />
         ))}
       </AnimatePresence>
     </div>

@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { motion } from "framer-motion";
 import { Gamepad2, Briefcase, ShieldCheck } from "lucide-react";
-import { DraggableItem } from "./components/DraggableItem";
+import { Pool } from "./components/Pool";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
 import { items, type Category } from "./data/items";
@@ -28,10 +28,14 @@ export default function App() {
 
   function handleDragEnd(event: DragEndEvent) {
     const { over, active } = event;
-    if (over?.id === "setup-dropzone") {
+    if (!over) return;
+
+    if (over.id === "setup-dropzone") {
       setPickedIds((prev) =>
         prev.includes(active.id as string) ? prev : [...prev, active.id as string],
       );
+    } else if (over.id === "pool-dropzone") {
+      setPickedIds((prev) => prev.filter((id) => id !== active.id));
     }
   }
 
@@ -81,11 +85,7 @@ export default function App() {
             <div className="picker-columns">
               <div>
                 <p className="column-label">Available</p>
-                <div className="item-list">
-                  {poolItems.map((item) => (
-                    <DraggableItem key={item.id} item={item} />
-                  ))}
-                </div>
+                <Pool items={poolItems} />
               </div>
 
               <div>

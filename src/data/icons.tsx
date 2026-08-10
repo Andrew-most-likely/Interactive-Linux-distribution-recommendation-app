@@ -14,8 +14,31 @@ import {
   siNobaralinux,
   siMxlinux,
   siLinux,
+  siLeagueoflegends,
+  siDocker,
+  siJetbrains,
+  siObsstudio,
+  siNodedotjs,
+  siTorbrowser,
+  siFlatpak,
+  siWireguard,
 } from "simple-icons";
-import { Blocks, Code2, Dices, Server, Globe, ShieldCheck, Terminal, Lock, Network } from "lucide-react";
+import {
+  Blocks,
+  Code2,
+  Dices,
+  Server,
+  Globe,
+  ShieldCheck,
+  Terminal,
+  Lock,
+  Network,
+  Swords,
+  Crosshair,
+  Zap,
+  Sprout,
+  WifiOff,
+} from "lucide-react";
 
 export type IconDef =
   | { kind: "brand"; path: string; color: string; title: string }
@@ -32,7 +55,7 @@ function brand(icon: { path: string; hex: string; title: string }): IconDef {
   // Some brand marks (Counter-Strike, Nobara, MX Linux) ship as pure black,
   // which disappears against this app's dark surfaces — lighten those so
   // they stay legible instead of vanishing.
-  const isNearBlack = relativeLuminance(icon.hex) < 40;
+  const isNearBlack = relativeLuminance(icon.hex) < 60;
   const color = isNearBlack ? "#d6d5d2" : `#${icon.hex}`;
   return { kind: "brand", path: icon.path, color, title: icon.title };
 }
@@ -49,6 +72,11 @@ export const itemIcons: Record<string, IconDef> = {
   valorant: brand(siValorant),
   bg3: lucide(Dices, "#c0392b"),
   minecraft: lucide(Blocks, "#5b8731"),
+  eldenring: lucide(Swords, "#a67c52"),
+  apex: lucide(Crosshair, "#b85c5c"),
+  cyberpunk: lucide(Zap, "#c9a227"),
+  stardew: lucide(Sprout, "#c9ac6f"),
+  lol: brand(siLeagueoflegends),
 
   // Work
   vscode: lucide(Code2, "#007acc"), // VS Code isn't in simple-icons either; this is their brand blue
@@ -56,12 +84,20 @@ export const itemIcons: Record<string, IconDef> = {
   discord: brand(siDiscord),
   blender: brand(siBlender),
   browser: lucide(Globe, "#4a90d9"),
+  docker: brand(siDocker),
+  jetbrains: brand(siJetbrains),
+  obs: brand(siObsstudio),
+  nodejs: brand(siNodedotjs),
 
   // Security
   sandboxing: lucide(ShieldCheck, "#7c93a8"),
   vpn: lucide(Network, "#5c9fe0"),
   minimalattack: lucide(Terminal, "#d8d3c2"),
   fde: lucide(Lock, "#a39c86"),
+  torbrowser: brand(siTorbrowser),
+  flatpak: brand(siFlatpak),
+  wireguard: brand(siWireguard),
+  airgapped: lucide(WifiOff, "#8b95a3"),
 };
 
 export const distroIcons: Record<string, IconDef> = {

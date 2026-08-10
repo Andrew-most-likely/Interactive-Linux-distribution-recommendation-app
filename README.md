@@ -30,8 +30,10 @@ src/
     scoring.ts        # turns picked items into distro scores + tradeoff text
   components/
     MatchMeter.tsx    # signature score visualization
+    Pool.tsx          # droppable "Available" list (also a drag-back target)
     DraggableItem.tsx
     DropZone.tsx
+    SetupChip.tsx     # draggable picked-item chip inside DropZone
     ScorePanel.tsx
   App.tsx              # ties it all together
   theme.css            # design tokens (quiet dark palette, single muted accent)
