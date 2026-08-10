@@ -3,14 +3,63 @@
   z-index: 1;
   max-width: 1080px;
   margin: 0 auto;
-  padding: 72px 28px 110px;
+  padding: 56px 28px 64px;
 }
 
 /* ---------- Hero ---------- */
 
 .hero {
-  margin-bottom: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 40px;
   animation: fade-in-up 0.6s var(--ease-out) both;
+}
+
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-art {
+    width: 220px;
+    margin: 0 auto;
+  }
+}
+
+.hero-art {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.steam {
+  transform-origin: center bottom;
+  animation: steam-rise 3.6s ease-in-out infinite;
+}
+
+.steam-2 {
+  animation-delay: 0.8s;
+}
+
+.steam-3 {
+  animation-delay: 1.6s;
+}
+
+.hero-story {
+  margin: 18px 0 0;
+  padding: 16px 20px;
+  max-width: 52ch;
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--matcha-deep);
+  background: linear-gradient(135deg, rgba(227, 232, 221, 0.55), rgba(255, 255, 255, 0.4));
+  border-left: 3px solid var(--matcha-vivid);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 .hero-eyebrow {
@@ -77,7 +126,10 @@
 
 .tab {
   position: relative;
-  padding: 11px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
   border-radius: var(--radius-pill);
   border: none;
   background: transparent;
@@ -351,4 +403,31 @@
   color: var(--text-muted);
   margin: 4px 0 0;
   line-height: 1.45;
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+  animation: fade-in-up 0.6s var(--ease-out) 0.16s both;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer-leaf {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, var(--matcha-light), var(--matcha-vivid));
+  border-radius: 0 100% 0 100%;
+  transform: rotate(45deg);
 }

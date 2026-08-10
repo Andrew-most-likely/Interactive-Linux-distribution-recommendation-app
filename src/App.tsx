@@ -1,16 +1,18 @@
 import { useMemo, useState } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { Gamepad2, Briefcase, ShieldCheck } from "lucide-react";
 import { DraggableItem } from "./components/DraggableItem";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
+import { HeroArt } from "./components/HeroArt";
 import { items, type Category } from "./data/items";
 import { scoreDistros } from "./lib/scoring";
 import "./App.css";
 
-const categories: { id: Category; label: string }[] = [
-  { id: "games", label: "Games" },
-  { id: "work", label: "Work" },
-  { id: "security", label: "Security" },
+const categories: { id: Category; label: string; Icon: typeof Gamepad2 }[] = [
+  { id: "games", label: "Games", Icon: Gamepad2 },
+  { id: "work", label: "Work", Icon: Briefcase },
+  { id: "security", label: "Security", Icon: ShieldCheck },
 ];
 
 export default function App() {
@@ -42,19 +44,28 @@ export default function App() {
   return (
     <div className="page">
       <header className="hero">
-        <span className="hero-eyebrow">Phase 1 · MVP</span>
-        <h1 className="hero-title">Steep</h1>
-        <p className="hero-sub">Drag in what you actually use. Watch your match brew.</p>
+        <div className="hero-copy">
+          <span className="hero-eyebrow">Phase 1 · MVP</span>
+          <h1 className="hero-title">Steep</h1>
+          <p className="hero-sub">Drag in what you actually use. Watch your match brew.</p>
+          <p className="hero-story">
+            Tea takes on whatever you steep it with. Steep works the same way: no abstract
+            quiz questions, just the exact games, tools, and habits you'd actually run, poured
+            in until a distro's real tradeoffs rise to the surface.
+          </p>
+        </div>
+        <HeroArt />
       </header>
 
       <nav className="tabs">
-        {categories.map((cat) => (
+        {categories.map(({ id, label, Icon }) => (
           <button
-            key={cat.id}
-            onClick={() => setActiveCategory(cat.id)}
-            className={`tab${activeCategory === cat.id ? " active" : ""}`}
+            key={id}
+            onClick={() => setActiveCategory(id)}
+            className={`tab${activeCategory === id ? " active" : ""}`}
           >
-            {cat.label}
+            <Icon size={15} strokeWidth={2.25} />
+            {label}
           </button>
         ))}
       </nav>
@@ -81,6 +92,11 @@ export default function App() {
         <p className="column-label">Live match</p>
         <ScorePanel results={results} />
       </section>
+
+      <footer className="footer">
+        <span className="footer-leaf" aria-hidden="true" />
+        <p>Steep is a small, honest experiment — brewed one setup at a time, no login required.</p>
+      </footer>
     </div>
   );
 }
