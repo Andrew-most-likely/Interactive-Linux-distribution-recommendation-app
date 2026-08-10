@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { MatchaBowl } from "./MatchaBowl";
 import { scoreRange, type DistroResult } from "../lib/scoring";
 import { distroIcons } from "../data/icons";
@@ -14,7 +15,12 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
         const isBest = hasSignal && i === 0;
 
         return (
-          <div key={result.distro.id} className={`result-card${isBest ? " best" : ""}`}>
+          <motion.div
+            key={result.distro.id}
+            layout
+            transition={{ type: "spring", stiffness: 380, damping: 32 }}
+            className={`result-card${isBest ? " best" : ""}`}
+          >
             <span className="result-rank">{i + 1}</span>
             <MatchaBowl id={result.distro.id} percentage={percentage} />
             <div className="result-body">
@@ -32,7 +38,7 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
                 </p>
               ))}
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </div>

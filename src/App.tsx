@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { motion } from "framer-motion";
 import { Gamepad2, Briefcase, ShieldCheck } from "lucide-react";
 import { DraggableItem } from "./components/DraggableItem";
 import { DropZone } from "./components/DropZone";
@@ -64,8 +65,17 @@ export default function App() {
             onClick={() => setActiveCategory(id)}
             className={`tab${activeCategory === id ? " active" : ""}`}
           >
-            <Icon size={15} strokeWidth={2.25} />
-            {label}
+            {activeCategory === id && (
+              <motion.span
+                layoutId="tab-active-pill"
+                className="tab-active-pill"
+                transition={{ type: "spring", stiffness: 500, damping: 34 }}
+              />
+            )}
+            <span className="tab-content">
+              <Icon size={15} strokeWidth={2.25} />
+              {label}
+            </span>
           </button>
         ))}
       </nav>

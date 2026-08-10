@@ -3,9 +3,9 @@
   --surface: #ffffff;
   --surface-glass: rgba(255, 255, 255, 0.72);
   --matcha: #5b7052;
-  --matcha-deep: #2f3d28;
+  --matcha-deep: #24301e;
   --matcha-light: #86a475;
-  --matcha-vivid: #4a7a3d;
+  --matcha-vivid: #3e6b2f;
   --sage: #a8b89c;
   --sage-light: #e3e8dd;
   --cream: #f0ecdd;
@@ -50,9 +50,9 @@ body {
   min-height: 100vh;
   position: relative;
   background:
-    radial-gradient(ellipse 1000px 700px at 6% -12%, rgba(74, 122, 61, 0.24), transparent 58%),
-    radial-gradient(ellipse 820px 620px at 106% -4%, rgba(201, 138, 58, 0.16), transparent 55%),
-    radial-gradient(ellipse 900px 640px at 50% 108%, rgba(168, 184, 156, 0.3), transparent 60%),
+    radial-gradient(ellipse 1000px 700px at 6% -12%, rgba(62, 107, 47, 0.32), transparent 58%),
+    radial-gradient(ellipse 820px 620px at 106% -4%, rgba(201, 138, 58, 0.24), transparent 55%),
+    radial-gradient(ellipse 900px 640px at 50% 108%, rgba(168, 184, 156, 0.38), transparent 60%),
     var(--bg);
   background-attachment: fixed;
   color: var(--text);
