@@ -5,38 +5,29 @@ import { Icon } from "./Icon";
 
 export function ScorePanel({ results }: { results: DistroResult[] }) {
   const range = scoreRange(results);
+  const hasSignal = results.some((r) => r.score !== 0);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-      {results.map((result) => {
+    <div className="results-list">
+      {results.map((result, i) => {
         const percentage = 50 + (result.score / (range * 2)) * 50;
+        const isBest = hasSignal && i === 0;
+
         return (
-          <div key={result.distro.id} style={{ display: "flex", gap: "14px" }}>
+          <div key={result.distro.id} className={`result-card${isBest ? " best" : ""}`}>
+            <span className="result-rank">{i + 1}</span>
             <MatchaBowl id={result.distro.id} percentage={percentage} />
-            <div style={{ flex: 1 }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontSize: "14px",
-                  marginBottom: "4px",
-                }}
-              >
-                <span style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>
+            <div className="result-body">
+              <div className="result-top-row">
+                <span className="result-name">
                   <Icon icon={distroIcons[result.distro.id]} />
                   {result.distro.name}
+                  {isBest && <span className="best-badge">Best match</span>}
                 </span>
-                <span style={{ color: "var(--text-muted)" }}>{result.score}</span>
+                <span className="result-score">{result.score}</span>
               </div>
-              {result.tradeoffs.map((t, i) => (
-                <p
-                  key={i}
-                  style={{
-                    fontSize: "12px",
-                    color: "var(--text-muted)",
-                    margin: "2px 0 0",
-                  }}
-                >
+              {result.tradeoffs.map((t, ti) => (
+                <p key={ti} className="tradeoff">
                   {t.text}
                 </p>
               ))}

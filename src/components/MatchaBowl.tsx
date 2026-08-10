@@ -9,23 +9,25 @@ interface MatchaBowlProps {
 export function MatchaBowl({ id, percentage }: MatchaBowlProps) {
   const clamped = Math.max(0, Math.min(100, percentage));
   const clipId = `bowl-clip-${id}`;
+  const gradientId = `bowl-gradient-${id}`;
   const bowlPath = "M12,18 Q12,68 50,70 Q88,68 88,18 Z";
 
   const liquidTop = 66 - (clamped / 100) * 44; // 66 = empty, 22 = full
   const showFoam = clamped > 55;
 
   return (
-    <svg width="64" height="56" viewBox="0 0 100 80" aria-hidden="true">
-      <clipPath id={clipId}>
-        <path d={bowlPath} />
-      </clipPath>
+    <svg width="52" height="46" viewBox="0 0 100 80" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <defs>
+        <clipPath id={clipId}>
+          <path d={bowlPath} />
+        </clipPath>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="var(--matcha-light)" />
+          <stop offset="100%" stopColor="var(--matcha-deep)" />
+        </linearGradient>
+      </defs>
 
-      <path
-        d={bowlPath}
-        fill="var(--surface)"
-        stroke="var(--sage)"
-        strokeWidth="2"
-      />
+      <path d={bowlPath} fill="var(--surface)" stroke="var(--sage)" strokeWidth="2" />
 
       <g clipPath={`url(#${clipId})`}>
         <rect
@@ -33,25 +35,20 @@ export function MatchaBowl({ id, percentage }: MatchaBowlProps) {
           y={liquidTop}
           width="100"
           height={80 - liquidTop}
-          fill="var(--matcha)"
-          style={{ transition: "y 0.4s ease" }}
+          fill={`url(#${gradientId})`}
+          style={{ transition: "y 0.5s var(--ease-out)" }}
         />
         {showFoam && (
           <g style={{ transition: "opacity 0.4s ease" }}>
-            <circle cx="30" cy={liquidTop} r="4" fill="var(--sage-light)" opacity="0.8" />
-            <circle cx="45" cy={liquidTop - 1} r="3" fill="var(--sage-light)" opacity="0.7" />
-            <circle cx="60" cy={liquidTop} r="4.5" fill="var(--sage-light)" opacity="0.8" />
-            <circle cx="72" cy={liquidTop - 1} r="3" fill="var(--sage-light)" opacity="0.6" />
+            <circle cx="30" cy={liquidTop} r="4" fill="var(--sage-light)" opacity="0.85" />
+            <circle cx="45" cy={liquidTop - 1} r="3" fill="var(--sage-light)" opacity="0.75" />
+            <circle cx="60" cy={liquidTop} r="4.5" fill="var(--sage-light)" opacity="0.85" />
+            <circle cx="72" cy={liquidTop - 1} r="3" fill="var(--sage-light)" opacity="0.65" />
           </g>
         )}
       </g>
 
-      <path
-        d={bowlPath}
-        fill="none"
-        stroke="var(--sage)"
-        strokeWidth="2"
-      />
+      <path d={bowlPath} fill="none" stroke="var(--sage)" strokeWidth="2" />
     </svg>
   );
 }

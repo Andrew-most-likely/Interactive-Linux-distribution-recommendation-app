@@ -5,6 +5,7 @@ import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
 import { items, type Category } from "./data/items";
 import { scoreDistros } from "./lib/scoring";
+import "./App.css";
 
 const categories: { id: Category; label: string }[] = [
   { id: "games", label: "Games" },
@@ -39,37 +40,19 @@ export default function App() {
   const poolItems = items.filter((i) => i.category === activeCategory);
 
   return (
-    <div style={{ maxWidth: "960px", margin: "0 auto", padding: "48px 24px" }}>
-      <header style={{ marginBottom: "40px" }}>
-        <h1
-          style={{
-            fontSize: "28px",
-            fontWeight: 600,
-            color: "var(--matcha-deep)",
-            margin: "0 0 8px",
-          }}
-        >
-          Steep
-        </h1>
-        <p style={{ color: "var(--text-muted)", margin: 0, fontSize: "15px" }}>
-          Drag in what you actually use. Watch your match brew.
-        </p>
+    <div className="page">
+      <header className="hero">
+        <span className="hero-eyebrow">Phase 1 · MVP</span>
+        <h1 className="hero-title">Steep</h1>
+        <p className="hero-sub">Drag in what you actually use. Watch your match brew.</p>
       </header>
 
-      <nav style={{ display: "flex", gap: "8px", marginBottom: "24px" }}>
+      <nav className="tabs">
         {categories.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            style={{
-              padding: "8px 16px",
-              borderRadius: "999px",
-              border: "1px solid var(--border)",
-              background: activeCategory === cat.id ? "var(--matcha)" : "var(--surface)",
-              color: activeCategory === cat.id ? "#fff" : "var(--text)",
-              cursor: "pointer",
-              fontSize: "14px",
-            }}
+            className={`tab${activeCategory === cat.id ? " active" : ""}`}
           >
             {cat.label}
           </button>
@@ -77,19 +60,10 @@ export default function App() {
       </nav>
 
       <DndContext onDragEnd={handleDragEnd}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "24px",
-            marginBottom: "40px",
-          }}
-        >
+        <div className="columns">
           <div>
-            <p style={{ fontSize: "13px", color: "var(--text-muted)", marginBottom: "10px" }}>
-              Available
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <p className="column-label">Available</p>
+            <div className="item-list">
               {poolItems.map((item) => (
                 <DraggableItem key={item.id} item={item} />
               ))}
@@ -97,18 +71,14 @@ export default function App() {
           </div>
 
           <div>
-            <p style={{ fontSize: "13px", color: "var(--text-muted)", marginBottom: "10px" }}>
-              Your setup
-            </p>
+            <p className="column-label">Your setup</p>
             <DropZone pickedItems={pickedItems} onRemove={handleRemove} />
           </div>
         </div>
       </DndContext>
 
-      <section>
-        <p style={{ fontSize: "13px", color: "var(--text-muted)", marginBottom: "16px" }}>
-          Live match
-        </p>
+      <section className="results-section">
+        <p className="column-label">Live match</p>
         <ScorePanel results={results} />
       </section>
     </div>

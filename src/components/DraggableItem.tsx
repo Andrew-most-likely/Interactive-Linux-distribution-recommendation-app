@@ -8,28 +8,20 @@ export function DraggableItem({ item }: { item: Item }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({ id: item.id });
 
+  const icon = itemIcons[item.id];
+  const tint = `${icon.color}1a`; // ~10% opacity tinted badge behind the icon
+
   return (
     <div
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      style={{
-        transform: CSS.Translate.toString(transform),
-        opacity: isDragging ? 0.4 : 1,
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        padding: "10px 14px",
-        background: "var(--surface)",
-        border: "1px solid var(--border)",
-        borderRadius: "var(--radius-md)",
-        fontSize: "14px",
-        cursor: "grab",
-        userSelect: "none",
-        touchAction: "none",
-      }}
+      className={`item-card${isDragging ? " dragging" : ""}`}
+      style={{ transform: CSS.Translate.toString(transform) }}
     >
-      <Icon icon={itemIcons[item.id]} />
+      <span className="item-icon-badge" style={{ ["--icon-tint" as string]: tint }}>
+        <Icon icon={icon} size={16} />
+      </span>
       {item.label}
     </div>
   );
