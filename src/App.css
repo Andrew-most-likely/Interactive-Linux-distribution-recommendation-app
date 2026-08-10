@@ -340,6 +340,7 @@
 /* ---------- Drop zone ---------- */
 
 .dropzone {
+  position: relative;
   min-height: 220px;
   padding: 14px;
   background: var(--surface);

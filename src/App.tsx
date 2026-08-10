@@ -116,7 +116,7 @@ export default function App() {
           </aside>
         </div>
 
-        <DragOverlay>{activeItem && <DragPreview item={activeItem} />}</DragOverlay>
+        <DragOverlay zIndex={9999}>{activeItem && <DragPreview item={activeItem} />}</DragOverlay>
       </DndContext>
 
       <footer className="footer">
