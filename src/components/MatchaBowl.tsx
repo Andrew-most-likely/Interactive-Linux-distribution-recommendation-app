@@ -16,7 +16,7 @@ export function MatchaBowl({ id, percentage }: MatchaBowlProps) {
   const showFoam = clamped > 55;
 
   return (
-    <svg width="52" height="46" viewBox="0 0 100 80" aria-hidden="true" style={{ flexShrink: 0 }}>
+    <svg width="60" height="52" viewBox="0 0 100 80" aria-hidden="true" style={{ flexShrink: 0 }}>
       <defs>
         <clipPath id={clipId}>
           <path d={bowlPath} />
@@ -27,7 +27,7 @@ export function MatchaBowl({ id, percentage }: MatchaBowlProps) {
         </linearGradient>
       </defs>
 
-      <path d={bowlPath} fill="var(--surface)" stroke="var(--sage)" strokeWidth="2" />
+      <path d={bowlPath} fill="var(--surface)" stroke="var(--sage)" strokeWidth="2.5" />
 
       <g clipPath={`url(#${clipId})`}>
         <rect
@@ -48,7 +48,7 @@ export function MatchaBowl({ id, percentage }: MatchaBowlProps) {
         )}
       </g>
 
-      <path d={bowlPath} fill="none" stroke="var(--sage)" strokeWidth="2" />
+      <path d={bowlPath} fill="none" stroke="var(--matcha-deep)" strokeWidth="1.5" opacity="0.5" />
     </svg>
   );
 }

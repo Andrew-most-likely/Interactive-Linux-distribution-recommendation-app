@@ -3,24 +3,28 @@
   --surface: #ffffff;
   --surface-glass: rgba(255, 255, 255, 0.72);
   --matcha: #5b7052;
-  --matcha-deep: #3a4a32;
+  --matcha-deep: #2f3d28;
   --matcha-light: #86a475;
+  --matcha-vivid: #4a7a3d;
   --sage: #a8b89c;
   --sage-light: #e3e8dd;
   --cream: #f0ecdd;
-  --text: #2b2b28;
+  --gold: #c98a3a;
+  --gold-light: #f0dcb8;
+  --text: #232320;
   --text-muted: #6b6b64;
   --border: #e4e0d4;
 
-  --radius-lg: 22px;
-  --radius-md: 14px;
-  --radius-sm: 9px;
+  --radius-lg: 26px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(43, 43, 40, 0.05);
-  --shadow-md: 0 6px 20px rgba(43, 43, 40, 0.07), 0 1px 3px rgba(43, 43, 40, 0.05);
-  --shadow-lg: 0 20px 44px rgba(58, 74, 50, 0.14), 0 2px 8px rgba(43, 43, 40, 0.06);
-  --shadow-glow: 0 0 0 1px rgba(91, 112, 82, 0.1), 0 10px 28px rgba(91, 112, 82, 0.16);
+  --shadow-sm: 0 1px 2px rgba(35, 35, 32, 0.06);
+  --shadow-md: 0 8px 24px rgba(35, 35, 32, 0.08), 0 2px 6px rgba(35, 35, 32, 0.05);
+  --shadow-lg: 0 24px 56px rgba(47, 61, 40, 0.18), 0 4px 12px rgba(35, 35, 32, 0.07);
+  --shadow-glow: 0 0 0 1px rgba(91, 112, 82, 0.12), 0 14px 36px rgba(74, 122, 61, 0.22);
+  --shadow-gold-glow: 0 0 0 1px rgba(201, 138, 58, 0.25), 0 14px 32px rgba(201, 138, 58, 0.22);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -39,15 +43,29 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  position: relative;
   background:
-    radial-gradient(ellipse 900px 620px at 8% -8%, rgba(91, 112, 82, 0.14), transparent 60%),
-    radial-gradient(ellipse 760px 560px at 104% 4%, rgba(168, 184, 156, 0.22), transparent 58%),
-    radial-gradient(ellipse 700px 500px at 50% 120%, rgba(240, 236, 221, 0.6), transparent 60%),
+    radial-gradient(ellipse 1000px 700px at 6% -12%, rgba(74, 122, 61, 0.24), transparent 58%),
+    radial-gradient(ellipse 820px 620px at 106% -4%, rgba(201, 138, 58, 0.16), transparent 55%),
+    radial-gradient(ellipse 900px 640px at 50% 108%, rgba(168, 184, 156, 0.3), transparent 60%),
     var(--bg);
   background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 button {
