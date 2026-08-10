@@ -33,7 +33,7 @@ function brand(icon: { path: string; hex: string; title: string }): IconDef {
   // which disappears against this app's dark surfaces — lighten those so
   // they stay legible instead of vanishing.
   const isNearBlack = relativeLuminance(icon.hex) < 40;
-  const color = isNearBlack ? "#e8e4d6" : `#${icon.hex}`;
+  const color = isNearBlack ? "#d6d5d2" : `#${icon.hex}`;
   return { kind: "brand", path: icon.path, color, title: icon.title };
 }
 
@@ -66,7 +66,7 @@ export const itemIcons: Record<string, IconDef> = {
 
 export const distroIcons: Record<string, IconDef> = {
   // no dedicated logo upstream, tinted Tux stands in
-  bazzite: { kind: "brand", path: siLinux.path, color: "#7c4dff", title: "Bazzite" },
+  bazzite: { kind: "brand", path: siLinux.path, color: "#9b8bc4", title: "Bazzite" },
   nobara: brand(siNobaralinux),
   cachyos: brand(siCachyos),
   popos: brand(siPopos),

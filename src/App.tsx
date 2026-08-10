@@ -5,7 +5,6 @@ import { Gamepad2, Briefcase, ShieldCheck } from "lucide-react";
 import { DraggableItem } from "./components/DraggableItem";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
-import { TerminalPreview } from "./components/TerminalPreview";
 import { items, type Category } from "./data/items";
 import { scoreDistros } from "./lib/scoring";
 import "./App.css";
@@ -44,65 +43,66 @@ export default function App() {
 
   return (
     <div className="page">
-      <header className="hero">
-        <div className="hero-copy">
-          <span className="hero-eyebrow">$ phase-1 --mvp</span>
-          <h1 className="hero-title">Steep</h1>
-          <p className="hero-sub">
-            Drag in the games, tools, and habits you actually run. Skip the survey — every pick
-            re-scores all ten distros live, with the tradeoffs shown, not hidden.
+      <header className="masthead">
+        <div>
+          <h1 className="masthead-title">Steep</h1>
+          <p className="masthead-sub">
+            Drag in what you actually use. Every pick re-scores all ten distros live.
           </p>
         </div>
-        <TerminalPreview />
+        <span className="masthead-tag">Phase 1 · MVP</span>
       </header>
 
-      <nav className="tabs">
-        {categories.map(({ id, label, Icon }) => (
-          <button
-            key={id}
-            onClick={() => setActiveCategory(id)}
-            className={`tab${activeCategory === id ? " active" : ""}`}
-          >
-            {activeCategory === id && (
-              <motion.span
-                layoutId="tab-active-pill"
-                className="tab-active-pill"
-                transition={{ type: "spring", stiffness: 500, damping: 34 }}
-              />
-            )}
-            <span className="tab-content">
-              <Icon size={15} strokeWidth={2.25} />
-              {label}
-            </span>
-          </button>
-        ))}
-      </nav>
-
       <DndContext onDragEnd={handleDragEnd}>
-        <div className="columns">
-          <div>
-            <p className="column-label">Available</p>
-            <div className="item-list">
-              {poolItems.map((item) => (
-                <DraggableItem key={item.id} item={item} />
+        <div className="workspace">
+          <div className="picker">
+            <nav className="tabs">
+              {categories.map(({ id, label, Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => setActiveCategory(id)}
+                  className={`tab${activeCategory === id ? " active" : ""}`}
+                >
+                  {activeCategory === id && (
+                    <motion.span
+                      layoutId="tab-active-pill"
+                      className="tab-active-pill"
+                      transition={{ type: "spring", stiffness: 500, damping: 34 }}
+                    />
+                  )}
+                  <span className="tab-content">
+                    <Icon size={15} strokeWidth={2.25} />
+                    {label}
+                  </span>
+                </button>
               ))}
+            </nav>
+
+            <div className="picker-columns">
+              <div>
+                <p className="column-label">Available</p>
+                <div className="item-list">
+                  {poolItems.map((item) => (
+                    <DraggableItem key={item.id} item={item} />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="column-label">Your setup</p>
+                <DropZone pickedItems={pickedItems} onRemove={handleRemove} />
+              </div>
             </div>
           </div>
 
-          <div>
-            <p className="column-label">Your setup</p>
-            <DropZone pickedItems={pickedItems} onRemove={handleRemove} />
-          </div>
+          <aside className="results-panel">
+            <p className="column-label">Live match</p>
+            <ScorePanel results={results} />
+          </aside>
         </div>
       </DndContext>
 
-      <section className="results-section">
-        <p className="column-label">Live match</p>
-        <ScorePanel results={results} />
-      </section>
-
       <footer className="footer">
-        <span className="footer-prompt">$</span>
         <p>No login, no tracking, no server — everything above runs in your browser.</p>
       </footer>
     </div>

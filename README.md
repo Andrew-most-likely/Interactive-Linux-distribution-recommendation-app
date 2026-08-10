@@ -30,12 +30,11 @@ src/
     scoring.ts        # turns picked items into distro scores + tradeoff text
   components/
     MatchMeter.tsx    # signature score visualization
-    TerminalPreview.tsx # hero mock terminal
     DraggableItem.tsx
     DropZone.tsx
     ScorePanel.tsx
   App.tsx              # ties it all together
-  theme.css            # design tokens (dark, amber terminal-inspired palette)
+  theme.css            # design tokens (quiet dark palette, single muted accent)
 \`\`\`
 
 ## How scoring works
