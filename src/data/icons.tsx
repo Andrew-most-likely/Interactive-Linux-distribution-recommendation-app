@@ -21,8 +21,20 @@ export type IconDef =
   | { kind: "brand"; path: string; color: string; title: string }
   | { kind: "lucide"; Component: LucideIcon; color: string };
 
+function relativeLuminance(hex: string): number {
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
 function brand(icon: { path: string; hex: string; title: string }): IconDef {
-  return { kind: "brand", path: icon.path, color: `#${icon.hex}`, title: icon.title };
+  // Some brand marks (Counter-Strike, Nobara, MX Linux) ship as pure black,
+  // which disappears against this app's dark surfaces — lighten those so
+  // they stay legible instead of vanishing.
+  const isNearBlack = relativeLuminance(icon.hex) < 40;
+  const color = isNearBlack ? "#e8e4d6" : `#${icon.hex}`;
+  return { kind: "brand", path: icon.path, color, title: icon.title };
 }
 
 function lucide(Component: LucideIcon, color: string): IconDef {
@@ -40,16 +52,16 @@ export const itemIcons: Record<string, IconDef> = {
 
   // Work
   vscode: lucide(Code2, "#007acc"), // VS Code isn't in simple-icons either; this is their brand blue
-  homeserver: lucide(Server, "#5b7052"),
+  homeserver: lucide(Server, "#b89b6a"),
   discord: brand(siDiscord),
   blender: brand(siBlender),
   browser: lucide(Globe, "#4a90d9"),
 
   // Security
-  sandboxing: lucide(ShieldCheck, "#5b7052"),
-  vpn: lucide(Network, "#3874d8"),
-  minimalattack: lucide(Terminal, "#2b2b28"),
-  fde: lucide(Lock, "#6b6b64"),
+  sandboxing: lucide(ShieldCheck, "#7c93a8"),
+  vpn: lucide(Network, "#5c9fe0"),
+  minimalattack: lucide(Terminal, "#d8d3c2"),
+  fde: lucide(Lock, "#a39c86"),
 };
 
 export const distroIcons: Record<string, IconDef> = {

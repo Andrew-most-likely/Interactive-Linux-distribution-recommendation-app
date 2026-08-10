@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MatchaBowl } from "./MatchaBowl";
+import { MatchMeter } from "./MatchMeter";
 import { scoreRange, type DistroResult } from "../lib/scoring";
 import { distroIcons } from "../data/icons";
 import { Icon } from "./Icon";
@@ -21,17 +21,17 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
             className={`result-card${isBest ? " best" : ""}`}
           >
-            <span className="result-rank">{i + 1}</span>
-            <MatchaBowl id={result.distro.id} percentage={percentage} />
+            <span className="result-rank">{String(i + 1).padStart(2, "0")}</span>
             <div className="result-body">
               <div className="result-top-row">
                 <span className="result-name">
                   <Icon icon={distroIcons[result.distro.id]} />
                   {result.distro.name}
-                  {isBest && <span className="best-badge">Best match</span>}
+                  {isBest && <span className="best-badge">best match</span>}
                 </span>
-                <span className="result-score">{result.score}</span>
+                <span className="result-score">{result.score.toFixed(1)}</span>
               </div>
+              <MatchMeter percentage={percentage} />
               {result.tradeoffs.map((t, ti) => (
                 <p key={ti} className="tradeoff">
                   {t.text}

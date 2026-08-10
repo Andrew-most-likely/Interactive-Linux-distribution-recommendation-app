@@ -1,40 +1,30 @@
 :root {
-  --bg: #f7f5ef;
-  --surface: #ffffff;
-  --surface-glass: rgba(255, 255, 255, 0.72);
-  --matcha: #5b7052;
-  --matcha-deep: #24301e;
-  --matcha-light: #86a475;
-  --matcha-vivid: #3e6b2f;
-  --sage: #a8b89c;
-  --sage-light: #e3e8dd;
-  --cream: #f0ecdd;
-  --gold: #c98a3a;
-  --gold-light: #f0dcb8;
-  --clay: #c97b52;
-  --clay-deep: #9c5735;
-  --clay-light: #ecbfa0;
-  --wood: #8a6a4a;
-  --wood-light: #d1b28c;
-  --text: #232320;
-  --text-muted: #6b6b64;
-  --border: #e4e0d4;
+  --bg: #16140f;
+  --bg-deep: #0e0d0a;
+  --surface: #211e17;
+  --surface-raised: #29251b;
+  --text: #f2ede0;
+  --text-muted: #948d78;
+  --accent: #f0a238;
+  --accent-deep: #c97d1f;
+  --accent-dim: rgba(240, 162, 56, 0.14);
+  --border-soft: rgba(242, 237, 224, 0.08);
 
-  --radius-lg: 26px;
-  --radius-md: 16px;
-  --radius-sm: 10px;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(35, 35, 32, 0.06);
-  --shadow-md: 0 8px 24px rgba(35, 35, 32, 0.08), 0 2px 6px rgba(35, 35, 32, 0.05);
-  --shadow-lg: 0 24px 56px rgba(47, 61, 40, 0.18), 0 4px 12px rgba(35, 35, 32, 0.07);
-  --shadow-glow: 0 0 0 1px rgba(91, 112, 82, 0.12), 0 14px 36px rgba(74, 122, 61, 0.22);
-  --shadow-gold-glow: 0 0 0 1px rgba(201, 138, 58, 0.25), 0 14px 32px rgba(201, 138, 58, 0.22);
+  --shadow-sm: 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.38), 0 2px 8px rgba(0, 0, 0, 0.28);
+  --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.45), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 0 1px rgba(240, 162, 56, 0.3), 0 12px 32px rgba(240, 162, 56, 0.22);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", serif;
+  --font-display: "Outfit", var(--font-sans);
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 
 * {
@@ -42,7 +32,7 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
@@ -50,10 +40,9 @@ body {
   min-height: 100vh;
   position: relative;
   background:
-    radial-gradient(ellipse 1000px 700px at 6% -12%, rgba(62, 107, 47, 0.32), transparent 58%),
-    radial-gradient(ellipse 820px 620px at 106% -4%, rgba(201, 138, 58, 0.24), transparent 55%),
-    radial-gradient(ellipse 900px 640px at 50% 108%, rgba(168, 184, 156, 0.38), transparent 60%),
-    var(--bg);
+    radial-gradient(ellipse 780px 560px at 88% -10%, rgba(240, 162, 56, 0.13), transparent 58%),
+    radial-gradient(ellipse 640px 520px at -6% 40%, rgba(240, 162, 56, 0.07), transparent 55%),
+    var(--bg-deep);
   background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
@@ -68,9 +57,9 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.5;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 button {
@@ -78,7 +67,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--matcha);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
@@ -94,27 +83,17 @@ button {
   }
 }
 
-@keyframes soft-pulse {
+@keyframes cursor-blink {
   0%,
-  100% {
+  45% {
     opacity: 1;
   }
-  50% {
-    opacity: 0.55;
-  }
-}
-
-@keyframes steam-rise {
-  0% {
-    transform: translateY(6px);
+  50%,
+  95% {
     opacity: 0;
-  }
-  35% {
-    opacity: 0.6;
   }
   100% {
-    transform: translateY(-14px);
-    opacity: 0;
+    opacity: 1;
   }
 }
 
