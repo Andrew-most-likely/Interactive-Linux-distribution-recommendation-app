@@ -1,5 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import type { Item } from "../data/items";
+import { itemIcons } from "../data/icons";
+import { Icon } from "./Icon";
 
 interface DropZoneProps {
   pickedItems: Item[];
@@ -43,7 +45,10 @@ export function DropZone({ pickedItems, onRemove }: DropZoneProps) {
             fontSize: "13px",
           }}
         >
-          <span>{item.label}</span>
+          <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Icon icon={itemIcons[item.id]} size={16} />
+            {item.label}
+          </span>
           <button
             aria-label={`Remove ${item.label}`}
             onClick={() => onRemove(item.id)}

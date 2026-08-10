@@ -1,6 +1,8 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import type { Item } from "../data/items";
+import { itemIcons } from "../data/icons";
+import { Icon } from "./Icon";
 
 export function DraggableItem({ item }: { item: Item }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
@@ -14,6 +16,9 @@ export function DraggableItem({ item }: { item: Item }) {
       style={{
         transform: CSS.Translate.toString(transform),
         opacity: isDragging ? 0.4 : 1,
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
         padding: "10px 14px",
         background: "var(--surface)",
         border: "1px solid var(--border)",
@@ -24,6 +29,7 @@ export function DraggableItem({ item }: { item: Item }) {
         touchAction: "none",
       }}
     >
+      <Icon icon={itemIcons[item.id]} />
       {item.label}
     </div>
   );

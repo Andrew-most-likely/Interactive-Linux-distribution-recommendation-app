@@ -1,5 +1,7 @@
 import { MatchaBowl } from "./MatchaBowl";
 import { scoreRange, type DistroResult } from "../lib/scoring";
+import { distroIcons } from "../data/icons";
+import { Icon } from "./Icon";
 
 export function ScorePanel({ results }: { results: DistroResult[] }) {
   const range = scoreRange(results);
@@ -20,7 +22,10 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontWeight: 500 }}>{result.distro.name}</span>
+                <span style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>
+                  <Icon icon={distroIcons[result.distro.id]} />
+                  {result.distro.name}
+                </span>
                 <span style={{ color: "var(--text-muted)" }}>{result.score}</span>
               </div>
               {result.tradeoffs.map((t, i) => (
