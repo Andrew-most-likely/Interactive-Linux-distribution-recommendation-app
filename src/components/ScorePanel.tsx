@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Copy, Check, Terminal, ClipboardCopy } from "lucide-react";
 import { MatchMeter } from "./MatchMeter";
-import { scoreRange, type DistroResult } from "../lib/scoring";
+import { scoreRange, ratingOutOf10, type DistroResult } from "../lib/scoring";
 import { resolveInstall } from "../lib/installGuide";
 import { distroIcons } from "../data/icons";
 import { Icon } from "./Icon";
@@ -108,7 +108,7 @@ export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; 
                   {isBest && <span className="best-badge">best match</span>}
                   {isIncompatible && <span className="incompatible-badge">won't run everything</span>}
                 </span>
-                <span className="result-score">{result.score.toFixed(1)}</span>
+                <span className="result-score">{ratingOutOf10(result.score, results).toFixed(1)}</span>
               </div>
               <MatchMeter percentage={percentage} />
               <p className="distro-blurb">{result.distro.blurb}</p>
