@@ -122,12 +122,8 @@ export function scoreDistros(
   });
 }
 
-export function scoreRange(results: DistroResult[]): number {
-  return Math.max(1, ...results.map((r) => Math.abs(r.score)));
-}
-
 // The raw score is an unbounded sum of weighted dimension contributions, not
-// a meaningful number on its own. Rescale it to a 1-10 "rating" relative to
+// a meaningful number on its own. Rescale it to a 0-10 "rating" relative to
 // the worst/best distro in the current result set, so the displayed number
 // always reads the same way regardless of how many items are picked.
 export function ratingOutOf10(score: number, results: DistroResult[]): number {
@@ -135,7 +131,7 @@ export function ratingOutOf10(score: number, results: DistroResult[]): number {
   const min = Math.min(...scores);
   const max = Math.max(...scores);
   if (max === min) return 10;
-  return 1 + ((score - min) / (max - min)) * 9;
+  return ((score - min) / (max - min)) * 10;
 }
 
 export type { DimensionId };

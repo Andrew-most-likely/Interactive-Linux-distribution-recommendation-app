@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Copy, Check, Terminal, ClipboardCopy } from "lucide-react";
 import { MatchMeter } from "./MatchMeter";
-import { scoreRange, ratingOutOf10, type DistroResult } from "../lib/scoring";
+import { ratingOutOf10, type DistroResult } from "../lib/scoring";
 import { resolveInstall } from "../lib/installGuide";
 import { distroIcons } from "../data/icons";
 import { Icon } from "./Icon";
@@ -71,7 +71,6 @@ function InstallChecklist({ items, packageManager }: { items: Item[]; packageMan
 export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; pickedItems: Item[] }) {
   const [showAll, setShowAll] = useState(false);
   const [openInstallId, setOpenInstallId] = useState<string | null>(null);
-  const range = scoreRange(results);
   const hasSignal = results.some((r) => r.score !== 0);
   const visible = showAll ? results : results.slice(0, VISIBLE_DEFAULT);
   const hiddenCount = results.length - VISIBLE_DEFAULT;
@@ -79,7 +78,8 @@ export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; 
   return (
     <div className="results-list">
       {visible.map((result, i) => {
-        const percentage = 50 + (result.score / (range * 2)) * 50;
+        const rating = ratingOutOf10(result.score, results);
+        const percentage = rating * 10;
         const isIncompatible = result.incompatibleItems.length > 0;
         const isBest = hasSignal && i === 0 && !isIncompatible;
         const installOpen = openInstallId === result.distro.id;
@@ -108,7 +108,7 @@ export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; 
                   {isBest && <span className="best-badge">best match</span>}
                   {isIncompatible && <span className="incompatible-badge">won't run everything</span>}
                 </span>
-                <span className="result-score">{ratingOutOf10(result.score, results).toFixed(1)}</span>
+                <span className="result-score">{rating.toFixed(1)}</span>
               </div>
               <MatchMeter percentage={percentage} />
               <p className="distro-blurb">{result.distro.blurb}</p>
