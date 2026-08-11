@@ -226,7 +226,17 @@
 .results-panel {
   position: sticky;
   top: 24px;
+  /* .picker has a tabs bar above its column headers that .results-panel
+     doesn't; this offsets the "Live match" header to start at the same Y
+     as "Available" / "Your setup" instead of sitting above them. */
+  margin-top: 66px;
   animation: fade-in-up 0.5s var(--ease-out) 0.08s both;
+}
+
+@media (max-width: 880px) {
+  .results-panel {
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 880px) {
@@ -307,6 +317,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  align-items: stretch;
+}
+
+.picker-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 @media (max-width: 560px) {
@@ -322,6 +339,15 @@
   text-transform: uppercase;
   color: var(--text-muted);
   margin: 0 0 12px 2px;
+}
+
+/* Shared height across the Available / Your setup / Live match headers so
+   their content boxes (grid, list, results) all start at the same Y
+   position by default, whether or not a given header also has a search
+   box or a conditional "Clear all" button. */
+.column-header {
+  flex-shrink: 0;
+  min-height: 80px;
 }
 
 .column-label-row {
@@ -420,9 +446,10 @@
 .item-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
-  gap: 10px;
   align-content: start;
-  min-height: 40px;
+  gap: 10px;
+  flex: 1;
+  min-height: 260px;
   max-height: 520px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -567,6 +594,7 @@
 
 .dropzone {
   position: relative;
+  flex: 1;
   min-height: 260px;
   max-height: 520px;
   overflow-y: auto;

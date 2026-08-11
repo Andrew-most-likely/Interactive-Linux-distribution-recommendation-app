@@ -175,26 +175,30 @@ export default function App() {
             </nav>
 
             <div className="picker-columns">
-              <div>
-                <p className="column-label">Available: click or drag to add</p>
-                <input
-                  type="text"
-                  className="search-input"
-                  placeholder={`Search ${categories.find((c) => c.id === activeCategory)?.label.toLowerCase()}…`}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+              <div className="picker-column">
+                <div className="column-header">
+                  <p className="column-label">Available</p>
+                  <input
+                    type="text"
+                    className="search-input"
+                    placeholder={`Search ${categories.find((c) => c.id === activeCategory)?.label.toLowerCase()}…`}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
                 <Pool items={poolItems} onAdd={handleAdd} />
               </div>
 
-              <div>
-                <div className="column-label-row">
-                  <p className="column-label">Your setup</p>
-                  {pickedItems.length > 0 && (
-                    <button type="button" className="clear-all-btn" onClick={handleClearAll}>
-                      Clear all
-                    </button>
-                  )}
+              <div className="picker-column">
+                <div className="column-header">
+                  <div className="column-label-row">
+                    <p className="column-label">Your setup</p>
+                    {pickedItems.length > 0 && (
+                      <button type="button" className="clear-all-btn" onClick={handleClearAll}>
+                        Clear all
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <DropZone pickedItems={pickedItems} onRemove={handleRemove} onMove={handleMove} />
               </div>
@@ -202,7 +206,9 @@ export default function App() {
           </div>
 
           <aside className="results-panel">
-            <p className="column-label">Live match</p>
+            <div className="column-header">
+              <p className="column-label">Live match</p>
+            </div>
             <ScorePanel results={results} />
           </aside>
         </div>
