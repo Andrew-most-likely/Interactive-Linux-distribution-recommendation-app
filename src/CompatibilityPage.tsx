@@ -3,6 +3,7 @@ import { distros } from "./data/distros";
 import { compatibilityNotes } from "./data/compatibility";
 import { distroIcons } from "./data/icons";
 import { Icon } from "./components/Icon";
+import { FooterLinks } from "./components/FooterLinks";
 import "./App.css";
 
 export function CompatibilityPage() {
@@ -23,7 +24,9 @@ export function CompatibilityPage() {
       </header>
 
       <div className="compat-list">
-        {distros.map((distro) => {
+        {[...distros]
+          .sort((a, b) => a.popularityRank - b.popularityRank)
+          .map((distro) => {
           const note = compatibilityNotes.find((n) => n.distroId === distro.id);
           if (!note) return null;
 
@@ -71,6 +74,7 @@ export function CompatibilityPage() {
 
       <footer className="footer">
         <p>General guidance, not live-sourced data. Always check a distro's own release notes.</p>
+        <FooterLinks />
       </footer>
     </div>
   );

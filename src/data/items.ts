@@ -1,6 +1,6 @@
 import type { DimensionScores } from "./dimensions";
 
-export type Category = "games" | "work" | "security" | "communication";
+export type Category = "games" | "work" | "browsers" | "security" | "communication";
 
 // A real, checkable fact about how a game actually runs on Linux, not an
 // invented number. driverFreshness requirements for games are derived from
@@ -51,24 +51,31 @@ export const items: Item[] = [
   // ---------- Work ----------
   { id: "vscode", label: "VS Code", category: "work", requirements: { easeOfUse: 6, stability: 4 } },
   { id: "homeserver", label: "Self-hosting / home server", category: "work", requirements: { stability: 9, easeOfUse: 3 } },
-  { id: "blender", label: "Blender", category: "work", requirements: { gamingPerf: 6, driverFreshness: 7, easeOfUse: 4 } }, // GPU render kernels want current drivers
+  { id: "blender", label: "Blender", category: "work", requirements: { gamingPerf: 6, driverFreshness: 7, easeOfUse: 4 } }, // Cycles GPU rendering needs current CUDA (NVIDIA) or HIP/ROCm (AMD); ROCm in particular tracks a narrow supported kernel/driver range
   { id: "browser", label: "Heavy browser multitasking", category: "work", requirements: { easeOfUse: 6, stability: 4 } },
   { id: "docker", label: "Docker / containers", category: "work", requirements: { stability: 7, easeOfUse: 4 } },
   { id: "jetbrains", label: "JetBrains IDEs", category: "work", requirements: { easeOfUse: 5, stability: 4 } },
-  { id: "obs", label: "OBS Studio / streaming", category: "work", requirements: { gamingPerf: 4, driverFreshness: 5, easeOfUse: 5 } },
+  { id: "obs", label: "OBS Studio / streaming", category: "work", requirements: { gamingPerf: 4, driverFreshness: 5, easeOfUse: 5 } }, // NVENC/VAAPI hardware encode wants a reasonably current driver, but OBS still runs fine on software x264 encoding if not
   { id: "nodejs", label: "Node.js development", category: "work", requirements: { stability: 5, easeOfUse: 5 } },
   { id: "neovim", label: "Neovim / Vim", category: "work", requirements: { easeOfUse: 2, stability: 5 } }, // steep to configure, rock solid once set up
   { id: "git", label: "Git (command line)", category: "work", requirements: { easeOfUse: 2, stability: 4 } },
   { id: "python", label: "Python development", category: "work", requirements: { easeOfUse: 6, stability: 4 } }, // first-class citizen on nearly every distro
   { id: "kubernetes", label: "Kubernetes / kubectl", category: "work", requirements: { stability: 8, easeOfUse: 2 } },
-  { id: "virtualbox", label: "VirtualBox", category: "work", requirements: { stability: 6, driverFreshness: 3, easeOfUse: 4 } }, // kernel module compatibility varies by distro
+  { id: "virtualbox", label: "VirtualBox", category: "work", requirements: { stability: 6, driverFreshness: 3, easeOfUse: 4 } }, // vboxdrv is a kernel module, not a GPU driver; DKMS rebuilds it automatically on most distros, but very new kernels can briefly outpace VirtualBox's official support
   { id: "libreoffice", label: "LibreOffice", category: "work", requirements: { easeOfUse: 7, stability: 4 } },
   { id: "notion", label: "Notion", category: "work", requirements: { easeOfUse: 6, stability: 3 } }, // Electron-wrapped, no true native Linux app
   { id: "figma", label: "Figma", category: "work", requirements: { easeOfUse: 7, stability: 3 } }, // browser-based, works anywhere
-  { id: "firefox", label: "Firefox", category: "work", requirements: { easeOfUse: 8, stability: 4 } }, // best-in-class native Linux support
   { id: "nextcloud", label: "Nextcloud", category: "work", requirements: { stability: 8, easeOfUse: 4 } },
-  { id: "plex", label: "Plex Media Server", category: "work", requirements: { stability: 8, driverFreshness: 5, easeOfUse: 5 } }, // hardware transcoding wants fresh GPU drivers
+  { id: "plex", label: "Plex Media Server", category: "work", requirements: { stability: 8, driverFreshness: 5, easeOfUse: 5 } }, // hardware transcoding (VAAPI on Intel/AMD, NVENC on NVIDIA) needs current enough drivers to recognize the specific GPU generation; falls back to slower CPU transcoding otherwise
   { id: "nginx", label: "Nginx", category: "work", requirements: { stability: 7, easeOfUse: 3 } },
+
+  // ---------- Browsers ----------
+  { id: "firefox", label: "Firefox", category: "browsers", requirements: { easeOfUse: 8, stability: 4 } }, // Mozilla's own project, best-in-class native Linux support
+  { id: "chrome", label: "Chrome", category: "browsers", requirements: { easeOfUse: 7, stability: 4 } }, // Google ships official .deb/.rpm builds, well-tested on nearly every distro
+  { id: "brave", label: "Brave", category: "browsers", requirements: { easeOfUse: 7, isolation: 3 } }, // Chromium-based with built-in tracker/ad blocking, official Linux repos
+  { id: "vivaldi", label: "Vivaldi", category: "browsers", requirements: { easeOfUse: 6, stability: 3 } }, // Chromium-based, official Linux builds, denser power-user UI than most
+  { id: "librewolf", label: "LibreWolf", category: "browsers", requirements: { easeOfUse: 5, isolation: 5 } }, // hardened Firefox fork; distributed via Flatpak/AUR/manual repo rather than every distro's main repos
+  { id: "opera", label: "Opera", category: "browsers", requirements: { easeOfUse: 7, stability: 3 } }, // Chromium-based, official .deb/.rpm builds, ships a built-in VPN feature
 
   // ---------- Security ----------
   { id: "sandboxing", label: "Strong sandboxing / isolation", category: "security", requirements: { isolation: 10, easeOfUse: 2 } },
@@ -96,7 +103,7 @@ export const items: Item[] = [
   { id: "discord", label: "Discord", category: "communication", requirements: { easeOfUse: 7 } },
   { id: "slack", label: "Slack", category: "communication", requirements: { easeOfUse: 7, stability: 3 } },
   { id: "msteams", label: "Microsoft Teams", category: "communication", requirements: { easeOfUse: 5, stability: 4 } }, // the weakest of the bunch on Linux, PWA-only now
-  { id: "zoom", label: "Zoom", category: "communication", requirements: { easeOfUse: 6, driverFreshness: 3, stability: 3 } },
+  { id: "zoom", label: "Zoom", category: "communication", requirements: { easeOfUse: 6, driverFreshness: 3, stability: 3 } }, // uses VAAPI hardware video decode/encode when available, but falls back to software cleanly, so driver freshness barely matters here
   { id: "googlemeet", label: "Google Meet", category: "communication", requirements: { easeOfUse: 8, stability: 3 } }, // browser-based, just works
   { id: "signal", label: "Signal", category: "communication", requirements: { easeOfUse: 7, isolation: 4 } }, // excellent native Linux app
   { id: "telegram", label: "Telegram", category: "communication", requirements: { easeOfUse: 8, isolation: 2 } }, // excellent native Linux app

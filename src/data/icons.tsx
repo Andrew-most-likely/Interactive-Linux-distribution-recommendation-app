@@ -47,6 +47,11 @@ import {
   siMessenger,
   siZoom,
   siSession,
+  siGooglechrome,
+  siBrave,
+  siVivaldi,
+  siLibrewolf,
+  siOpera,
 } from "simple-icons";
 import {
   Code2,
@@ -198,10 +203,17 @@ export const itemIcons: Record<string, IconDef> = {
   libreoffice: brand(siLibreoffice),
   notion: brand(siNotion),
   figma: brand(siFigma),
-  firefox: brand(siFirefoxbrowser),
   nextcloud: brand(siNextcloud),
   plex: brand(siPlex),
   nginx: brand(siNginx),
+
+  // Browsers
+  firefox: brand(siFirefoxbrowser),
+  chrome: brand(siGooglechrome),
+  brave: brand(siBrave),
+  vivaldi: brand(siVivaldi),
+  librewolf: brand(siLibrewolf),
+  opera: brand(siOpera),
 
   // Security
   sandboxing: lucide(ShieldCheck, "#7c93a8"),

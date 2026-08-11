@@ -8,7 +8,7 @@
 
 An interactive, drag-and-drop Linux distro recommender. Instead of a
 text-based questionnaire, you drag in the specific games, tools, and
-preferences you actually use, pick your GPU, and watch match scores for 25
+preferences you actually use, pick your GPU, and watch match scores for 37
 distros update live, with honest, individually-reasoned explanations of
 the tradeoffs each one involves.
 
@@ -44,7 +44,7 @@ Then open the URL it prints (usually http://localhost:5173).
 src/
   data/
     dimensions.ts     # the underlying axes distros are scored on
-    distros.ts         # 25 distros + attribute scores + blurb per dimension
+    distros.ts         # 37 distros + attribute scores + blurb per dimension
     items.ts            # curated draggable items per category
     hardware.ts        # GPU vendor options and their driver-freshness weight
     compatibility.ts   # per-distro driver/hardware notes shown on /distros

@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
-import { Gamepad2, Briefcase, ShieldCheck, MessageCircle } from "lucide-react";
+import { Gamepad2, Briefcase, Globe, ShieldCheck, MessageCircle } from "lucide-react";
 import { Pool } from "./components/Pool";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
 import { DragPreview } from "./components/DragPreview";
 import { HardwareSelect } from "./components/HardwareSelect";
+import { FooterLinks } from "./components/FooterLinks";
 import { items, type Category } from "./data/items";
 import { distros } from "./data/distros";
 import type { GpuVendor } from "./data/hardware";
@@ -18,6 +19,7 @@ import "./App.css";
 const categories: { id: Category; label: string; Icon: typeof Gamepad2 }[] = [
   { id: "games", label: "Games", Icon: Gamepad2 },
   { id: "work", label: "Work", Icon: Briefcase },
+  { id: "browsers", label: "Browsers", Icon: Globe },
   { id: "security", label: "Security", Icon: ShieldCheck },
   { id: "communication", label: "Communication", Icon: MessageCircle },
 ];
@@ -169,6 +171,7 @@ export default function App() {
 
       <footer className="footer">
         <p>No login, no tracking, no server. Everything above runs in your browser.</p>
+        <FooterLinks />
       </footer>
     </div>
   );
