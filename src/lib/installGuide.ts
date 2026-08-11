@@ -45,7 +45,7 @@ function resolveGameInstall(item: Item, pm: PackageManager): ResolvedInstall {
   const steam = steamInstallCommand(pm);
   switch (item.linuxSupport) {
     case "native":
-      return { command: steam.command, note: "Ships an official native Linux build — installs and runs directly via Steam" };
+      return { command: steam.command, note: "Ships an official native Linux build, installs and runs directly via Steam" };
     case "proton-verified":
       return { command: steam.command, note: "No native build; enable Steam Play/Proton in Settings → Compatibility. Steam Deck Verified, runs smoothly" };
     case "proton-playable":
@@ -65,7 +65,7 @@ function resolveGameInstall(item: Item, pm: PackageManager): ResolvedInstall {
 // when neither applies (vendor-only .deb/.rpm, web-only, no Linux client).
 export function resolveInstall(item: Item, packageManager: PackageManager): ResolvedInstall {
   if (item.custom) {
-    return { note: "Unverified — typed in manually, no verified Linux support or install path" };
+    return { note: "Unverified, typed in manually, no verified Linux support or install path" };
   }
 
   if (item.category === "games") return resolveGameInstall(item, packageManager);

@@ -1,4 +1,4 @@
-# ARL — Always Recommend Linux
+# ARL: Always Recommend Linux
 
 **[Try it live →](https://andrew-most-likely.github.io/Interactive-Linux-distribution-recommendation-app/)**
 
