@@ -1,30 +1,19 @@
 import { Heart } from "lucide-react";
 
-const SPONSOR_URL = "https://github.com/sponsors/Andrew-most-likely";
+const SPONSOR_URL =
+  "https://github.com/Andrew-most-likely/Interactive-Linux-distribution-recommendation-app/blob/main/.github/SPONSOR.md";
 
-function SponsorBanner({ side }: { side: "left" | "right" }) {
+export function SponsorAds() {
   return (
     <a
       href={SPONSOR_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`sponsor-ad sponsor-ad-${side}`}
-      aria-label="Sponsor this project on GitHub Sponsors"
+      className="sponsor-ad"
+      aria-label="Sponsor this project"
     >
-      <span className="sponsor-ad-label">Advertisement</span>
-      <Heart size={26} strokeWidth={1.5} />
-      <p className="sponsor-ad-title">Sponsor me</p>
-      <p className="sponsor-ad-sub">Support this project on GitHub Sponsors</p>
-      <span className="sponsor-ad-btn">Sponsor →</span>
+      <Heart size={14} strokeWidth={1.75} />
+      <span>Sponsor this project</span>
     </a>
-  );
-}
-
-export function SponsorAds() {
-  return (
-    <>
-      <SponsorBanner side="left" />
-      <SponsorBanner side="right" />
-    </>
   );
 }
