@@ -37,47 +37,6 @@ back a single flat verdict. Steep instead:
 - Ships a [compatibility guide](https://andrew-most-likely.github.io/Interactive-Linux-distribution-recommendation-app/#/distros)
   with real, distro-specific NVIDIA driver notes, strengths, and tradeoffs
 
-## Run it locally
-
-```bash
-npm install
-npm run dev
-```
-
-Then open the URL it prints (usually http://localhost:5173).
-
-## Project structure
-
-```
-src/
-  data/
-    dimensions.ts     # the underlying axes distros are scored on
-    distros.ts        # 37 distros + attribute scores, package manager, blurb
-    items.ts          # curated draggable items per category (games, work,
-                       # browsers, security, communication)
-    hardware.ts       # GPU vendor + device type options and their weighting
-    compatibility.ts  # per-distro driver/hardware notes shown on /distros
-    icons.tsx         # real cover art / logos / brand icons per item & distro
-  lib/
-    scoring.ts         # turns picks + GPU + device + ranking into distro scores
-  components/
-    MatchMeter.tsx     # signature score visualization
-    Pool.tsx           # droppable "Available" list (click or drag to add)
-    DraggableItem.tsx
-    DropZone.tsx        # "Your setup": rank, reorder, and remove picks
-    SetupChip.tsx
-    DragPreview.tsx     # the visual shown in dnd-kit's DragOverlay
-    HardwareSelect.tsx  # GPU vendor + device type picker
-    FooterLinks.tsx
-    SponsorAd.tsx
-    FloatingShapes.tsx  # ambient background animation
-    ScorePanel.tsx
-  App.tsx                 # the matcher (route "/")
-  CompatibilityPage.tsx    # distro compatibility reference (route "/distros")
-  main.tsx                 # HashRouter + route table
-  theme.css                # design tokens (quiet dark palette, single muted accent)
-```
-
 ## Compatibility guide
 
 A separate `/distros` page gives every distro its own card: what it's
