@@ -1,7 +1,6 @@
 import { Heart } from "lucide-react";
 
-const SPONSOR_URL =
-  "https://github.com/Andrew-most-likely/Interactive-Linux-distribution-recommendation-app/blob/main/.github/SPONSOR.md";
+const SPONSOR_URL = "https://github.com/sponsors/Andrew-most-likely";
 
 export function SponsorAds() {
   return (

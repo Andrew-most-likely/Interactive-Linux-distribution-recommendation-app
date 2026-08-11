@@ -10,6 +10,7 @@ import { ScorePanel } from "./components/ScorePanel";
 import { DragPreview } from "./components/DragPreview";
 import { HardwareSelect } from "./components/HardwareSelect";
 import { FooterLinks } from "./components/FooterLinks";
+import { SponsorAds } from "./components/SponsorAd";
 import { items, type Category, type Item } from "./data/items";
 import { Plus } from "lucide-react";
 import type { GpuVendor, FormFactor } from "./data/hardware";
@@ -166,31 +167,36 @@ export default function App() {
           formFactor={formFactor}
           onFormFactorChange={setFormFactor}
         />
-        <nav className="tabs">
-          {categories.map(({ id, label, Icon }) => (
-            <button
-              key={id}
-              onClick={() => {
-                setActiveCategory(id);
-                setSearchQuery("");
-              }}
-              className={`tab${activeCategory === id ? " active" : ""}`}
-            >
-              {activeCategory === id && (
-                <motion.span
-                  layoutId="tab-active-pill"
-                  className="tab-active-pill"
-                  transition={{ type: "spring", stiffness: 500, damping: 34 }}
-                />
-              )}
-              <span className="tab-content">
-                <Icon size={15} strokeWidth={2.25} />
-                {label}
-                {!!categoryCounts[id] && <span className="tab-count">{categoryCounts[id]}</span>}
-              </span>
-            </button>
-          ))}
-        </nav>
+        <div className="control-group">
+          <span className="control-group-label">Category</span>
+          <nav className="tabs">
+            {categories.map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                onClick={() => {
+                  setActiveCategory(id);
+                  setSearchQuery("");
+                }}
+                className={`tab${activeCategory === id ? " active" : ""}`}
+              >
+                {activeCategory === id && (
+                  <motion.span
+                    layoutId="tab-active-pill"
+                    className="tab-active-pill"
+                    transition={{ type: "spring", stiffness: 500, damping: 34 }}
+                  />
+                )}
+                <span className="tab-content">
+                  <Icon size={15} strokeWidth={2.25} />
+                  {label}
+                  {!!categoryCounts[id] && <span className="tab-count">{categoryCounts[id]}</span>}
+                </span>
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        <SponsorAds />
       </div>
 
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
