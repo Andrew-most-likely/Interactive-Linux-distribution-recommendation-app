@@ -34,6 +34,7 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
                 <span className="result-score">{result.score.toFixed(1)}</span>
               </div>
               <MatchMeter percentage={percentage} />
+              <p className="distro-blurb">{result.distro.blurb}</p>
               {isIncompatible && (
                 <p className="incompatible-note">
                   Won't run: {result.incompatibleItems.join(", ")}

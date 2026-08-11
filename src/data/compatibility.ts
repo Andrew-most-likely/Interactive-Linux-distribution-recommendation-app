@@ -145,4 +145,108 @@ export const compatibilityNotes: CompatibilityNote[] = [
       "Offers a non-systemd variant, which is unusual and worth knowing before relying on systemd-specific tooling",
     ],
   },
+  {
+    distroId: "zorinos",
+    base: "Ubuntu LTS",
+    nvidia: "GUI Driver Manager (the same tooling used by Mint/Ubuntu) installs the proprietary driver in a few clicks.",
+    strengths: [
+      "Ships a Windows-like layout by default, with a macOS-like option too — genuinely the easiest transition for switchers",
+      "Zorin Appearance app makes desktop customization approachable without editing config files",
+    ],
+    caveats: [
+      "The most useful layout options are gated behind the paid Zorin OS Pro edition",
+      "LTS base means the same driver/kernel lag as Mint on very new hardware",
+    ],
+  },
+  {
+    distroId: "manjaro",
+    base: "Arch Linux, with updates held back roughly two weeks for testing",
+    nvidia: "Manjaro's own driver manager (mhwd) detects and installs the proprietary driver automatically — easier than Arch's manual pacman process.",
+    strengths: [
+      "Graphical installer and curated defaults make Arch's package base far more approachable",
+      "Multiple desktop editions (KDE, GNOME, Xfce) officially maintained",
+    ],
+    caveats: [
+      "The delay between Arch and Manjaro repos has caused real AUR-compatibility breakage in the past — a well-known community criticism",
+      "Not as bleeding-edge as CachyOS, EndeavourOS, or Arch itself, despite still being a rolling release",
+    ],
+  },
+  {
+    distroId: "endeavouros",
+    base: "Arch Linux, essentially unmodified",
+    nvidia: "Manual pacman install, identical to vanilla Arch — the ArchWiki's NVIDIA page applies directly.",
+    strengths: [
+      "Closest thing to 'Arch with a working installer' — no held-back packages, no custom repo layer",
+      "Welcome app links straight to the ArchWiki and community resources instead of reinventing documentation",
+    ],
+    caveats: [
+      "All of Arch's ongoing maintenance expectations apply post-install — this only simplifies day one",
+      "Smaller team than Manjaro, so less independent tooling if something goes wrong",
+    ],
+  },
+  {
+    distroId: "garuda",
+    base: "Arch Linux, BTRFS by default",
+    nvidia: "Manual pacman install; Garuda's kernel choices are usually current within days of a new driver release.",
+    strengths: [
+      "Automatic BTRFS snapshots via Timeshift mean a bad update is a one-command rollback — an unusual safety net for a rolling release",
+      "Ships with performance and gaming tweaks pre-applied out of the box",
+    ],
+    caveats: [
+      "The default desktop is heavily themed and animation-heavy — striking, but it costs some resources and isn't to everyone's taste",
+      "Larger and more opinionated install than EndeavourOS if you'd rather start closer to vanilla Arch",
+    ],
+  },
+  {
+    distroId: "pikaos",
+    base: "Debian testing/unstable, with a mainline kernel",
+    nvidia: "Recent proprietary driver ships close to release; PikaOS explicitly targets gaming freshness rather than Debian's usual conservatism.",
+    strengths: [
+      "Gaming-focused patches and a current kernel on top of Debian's package base — a combination Debian itself doesn't offer",
+      "Actively maintained by a small, gaming-focused team with quick driver turnaround",
+    ],
+    caveats: [
+      "Much younger and smaller project than the other distros here — less community track record",
+      "Debian testing/unstable as a base carries more real breakage risk than Debian stable",
+    ],
+  },
+  {
+    distroId: "silverblue",
+    base: "Fedora, atomic/image-based (rpm-ostree) instead of traditional package management",
+    nvidia: "No proprietary driver by default; installing it means layering an RPM Fusion package onto the image, slower to apply than a normal dnf install.",
+    strengths: [
+      "Updates apply as a whole image and are trivially rollback-able if one breaks something",
+      "Flatpak-first application model keeps the base system clean and avoids dependency conflicts",
+    ],
+    caveats: [
+      "Installing traditional packages requires rpm-ostree layering or a toolbox container — a real mental-model shift from apt/dnf",
+      "Smaller software compatibility surface for anything that assumes a mutable filesystem",
+    ],
+  },
+  {
+    distroId: "tails",
+    base: "Debian, customized into a live-only (amnesic) system",
+    nvidia: "Not applicable — Tails isn't meant to be installed persistently or used for GPU-dependent work.",
+    strengths: [
+      "Forces all network traffic through Tor by default, with no persistent trace left after shutdown",
+      "Purpose-built and audited specifically for anonymity — this is Tails' entire reason to exist",
+    ],
+    caveats: [
+      "Explicitly not a daily-driver OS — no persistent software installs, no gaming, no general productivity use",
+      "Old, conservative kernel means poor support for very recent hardware",
+    ],
+  },
+  {
+    distroId: "antix",
+    base: "Debian stable, without systemd",
+    nvidia: "Manual driver install via Debian's non-free repository, same as Debian itself — less GUI hand-holding than MX Linux.",
+    strengths: [
+      "Extremely light resource footprint — a realistic option for genuinely old or low-spec machines",
+      "Uses SysVinit/runit instead of systemd, a deliberate choice for people who want to avoid it",
+    ],
+    caveats: [
+      "The no-systemd approach means some modern tooling and tutorials (which assume systemd) don't directly apply",
+      "Sparse, dated-looking desktop by default — function over polish",
+    ],
+  },
 ];
