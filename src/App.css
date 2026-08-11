@@ -330,14 +330,15 @@
 }
 
 .item-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 10px;
+  align-content: start;
   min-height: 40px;
-  max-height: 480px;
+  max-height: 520px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 4px;
+  padding: 4px 4px 4px 0;
   border-radius: var(--radius-lg);
   transition: background 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
 }
@@ -345,29 +346,35 @@
 .item-list.over {
   background: var(--accent-dim);
   box-shadow: 0 0 0 1.5px var(--accent);
-  padding: 8px;
-  margin: -8px;
+  padding: 10px;
+  margin: -6px;
 }
 
 /* ---------- Draggable item card ---------- */
 
 .item-card {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  padding: 16px 10px 14px;
   background: var(--surface);
   border-radius: var(--radius-md);
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 500;
+  text-align: center;
   cursor: grab;
   user-select: none;
   touch-action: none;
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.25s var(--ease-out);
+  transition: box-shadow 0.25s var(--ease-out), background 0.25s var(--ease-out);
 }
 
 .item-card:hover {
+  background: var(--surface-raised);
   box-shadow: var(--shadow-md), 0 0 0 1px var(--accent-dim);
 }
 
@@ -380,6 +387,14 @@
   box-shadow: none;
 }
 
+.item-card-label {
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .drag-preview {
   cursor: grabbing;
   box-shadow: var(--shadow-lg);
@@ -387,9 +402,13 @@
 }
 
 .item-add-hint {
-  margin-left: auto;
-  flex-shrink: 0;
+  position: absolute;
+  top: 8px;
+  right: 8px;
   color: var(--accent);
+  background: var(--accent-dim);
+  border-radius: 50%;
+  padding: 3px;
   opacity: 0;
   transform: scale(0.7);
   transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
@@ -404,16 +423,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-sm);
   background: var(--icon-tint, var(--surface-raised));
   flex-shrink: 0;
 }
 
 .item-icon-badge.has-photo {
-  width: 38px;
-  height: 38px;
+  width: 48px;
+  height: 48px;
   overflow: hidden;
   background: var(--surface-raised);
 }
@@ -439,17 +458,17 @@
 
 .dropzone {
   position: relative;
-  min-height: 220px;
-  max-height: 480px;
+  min-height: 260px;
+  max-height: 520px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 14px;
+  padding: 18px;
   background: var(--surface);
   border: 1.5px dashed var(--border-soft);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
 }
 
@@ -462,34 +481,61 @@
 .dropzone-empty {
   display: flex;
   flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   text-align: center;
   font-size: 12.5px;
   color: var(--text-muted);
   padding: 24px;
 }
 
+.dropzone-empty svg {
+  opacity: 0.5;
+}
+
 .setup-chip {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 6px;
   padding: 9px 12px;
   background: var(--surface-raised);
   border-radius: var(--radius-md);
   font-size: 12.5px;
   font-weight: 500;
-  cursor: grab;
 }
 
 .setup-chip.dragging {
   opacity: 0.4;
 }
 
+.chip-grip {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  cursor: grab;
+  touch-action: none;
+  padding: 2px;
+  margin-left: -4px;
+  transition: color 0.2s var(--ease-out);
+}
+
+.chip-grip:hover {
+  color: var(--accent);
+}
+
+.chip-grip:active {
+  cursor: grabbing;
+}
+
 .setup-chip-label {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
 }
 
 .chip-remove {

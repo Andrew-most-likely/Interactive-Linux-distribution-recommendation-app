@@ -1,6 +1,7 @@
-import { useDraggable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, GripVertical } from "lucide-react";
 import type { Item } from "../data/items";
 import { getItemIcon, iconTint } from "../data/icons";
 import { Icon } from "./Icon";
@@ -15,15 +16,19 @@ interface SetupChipProps {
 }
 
 export function SetupChip({ item, rank, isFirst, isLast, onRemove, onMove }: SetupChipProps) {
-  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: item.id,
   });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   return (
     <motion.div
       ref={setNodeRef}
-      {...listeners}
-      {...attributes}
+      style={style}
       layout
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -31,6 +36,14 @@ export function SetupChip({ item, rank, isFirst, isLast, onRemove, onMove }: Set
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
       className={`setup-chip${isDragging ? " dragging" : ""}`}
     >
+      <span
+        className="chip-grip"
+        {...listeners}
+        {...attributes}
+        aria-label={`Drag to reorder ${item.label}`}
+      >
+        <GripVertical size={14} strokeWidth={2} />
+      </span>
       <span className="setup-chip-label">
         <span className="setup-chip-rank" title="Importance rank — higher on the list counts more">
           {rank}

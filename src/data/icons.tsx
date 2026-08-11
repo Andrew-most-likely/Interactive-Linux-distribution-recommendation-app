@@ -104,6 +104,12 @@ import voidlinuxLogo from "../assets/distros/voidlinux.svg";
 import gentooLogo from "../assets/distros/gentoo.png";
 import kaliLogo from "../assets/distros/kali.png";
 import parrotLogo from "../assets/distros/parrot.svg";
+import slackwareLogo from "../assets/distros/slackware.png";
+import solusLogo from "../assets/distros/solus.png";
+import elementaryLogo from "../assets/distros/elementary.png";
+import deepinLogo from "../assets/distros/deepin.png";
+import rockylinuxLogo from "../assets/distros/rockylinux.svg";
+import kdeneonLogo from "../assets/distros/kdeneon.svg";
 
 export type IconDef =
   | { kind: "brand"; path: string; color: string; title: string }
@@ -265,4 +271,10 @@ export const distroIcons: Record<string, IconDef> = {
   gentoo: photo(gentooLogo, "Gentoo", "contain"),
   kali: photo(kaliLogo, "Kali Linux", "contain"),
   parrot: photo(parrotLogo, "Parrot OS", "contain"),
+  slackware: photo(slackwareLogo, "Slackware", "contain"),
+  solus: photo(solusLogo, "Solus", "contain"),
+  elementary: photo(elementaryLogo, "elementary OS", "contain"),
+  deepin: photo(deepinLogo, "Deepin", "contain"),
+  rockylinux: photo(rockylinuxLogo, "Rocky Linux", "contain"),
+  kdeneon: photo(kdeneonLogo, "KDE Neon", "contain"),
 };

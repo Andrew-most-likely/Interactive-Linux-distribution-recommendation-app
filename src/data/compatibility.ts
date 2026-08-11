@@ -340,4 +340,82 @@ export const compatibilityNotes: CompatibilityNote[] = [
       "Being usable as a daily driver cuts both ways — more attack surface than a single-purpose live-boot tool like Kali or Tails",
     ],
   },
+  {
+    distroId: "slackware",
+    base: "Independent — no package dependency resolver by design",
+    nvidia: "Manual driver install, no package manager dependency resolution to lean on — you track every file yourself.",
+    strengths: [
+      "Genuinely the most stable, least-changed base of any distro here — what worked a decade ago still works",
+      "BSD-style init and a Unix-purist philosophy that predates and outlasted most distro trends",
+    ],
+    caveats: [
+      "No automatic dependency resolution — installing software you didn't compile yourself means finding or building packages manually",
+      "Extremely steep learning curve, arguably steeper than Gentoo for newcomers",
+    ],
+  },
+  {
+    distroId: "solus",
+    base: "Independent, built around its own Budgie desktop",
+    nvidia: "Solus's own package manager (eopkg) has straightforward proprietary driver packages, though the driver-testing surface is much smaller than Ubuntu/Fedora's.",
+    strengths: [
+      "Budgie desktop is original to Solus and tightly integrated, not bolted on",
+      "Curated software selection avoids the sprawl of some rolling distros",
+    ],
+    caveats: [
+      "Smaller team and community than the major distros — slower response to new hardware and edge-case bugs",
+      "Semi-rolling release model is less battle-tested than Arch's or Debian's approaches",
+    ],
+  },
+  {
+    distroId: "elementary",
+    base: "Ubuntu LTS, with the from-scratch Pantheon desktop",
+    nvidia: "Same driver path as Ubuntu underneath, though Pantheon's conventions occasionally lag behind NVIDIA-specific Wayland fixes landing in GNOME/KDE first.",
+    strengths: [
+      "Pantheon desktop is cohesive and consistent in a way few other DEs manage — feels like one designed product, not assembled parts",
+      "AppCenter models pay-what-you-want app distribution, a genuinely different take on a Linux software store",
+    ],
+    caveats: [
+      "Smaller app ecosystem tailored specifically for Pantheon; some GNOME/KDE apps look visually out of place",
+      "Releases are less frequent than Ubuntu itself, so it can lag behind on very new hardware support",
+    ],
+  },
+  {
+    distroId: "deepin",
+    base: "Independent, built around the Qt-based Deepin Desktop Environment (DDE)",
+    nvidia: "Ships its own driver management tooling; functional but historically less consistently tested than Ubuntu/Fedora's mainstream paths.",
+    strengths: [
+      "DDE is genuinely unique — animated, cohesive, and unlike any other Linux desktop",
+      "Ships a large set of custom in-house applications rather than relying entirely on upstream GNOME/KDE apps",
+    ],
+    caveats: [
+      "Historical privacy concerns around telemetry and cloud-connected features have made some users cautious — worth reviewing before installing",
+      "Smaller international community and slower English-language support than the major Western-maintained distros",
+    ],
+  },
+  {
+    distroId: "rockylinux",
+    base: "Binary-compatible rebuild of Red Hat Enterprise Linux",
+    nvidia: "Manual driver install via third-party repos (ELRepo/EPEL); not a distro built with desktop GPU use as a priority.",
+    strengths: [
+      "Binary-compatible with RHEL, so it inherits Red Hat's enterprise-grade stability and long support lifecycles",
+      "Free and community-governed, explicitly filling the gap CentOS left behind",
+    ],
+    caveats: [
+      "Built for servers and enterprise workloads first — desktop use is possible but genuinely secondary to its actual purpose",
+      "Conservative package versions mean it's a poor fit for anything needing current hardware/driver support",
+    ],
+  },
+  {
+    distroId: "kdeneon",
+    base: "Ubuntu LTS, with the latest KDE Plasma always layered on top",
+    nvidia: "Same driver path as Ubuntu underneath — the LTS base handles NVIDIA the same way Ubuntu does.",
+    strengths: [
+      "Always ships the newest stable KDE Plasma release, faster than most distros that bundle Plasma with their own release cadence",
+      "Ubuntu LTS base underneath means broad hardware and software compatibility",
+    ],
+    caveats: [
+      "Mixing a stable Ubuntu base with a bleeding-edge desktop occasionally produces version-mismatch quirks",
+      "Effectively a single-purpose distro — if you don't specifically want latest-KDE-on-Ubuntu, there's little else differentiating it",
+    ],
+  },
 ];

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
 import { Gamepad2, Briefcase, ShieldCheck, MessageCircle } from "lucide-react";
 import { Pool } from "./components/Pool";
@@ -45,13 +46,34 @@ export default function App() {
     setActiveId(null);
     if (!over) return;
 
-    if (over.id === "setup-dropzone") {
-      setPickedIds((prev) =>
-        prev.includes(active.id as string) ? prev : [...prev, active.id as string],
-      );
-    } else if (over.id === "pool-dropzone") {
-      setPickedIds((prev) => prev.filter((id) => id !== active.id));
-    }
+    const activeId = active.id as string;
+    const overId = over.id as string;
+
+    setPickedIds((prev) => {
+      const isSetupItem = prev.includes(activeId);
+      // "setup" if dropped on the container itself or on an existing setup
+      // chip; "pool" if dropped on the pool container or a still-available
+      // pool item — picked items never appear in the pool, so an id can't
+      // be ambiguous between the two.
+      const overIsSetup = overId === "setup-dropzone" || prev.includes(overId);
+
+      if (isSetupItem) {
+        if (overIsSetup) {
+          const oldIndex = prev.indexOf(activeId);
+          const newIndex = overId === "setup-dropzone" ? prev.length - 1 : prev.indexOf(overId);
+          if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) return prev;
+          return arrayMove(prev, oldIndex, newIndex);
+        }
+        // dropped back onto the pool — remove it
+        return prev.filter((id) => id !== activeId);
+      }
+
+      // dragging a fresh pool item — add it if dropped anywhere in setup
+      if (overIsSetup) {
+        return prev.includes(activeId) ? prev : [...prev, activeId];
+      }
+      return prev;
+    });
   }
 
   function handleAdd(id: string) {

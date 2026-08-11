@@ -24,18 +24,18 @@ export function DraggableItem({ item, onAdd }: DraggableItemProps) {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        whileHover={{ y: -3, scale: 1.015 }}
-        whileTap={{ scale: 0.97 }}
+        whileHover={{ y: -4, scale: 1.03 }}
+        whileTap={{ scale: 0.96 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       >
+        <Plus className="item-add-hint" size={13} strokeWidth={2.5} aria-hidden="true" />
         <span
           className={`item-icon-badge${isPhoto ? " has-photo" : ""}`}
           style={{ ["--icon-tint" as string]: iconTint(icon) }}
         >
-          <Icon icon={icon} size={isPhoto ? 34 : 16} />
+          <Icon icon={icon} size={isPhoto ? 40 : 22} />
         </span>
-        {item.label}
-        <Plus className="item-add-hint" size={15} strokeWidth={2.5} aria-hidden="true" />
+        <span className="item-card-label">{item.label}</span>
       </motion.div>
     </div>
   );

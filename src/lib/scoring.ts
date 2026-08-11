@@ -82,7 +82,10 @@ export function scoreDistros(pickedItemIds: string[], gpuVendor: GpuVendor | nul
     if (a.incompatibleItems.length !== b.incompatibleItems.length) {
       return a.incompatibleItems.length - b.incompatibleItems.length;
     }
-    return b.score - a.score;
+    if (a.score !== b.score) return b.score - a.score;
+    // Ties (including the all-zero default view before anything is picked)
+    // fall back to real-world popularity instead of array declaration order.
+    return a.distro.popularityRank - b.distro.popularityRank;
   });
 }
 
