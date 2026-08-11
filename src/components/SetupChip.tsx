@@ -55,6 +55,11 @@ export function SetupChip({ item, rank, isFirst, isLast, onRemove, onMove }: Set
           <Icon icon={getItemIcon(item.id)} size={20} />
         </span>
         {item.label}
+        {item.custom && (
+          <span className="setup-chip-unverified" title="Custom item, Linux support not verified">
+            unverified
+          </span>
+        )}
       </span>
       <span className="setup-chip-controls">
         <button

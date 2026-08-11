@@ -21,6 +21,7 @@ export interface Item {
   category: Category;
   requirements: DimensionScores; // how much this item cares about each dimension, 0-10
   linuxSupport?: LinuxSupport; // set for games; drives the anti-cheat hard-block check
+  custom?: boolean; // user-typed via search, no verified Linux-support data
 }
 
 export const items: Item[] = [

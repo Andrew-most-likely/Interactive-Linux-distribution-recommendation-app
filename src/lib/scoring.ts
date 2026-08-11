@@ -47,11 +47,13 @@ const HARDWARE_WEIGHT = 1.4;
 
 export function scoreDistros(
   pickedItemIds: string[],
+  customItems: Item[] = [],
   gpuVendor: GpuVendor | null = null,
   formFactor: FormFactor | null = null,
 ): DistroResult[] {
+  const allItems = customItems.length ? [...items, ...customItems] : items;
   const picked = pickedItemIds
-    .map((id) => items.find((i) => i.id === id))
+    .map((id) => allItems.find((i) => i.id === id))
     .filter((i): i is Item => Boolean(i));
   const hardwareItems = [
     gpuVendor ? gpuHardwareItem(gpuVendor) : null,

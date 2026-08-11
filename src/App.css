@@ -16,6 +16,89 @@
   pointer-events: none;
 }
 
+/* ---------- Sponsor "ad" rails ---------- */
+/* A joke on classic sidebar ad placement, not a real ad network, links
+   straight to GitHub Sponsors. Only shows once there's genuine margin
+   space so it never competes with the actual page content. */
+
+.sponsor-ad {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 160px;
+  padding: 16px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  color: var(--text-muted);
+  text-decoration: none;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.sponsor-ad-left {
+  left: 24px;
+}
+
+.sponsor-ad-right {
+  right: 24px;
+}
+
+.sponsor-ad:hover {
+  border-color: var(--accent);
+  transform: translateY(-50%) scale(1.03);
+}
+
+.sponsor-ad-label {
+  align-self: flex-start;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.sponsor-ad svg {
+  color: var(--accent);
+  margin: 4px 0;
+}
+
+.sponsor-ad-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.sponsor-ad-sub {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.sponsor-ad-btn {
+  margin-top: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--bg-deep);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+@media (min-width: 2100px) {
+  .sponsor-ad {
+    display: flex;
+  }
+}
+
 .floating-shape {
   position: absolute;
   object-fit: contain;
@@ -407,6 +490,31 @@
   background: var(--surface-raised);
 }
 
+.add-custom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: var(--radius-md);
+  border: 1.5px dashed var(--border-soft);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+
+.add-custom-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+  background: var(--accent-dim);
+}
+
 .item-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
@@ -694,6 +802,18 @@
   font-size: 10.5px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+
+.setup-chip-unverified {
+  flex-shrink: 0;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  background: rgba(230, 229, 226, 0.08);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
 }
 
 .setup-chip-controls {
