@@ -1,6 +1,6 @@
-# Sponsor Steep
+# Sponsor ARL
 
-Steep is a free, open-source, ad-supported-in-name-only Linux distro
+ARL (Always Recommend Linux) is a free, open-source, ad-supported-in-name-only Linux distro
 picker: no login, no tracking, no server, everything runs in your
 browser. If it's been useful (or you just want to support the project),
 you can sponsor its development on GitHub Sponsors:

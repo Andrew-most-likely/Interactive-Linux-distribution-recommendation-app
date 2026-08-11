@@ -64,6 +64,10 @@ function resolveGameInstall(item: Item, pm: PackageManager): ResolvedInstall {
 // verified, a Flatpak command as the universal fallback, or an honest note
 // when neither applies (vendor-only .deb/.rpm, web-only, no Linux client).
 export function resolveInstall(item: Item, packageManager: PackageManager): ResolvedInstall {
+  if (item.custom) {
+    return { note: "Unverified — typed in manually, no verified Linux support or install path" };
+  }
+
   if (item.category === "games") return resolveGameInstall(item, packageManager);
 
   const install = item.install;

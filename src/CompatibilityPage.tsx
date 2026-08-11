@@ -12,7 +12,7 @@ export function CompatibilityPage() {
       <header className="masthead">
         <div>
           <Link to="/" className="compat-back-link">
-            ← Back to Steep
+            ← Back to ARL
           </Link>
           <h1 className="masthead-title">Compatibility</h1>
           <p className="masthead-sub">

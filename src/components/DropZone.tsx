@@ -23,7 +23,7 @@ export function DropZone({ pickedItems, onRemove, onMove }: DropZoneProps) {
         </div>
       )}
       <SortableContext items={pickedItems.map((i) => i.id)} strategy={verticalListSortingStrategy}>
-        <AnimatePresence initial={false}>
+        <AnimatePresence initial={false} mode="popLayout">
           {pickedItems.map((item, index) => (
             <SetupChip
               key={item.id}

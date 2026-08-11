@@ -1,4 +1,4 @@
-# Steep
+# ARL — Always Recommend Linux
 
 **[Try it live →](https://andrew-most-likely.github.io/Interactive-Linux-distribution-recommendation-app/)**
 
@@ -16,12 +16,12 @@ individually-reasoned explanations of the tradeoffs each one involves.
 No login, no tracking, no server. Everything runs client-side in your
 browser.
 
-![Steep's main picker: drag items into "Your setup" and watch the live match ranking update](docs/screenshots/main-picker.png)
+![ARL's main picker: drag items into "Your setup" and watch the live match ranking update](docs/screenshots/main-picker.png)
 
 ## Why this is different
 
 Most distro-picker sites ask abstract questions ("do you game?") and hand
-back a single flat verdict. Steep instead:
+back a single flat verdict. ARL instead:
 
 - Lets you drag in **specific, named software**, not vague categories
 - Lets you **rank picks by importance** (drag to reorder) so your top
@@ -49,17 +49,23 @@ Then open the URL it prints (usually http://localhost:5173).
 ## Project structure
 
 ```
+config/                # vite.config.ts, tsconfig.app.json/node.json, .oxlintrc.json
+docs/                   # screenshots + internal project notes
+public/                 # favicon, og-image.png, static assets
 src/
   data/
     dimensions.ts     # the underlying axes distros are scored on
     distros.ts        # 37 distros + attribute scores, package manager, blurb
     items.ts          # curated draggable items per category (games, work,
-                       # browsers, security, communication)
+                       # browsers, security, communication), with real
+                       # per-distro install data on each one
     hardware.ts       # GPU vendor + device type options and their weighting
     compatibility.ts  # per-distro driver/hardware notes shown on /distros
     icons.tsx         # real cover art / logos / brand icons per item & distro
   lib/
-    scoring.ts         # turns picks + GPU + device + ranking into distro scores
+    scoring.ts          # turns picks + GPU + device + ranking into distro scores
+    installGuide.ts      # resolves each item's install command for a distro's
+                          # package manager (native package, Flatpak, or a note)
   components/
     MatchMeter.tsx     # signature score visualization
     Pool.tsx           # droppable "Available" list (click or drag to add)
@@ -71,7 +77,7 @@ src/
     FooterLinks.tsx
     SponsorAd.tsx
     FloatingShapes.tsx  # ambient background animation
-    ScorePanel.tsx
+    ScorePanel.tsx        # results list + per-distro install checklist
   App.tsx                 # the matcher (route "/")
   CompatibilityPage.tsx    # distro compatibility reference (route "/distros")
   main.tsx                 # HashRouter + route table
@@ -116,7 +122,7 @@ every push. If you fork it:
 
 1. In your fork's Settings → Pages, set the source to "GitHub Actions."
 2. If your Pages site will live at `https://<user>.github.io/<repo>/` (not
-   a custom domain at the root), update `base` in `vite.config.ts` to
+   a custom domain at the root), update `base` in `config/vite.config.ts` to
    `'/<repo>/'`.
 3. Push to `main`, the workflow builds and deploys automatically.
 

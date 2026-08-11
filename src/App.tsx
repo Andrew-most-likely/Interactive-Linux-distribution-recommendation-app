@@ -151,7 +151,10 @@ export default function App() {
     <div className="page">
       <header className="masthead">
         <div className="masthead-content">
-          <h1 className="masthead-title">Steep</h1>
+          <h1 className="masthead-title">
+            ARL<span className="masthead-mark-dot">.</span>
+            <span className="masthead-tagline">Always Recommend Linux</span>
+          </h1>
         </div>
         <div className="masthead-links">
           <Link to="/distros" className="masthead-link">
@@ -209,6 +212,7 @@ export default function App() {
                   <input
                     type="text"
                     className="search-input"
+                    aria-label={`Search ${categories.find((c) => c.id === activeCategory)?.label.toLowerCase()}`}
                     placeholder={`Search ${categories.find((c) => c.id === activeCategory)?.label.toLowerCase()}…`}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

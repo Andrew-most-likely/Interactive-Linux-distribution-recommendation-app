@@ -13,7 +13,7 @@ export function Pool({ items, onAdd }: PoolProps) {
 
   return (
     <div ref={setNodeRef} className={`item-list${isOver ? " over" : ""}`}>
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={false} mode="popLayout">
         {items.map((item) => (
           <DraggableItem key={item.id} item={item} onAdd={onAdd} />
         ))}

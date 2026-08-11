@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Copy, Check, Terminal } from "lucide-react";
+import { ChevronDown, Copy, Check, Terminal, ClipboardCopy } from "lucide-react";
 import { MatchMeter } from "./MatchMeter";
 import { scoreRange, type DistroResult } from "../lib/scoring";
 import { resolveInstall } from "../lib/installGuide";
@@ -27,6 +27,26 @@ function CopyableCommand({ command }: { command: string }) {
   );
 }
 
+function CopyAllButton({ rows }: { rows: { item: Item; resolved: ReturnType<typeof resolveInstall> }[] }) {
+  const [copied, setCopied] = useState(false);
+  const commandRows = rows.filter((r) => r.resolved.command);
+  if (commandRows.length === 0) return null;
+
+  async function handleCopyAll() {
+    const script = commandRows.map(({ item, resolved }) => `# ${item.label}\n${resolved.command}`).join("\n");
+    await navigator.clipboard.writeText(script);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
+
+  return (
+    <button type="button" className="install-copy-all" onClick={handleCopyAll}>
+      {copied ? <Check size={12} strokeWidth={2.5} /> : <ClipboardCopy size={12} strokeWidth={2} />}
+      {copied ? "Copied script" : `Copy all ${commandRows.length} command${commandRows.length === 1 ? "" : "s"}`}
+    </button>
+  );
+}
+
 function InstallChecklist({ items, packageManager }: { items: Item[]; packageManager: DistroResult["distro"]["packageManager"] }) {
   const rows = items
     .map((item) => ({ item, resolved: resolveInstall(item, packageManager) }))
@@ -36,6 +56,7 @@ function InstallChecklist({ items, packageManager }: { items: Item[]; packageMan
 
   return (
     <div className="install-checklist">
+      <CopyAllButton rows={rows} />
       {rows.map(({ item, resolved }) => (
         <div key={item.id} className="install-row">
           <span className="install-row-label">{item.label}</span>
