@@ -2,38 +2,51 @@ import type { DimensionScores } from "./dimensions";
 
 export type Category = "games" | "work" | "security" | "communication";
 
+// A real, checkable fact about how a game actually runs on Linux, not an
+// invented number. driverFreshness requirements for games are derived from
+// this rather than hand-picked: an anti-cheat block isn't a "low score",
+// it's a hard, distro-independent wall (see HARD-BLOCKED handling in
+// scoring.ts), and native titles simply don't stress the GPU driver stack
+// the way a Proton/Wine translation layer does.
+export type LinuxSupport =
+  | "native" // ships an official Linux build; no translation layer involved
+  | "proton-verified" // no native build, but well-tested and smooth through Proton
+  | "proton-playable" // runs through Proton but more sensitive to Mesa/kernel freshness
+  | "wine-workaround" // no Steam/Proton path at all; needs manual Wine/Lutris setup
+  | "anticheat-blocked"; // kernel-level anti-cheat refuses to run on Linux, on any distro
+
 export interface Item {
   id: string;
   label: string;
   category: Category;
   requirements: DimensionScores; // how much this item cares about each dimension, 0-10
+  linuxSupport?: LinuxSupport; // set for games; drives the anti-cheat hard-block check
 }
 
 export const items: Item[] = [
   // ---------- Games ----------
-  // Each item is reasoned individually from real-world Linux/Proton behavior
-  // (native ports, anti-cheat friction, launcher quirks) rather than a
-  // generic "genre" template.
-  { id: "cs2", label: "Counter-Strike 2", category: "games", requirements: { gamingPerf: 9, driverFreshness: 8, easeOfUse: 3 } },
-  { id: "valorant", label: "Valorant", category: "games", requirements: { gamingPerf: 8, driverFreshness: 8, easeOfUse: 2 } }, // Vanguard anti-cheat blocks Linux outright
-  { id: "bg3", label: "Baldur's Gate 3", category: "games", requirements: { gamingPerf: 6, driverFreshness: 5, easeOfUse: 4 } },
-  { id: "minecraft", label: "Minecraft", category: "games", requirements: { gamingPerf: 3, driverFreshness: 2, easeOfUse: 6 } }, // runs on the JVM, GPU load is modest
-  { id: "eldenring", label: "Elden Ring", category: "games", requirements: { gamingPerf: 8, driverFreshness: 7, easeOfUse: 4 } },
-  { id: "apex", label: "Apex Legends", category: "games", requirements: { gamingPerf: 8, driverFreshness: 8, easeOfUse: 2 } }, // EAC's kernel driver blocks Linux for this title specifically
-  { id: "cyberpunk", label: "Cyberpunk 2077", category: "games", requirements: { gamingPerf: 9, driverFreshness: 9, easeOfUse: 4 } },
-  { id: "stardew", label: "Stardew Valley", category: "games", requirements: { gamingPerf: 2, driverFreshness: 1, easeOfUse: 7 } },
-  { id: "lol", label: "League of Legends", category: "games", requirements: { gamingPerf: 5, driverFreshness: 4, easeOfUse: 3 } }, // Riot's Vanguard rollout made this harder to run than it used to be
-  { id: "fortnite", label: "Fortnite", category: "games", requirements: { gamingPerf: 8, driverFreshness: 8, easeOfUse: 3 } },
-  { id: "gtav", label: "Grand Theft Auto V", category: "games", requirements: { gamingPerf: 6, driverFreshness: 5, easeOfUse: 6 } }, // one of the best-supported AAA titles under Proton
-  { id: "rdr2", label: "Red Dead Redemption 2", category: "games", requirements: { gamingPerf: 9, driverFreshness: 9, easeOfUse: 3 } },
-  { id: "skyrim", label: "Skyrim", category: "games", requirements: { gamingPerf: 4, driverFreshness: 3, easeOfUse: 6 } }, // old engine, runs everywhere, mods can add setup overhead
-  { id: "terraria", label: "Terraria", category: "games", requirements: { gamingPerf: 1, driverFreshness: 1, easeOfUse: 8 } }, // has an official native Linux build
-  { id: "wow", label: "World of Warcraft", category: "games", requirements: { gamingPerf: 6, driverFreshness: 5, easeOfUse: 3, stability: 4 } }, // Battle.net launcher friction on Linux
-  { id: "hollowknight", label: "Hollow Knight", category: "games", requirements: { gamingPerf: 1, driverFreshness: 1, easeOfUse: 7 } }, // native Linux build
-  { id: "civ6", label: "Sid Meier's Civilization VI", category: "games", requirements: { gamingPerf: 3, driverFreshness: 2, easeOfUse: 6 } }, // native Linux port
-  { id: "rocketleague", label: "Rocket League", category: "games", requirements: { gamingPerf: 6, driverFreshness: 5, easeOfUse: 4 } }, // lost its native Linux build after the Epic acquisition
-  { id: "hades", label: "Hades", category: "games", requirements: { gamingPerf: 2, driverFreshness: 1, easeOfUse: 7 } }, // native Linux build, excellent compatibility
-  { id: "forzahorizon5", label: "Forza Horizon 5", category: "games", requirements: { gamingPerf: 8, driverFreshness: 9, easeOfUse: 4 } },
+  // driverFreshness values below are derived from each title's real Linux
+  // support status (see LinuxSupport), not invented per-game.
+  { id: "cs2", label: "Counter-Strike 2", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 9, driverFreshness: 6, easeOfUse: 3 } }, // Steam Deck Verified; VAC works fine under Proton
+  { id: "valorant", label: "Valorant", category: "games", linuxSupport: "anticheat-blocked", requirements: { gamingPerf: 8, easeOfUse: 2 } }, // Riot's Vanguard driver explicitly refuses to run on Linux/VMs
+  { id: "bg3", label: "Baldur's Gate 3", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 6, driverFreshness: 6, easeOfUse: 4 } }, // Steam Deck Verified, no native client
+  { id: "minecraft", label: "Minecraft", category: "games", linuxSupport: "native", requirements: { gamingPerf: 3, driverFreshness: 1, easeOfUse: 6 } }, // official Linux Java build from Mojang
+  { id: "eldenring", label: "Elden Ring", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 8, driverFreshness: 6, easeOfUse: 4 } }, // Steam Deck Verified, no Linux-hostile anti-cheat
+  { id: "apex", label: "Apex Legends", category: "games", linuxSupport: "anticheat-blocked", requirements: { gamingPerf: 8, easeOfUse: 2 } }, // Respawn disabled Linux/Proton support for this title specifically in 2021
+  { id: "cyberpunk", label: "Cyberpunk 2077", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 9, driverFreshness: 7, easeOfUse: 4 } }, // Steam Deck Verified
+  { id: "stardew", label: "Stardew Valley", category: "games", linuxSupport: "native", requirements: { gamingPerf: 2, driverFreshness: 1, easeOfUse: 7 } }, // ConcernedApe ships an official Linux build
+  { id: "lol", label: "League of Legends", category: "games", linuxSupport: "anticheat-blocked", requirements: { gamingPerf: 5, easeOfUse: 3 } }, // Riot rolled Vanguard out to the League client in 2024, closing off Linux
+  { id: "fortnite", label: "Fortnite", category: "games", linuxSupport: "anticheat-blocked", requirements: { gamingPerf: 8, easeOfUse: 3 } }, // Epic's anti-cheat config blocks Linux/Proton for this title
+  { id: "gtav", label: "Grand Theft Auto V", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 6, driverFreshness: 5, easeOfUse: 6 } }, // one of the best-supported AAA titles under Proton, GTA Online included
+  { id: "rdr2", label: "Red Dead Redemption 2", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 9, driverFreshness: 7, easeOfUse: 3 } }, // Steam Deck Verified
+  { id: "skyrim", label: "Skyrim", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 4, driverFreshness: 3, easeOfUse: 6 } }, // old engine, excellent Proton support, mods add setup overhead
+  { id: "terraria", label: "Terraria", category: "games", linuxSupport: "native", requirements: { gamingPerf: 1, driverFreshness: 1, easeOfUse: 8 } }, // official native Linux build
+  { id: "wow", label: "World of Warcraft", category: "games", linuxSupport: "wine-workaround", requirements: { gamingPerf: 6, driverFreshness: 8, easeOfUse: 2, stability: 4 } }, // no native client and not distributed via Steam/Proton; runs through Lutris/Wine scripts, not officially supported by Blizzard on Linux
+  { id: "hollowknight", label: "Hollow Knight", category: "games", linuxSupport: "native", requirements: { gamingPerf: 1, driverFreshness: 1, easeOfUse: 7 } }, // official native Linux build
+  { id: "civ6", label: "Sid Meier's Civilization VI", category: "games", linuxSupport: "native", requirements: { gamingPerf: 3, driverFreshness: 2, easeOfUse: 6 } }, // Aspyr shipped an official native Linux port
+  { id: "rocketleague", label: "Rocket League", category: "games", linuxSupport: "proton-playable", requirements: { gamingPerf: 6, driverFreshness: 7, easeOfUse: 4 } }, // lost its native Linux build when Epic acquired Psyonix in 2020; Proton-only since
+  { id: "hades", label: "Hades", category: "games", linuxSupport: "native", requirements: { gamingPerf: 2, driverFreshness: 1, easeOfUse: 7 } }, // official native Linux build
+  { id: "forzahorizon5", label: "Forza Horizon 5", category: "games", linuxSupport: "proton-playable", requirements: { gamingPerf: 8, driverFreshness: 8, easeOfUse: 4 } }, // no native Linux build, Xbox Play Anywhere title, generally good but less bulletproof than Steam Deck Verified titles
 
   // ---------- Work ----------
   { id: "vscode", label: "VS Code", category: "work", requirements: { easeOfUse: 6, stability: 4 } },

@@ -56,6 +56,16 @@ export function scoreDistros(pickedItemIds: string[], gpuVendor: GpuVendor | nul
       // Rank 0 (top of "Your setup") counts most; weight tapers toward the
       // 1x baseline for lower-priority picks.
       const importance = importanceForRank(index);
+
+      // An anti-cheat block is a fact about the game, not about any
+      // particular distro: Vanguard/EAC refuses to run on Linux entirely,
+      // so every distro is equally incompatible here, unlike a dimension
+      // threshold that only some distros fail.
+      if (item.linuxSupport === "anticheat-blocked") {
+        incompatibleItems.push(item.label);
+        return;
+      }
+
       let itemIsIncompatible = false;
 
       for (const dim of dimensions) {

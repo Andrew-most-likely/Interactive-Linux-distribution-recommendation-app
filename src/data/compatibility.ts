@@ -418,4 +418,82 @@ export const compatibilityNotes: CompatibilityNote[] = [
       "Effectively a single-purpose distro, if you don't specifically want latest-KDE-on-Ubuntu, there's little else differentiating it",
     ],
   },
+  {
+    distroId: "kubuntu",
+    base: "Ubuntu LTS, with KDE Plasma as the default desktop",
+    nvidia: "Same driver path as Ubuntu underneath, the installer can offer the proprietary driver directly.",
+    strengths: [
+      "Official Canonical-backed flavor, so it gets the same support lifecycle and update cadence as Ubuntu itself",
+      "KDE Plasma is more configurable out of the box than GNOME, without needing a different distro entirely",
+    ],
+    caveats: [
+      "Smaller default app selection curated for Plasma than mainline Ubuntu's GNOME-first ecosystem",
+      "Same LTS driver lag as Ubuntu on very new hardware",
+    ],
+  },
+  {
+    distroId: "xubuntu",
+    base: "Ubuntu LTS, with Xfce as the default desktop",
+    nvidia: "Same driver path as Ubuntu underneath.",
+    strengths: [
+      "Xfce's low resource footprint makes it noticeably snappier than mainline Ubuntu on modest hardware",
+      "Official flavor, so it inherits Ubuntu's full driver and package ecosystem rather than a smaller independent one",
+    ],
+    caveats: [
+      "Xfce's visual polish and default app set are more basic than GNOME or KDE",
+      "Same LTS driver lag as Ubuntu on very new hardware",
+    ],
+  },
+  {
+    distroId: "lubuntu",
+    base: "Ubuntu LTS, with LXQt as the default desktop",
+    nvidia: "Same driver path as Ubuntu underneath, though installing the proprietary driver on very old hardware may not be worth the tradeoff.",
+    strengths: [
+      "The lightest official Ubuntu flavor, aimed specifically at reviving older or low-spec machines",
+      "Still gets Ubuntu's full package repository and driver ecosystem despite the minimal desktop",
+    ],
+    caveats: [
+      "LXQt's app selection and polish trail behind Xfce, let alone GNOME or KDE",
+      "Not the right choice if the hardware is actually modern, the lightweight tradeoffs aren't worth it",
+    ],
+  },
+  {
+    distroId: "almalinux",
+    base: "Binary-compatible rebuild of Red Hat Enterprise Linux",
+    nvidia: "Manual driver install via third-party repos (ELRepo/EPEL), not a distro built with desktop GPU use as a priority.",
+    strengths: [
+      "Binary-compatible with RHEL, inheriting the same enterprise-grade stability and long support lifecycles as Rocky Linux",
+      "Backed by CloudLinux, with a governance model some enterprises prefer over Rocky's community foundation",
+    ],
+    caveats: [
+      "Built for servers and enterprise workloads first, desktop use is genuinely secondary",
+      "Conservative package versions make it a poor fit for anything needing current hardware/driver support",
+    ],
+  },
+  {
+    distroId: "artix",
+    base: "Arch Linux packages, without systemd (OpenRC/runit/s6 init)",
+    nvidia: "Manual pacman install, identical to Arch itself; the ArchWiki mostly applies with init-system caveats.",
+    strengths: [
+      "Same rolling-release freshness and AUR access as Arch, for people who specifically want to avoid systemd",
+      "Multiple init system choices (OpenRC, runit, s6) rather than being locked into one alternative",
+    ],
+    caveats: [
+      "Smaller community than Arch itself, so systemd-assuming guides and AUR packages occasionally need adaptation",
+      "All the manual maintenance expectations of Arch still apply, plus init-system-specific quirks",
+    ],
+  },
+  {
+    distroId: "q4os",
+    base: "Debian stable, with the Trinity Desktop Environment (a KDE 3 continuation)",
+    nvidia: "Manual driver install via Debian's non-free repository, same as Debian itself.",
+    strengths: [
+      "Extremely light resource footprint, comparable to MX Linux or antiX, aimed at reviving old hardware",
+      "Trinity Desktop is actively maintained and offers a classic, low-overhead desktop metaphor",
+    ],
+    caveats: [
+      "Trinity's look and app ecosystem will feel dated compared to GNOME/KDE Plasma/Xfce",
+      "Debian stable's driver lag applies here too, the same tradeoff as MX Linux and antiX",
+    ],
+  },
 ];

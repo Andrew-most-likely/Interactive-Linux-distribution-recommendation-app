@@ -111,6 +111,12 @@ import elementaryLogo from "../assets/distros/elementary.png";
 import deepinLogo from "../assets/distros/deepin.png";
 import rockylinuxLogo from "../assets/distros/rockylinux.svg";
 import kdeneonLogo from "../assets/distros/kdeneon.svg";
+import kubuntuLogo from "../assets/distros/kubuntu.svg";
+import xubuntuLogo from "../assets/distros/xubuntu.svg";
+import lubuntuLogo from "../assets/distros/lubuntu.png";
+import almalinuxLogo from "../assets/distros/almalinux.svg";
+import artixLogo from "../assets/distros/artix.png";
+import q4osLogo from "../assets/distros/q4os.svg";
 
 export type IconDef =
   | { kind: "brand"; path: string; color: string; title: string }
@@ -278,4 +284,10 @@ export const distroIcons: Record<string, IconDef> = {
   deepin: photo(deepinLogo, "Deepin", "contain"),
   rockylinux: photo(rockylinuxLogo, "Rocky Linux", "contain"),
   kdeneon: photo(kdeneonLogo, "KDE Neon", "contain"),
+  kubuntu: photo(kubuntuLogo, "Kubuntu", "contain"),
+  xubuntu: photo(xubuntuLogo, "Xubuntu", "contain"),
+  lubuntu: photo(lubuntuLogo, "Lubuntu", "contain"),
+  almalinux: photo(almalinuxLogo, "AlmaLinux", "contain"),
+  artix: photo(artixLogo, "Artix Linux", "contain"),
+  q4os: photo(q4osLogo, "Q4OS", "contain"),
 };

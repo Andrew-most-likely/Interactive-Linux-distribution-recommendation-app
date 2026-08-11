@@ -335,4 +335,64 @@ export const distros: Distro[] = [
     attributes: { driverFreshness: 6, stability: 6, gamingPerf: 6, isolation: 4, easeOfUse: 6 },
     popularityRank: 11.5,
   },
+  {
+    id: "kubuntu",
+    name: "Kubuntu",
+    website: "https://kubuntu.org",
+    family: "debian-based",
+    blurb:
+      "The official Ubuntu flavor built around KDE Plasma instead of GNOME, same Ubuntu base and driver story, just a different desktop by default.",
+    attributes: { driverFreshness: 6, stability: 8, gamingPerf: 6, isolation: 4, easeOfUse: 7 },
+    popularityRank: 6.5,
+  },
+  {
+    id: "xubuntu",
+    name: "Xubuntu",
+    website: "https://xubuntu.org",
+    family: "debian-based",
+    blurb:
+      "The official Ubuntu flavor built around the lightweight Xfce desktop, for people who want Ubuntu's driver story without GNOME's resource footprint.",
+    attributes: { driverFreshness: 6, stability: 8, gamingPerf: 5, isolation: 4, easeOfUse: 8 },
+    popularityRank: 6.7,
+  },
+  {
+    id: "lubuntu",
+    name: "Lubuntu",
+    website: "https://lubuntu.me",
+    family: "debian-based",
+    blurb:
+      "The official Ubuntu flavor built around the minimal LXQt desktop, the lightest of the Ubuntu family, aimed at older or lower-spec hardware.",
+    attributes: { driverFreshness: 5, stability: 8, gamingPerf: 4, isolation: 4, easeOfUse: 7 },
+    popularityRank: 6.8,
+  },
+  {
+    id: "almalinux",
+    name: "AlmaLinux",
+    website: "https://almalinux.org",
+    family: "independent",
+    blurb:
+      "Another binary-compatible RHEL rebuild, community-governed like Rocky Linux, chosen almost entirely on which project's governance model you trust more.",
+    attributes: { driverFreshness: 3, stability: 9, gamingPerf: 2, isolation: 5, easeOfUse: 5 },
+    popularityRank: 5.7,
+  },
+  {
+    id: "artix",
+    name: "Artix Linux",
+    website: "https://artixlinux.org",
+    family: "arch-based",
+    blurb:
+      "Arch Linux's packages and rolling release, but without systemd, for people who want Arch's freshness with a different init system underneath.",
+    attributes: { driverFreshness: 9, stability: 5, gamingPerf: 8, isolation: 4, easeOfUse: 3 },
+    popularityRank: 10.5,
+  },
+  {
+    id: "q4os",
+    name: "Q4OS",
+    website: "https://q4os.org",
+    family: "debian-based",
+    blurb:
+      "Debian-based and extremely lightweight, built around the Trinity desktop, another solid option for keeping old hardware usable.",
+    attributes: { driverFreshness: 4, stability: 8, gamingPerf: 3, isolation: 3, easeOfUse: 7 },
+    popularityRank: 18.5,
+  },
 ];
