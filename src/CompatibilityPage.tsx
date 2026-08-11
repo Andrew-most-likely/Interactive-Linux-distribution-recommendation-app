@@ -73,7 +73,6 @@ export function CompatibilityPage() {
       </div>
 
       <footer className="footer">
-        <p>General guidance, not live-sourced data. Always check a distro's own release notes.</p>
         <FooterLinks />
       </footer>
     </div>

@@ -43,3 +43,50 @@ export function gpuHardwareItem(vendor: GpuVendor): Item {
     requirements: { driverFreshness: option.driverFreshness },
   };
 }
+
+export type FormFactor = "desktop" | "laptop" | "handheld";
+
+export interface FormFactorOption {
+  id: FormFactor;
+  label: string;
+  description: string;
+  requirements: Item["requirements"];
+}
+
+// Desktop is the baseline every distro is designed for by default, so it
+// doesn't push the score in any direction. Laptops specifically need
+// current kernel support for hybrid graphics, Wi-Fi/Bluetooth, and
+// suspend/resume to just work. Handhelds (Steam Deck-likes) need a distro
+// that's genuinely tuned for controller-first, no-keyboard operation, not
+// just one that happens to run games well.
+export const formFactorOptions: FormFactorOption[] = [
+  {
+    id: "desktop",
+    label: "Desktop",
+    description: "The default case every distro targets, no extra weighting",
+    requirements: {},
+  },
+  {
+    id: "laptop",
+    label: "Laptop",
+    description: "Needs current kernel support for hybrid graphics, Wi-Fi/Bluetooth, and suspend/resume",
+    requirements: { driverFreshness: 6, easeOfUse: 6 },
+  },
+  {
+    id: "handheld",
+    label: "Handheld",
+    description: "Needs a distro genuinely tuned for controller-first, no-keyboard operation (Bazzite-style), not just one that runs games well",
+    requirements: { gamingPerf: 9, easeOfUse: 9 },
+  },
+];
+
+export function formFactorHardwareItem(formFactor: FormFactor): Item | null {
+  const option = formFactorOptions.find((o) => o.id === formFactor)!;
+  if (Object.keys(option.requirements).length === 0) return null;
+  return {
+    id: `hw-${formFactor}`,
+    label: option.label,
+    category: "games",
+    requirements: option.requirements,
+  };
+}

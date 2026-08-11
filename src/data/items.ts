@@ -50,15 +50,15 @@ export const items: Item[] = [
 
   // ---------- Work ----------
   { id: "vscode", label: "VS Code", category: "work", requirements: { easeOfUse: 6, stability: 4 } },
-  { id: "homeserver", label: "Self-hosting / home server", category: "work", requirements: { stability: 9, easeOfUse: 3 } },
+  { id: "homeserver", label: "Self-hosting / home server", category: "work", requirements: { stability: 9 } }, // stability is the only real signal here; a distro's desktop ease-of-use is irrelevant to headless server suitability
   { id: "blender", label: "Blender", category: "work", requirements: { gamingPerf: 6, driverFreshness: 7, easeOfUse: 4 } }, // Cycles GPU rendering needs current CUDA (NVIDIA) or HIP/ROCm (AMD); ROCm in particular tracks a narrow supported kernel/driver range
   { id: "browser", label: "Heavy browser multitasking", category: "work", requirements: { easeOfUse: 6, stability: 4 } },
   { id: "docker", label: "Docker / containers", category: "work", requirements: { stability: 7, easeOfUse: 4 } },
   { id: "jetbrains", label: "JetBrains IDEs", category: "work", requirements: { easeOfUse: 5, stability: 4 } },
   { id: "obs", label: "OBS Studio / streaming", category: "work", requirements: { gamingPerf: 4, driverFreshness: 5, easeOfUse: 5 } }, // NVENC/VAAPI hardware encode wants a reasonably current driver, but OBS still runs fine on software x264 encoding if not
   { id: "nodejs", label: "Node.js development", category: "work", requirements: { stability: 5, easeOfUse: 5 } },
-  { id: "neovim", label: "Neovim / Vim", category: "work", requirements: { easeOfUse: 2, stability: 5 } }, // steep to configure, rock solid once set up
-  { id: "git", label: "Git (command line)", category: "work", requirements: { easeOfUse: 2, stability: 4 } },
+  { id: "neovim", label: "Neovim / Vim", category: "work", requirements: { stability: 5 } }, // terminal editor; a distro's desktop ease-of-use doesn't apply either way
+  { id: "git", label: "Git (command line)", category: "work", requirements: { stability: 4 } }, // CLI tool; desktop ease-of-use is irrelevant either way
   { id: "python", label: "Python development", category: "work", requirements: { easeOfUse: 6, stability: 4 } }, // first-class citizen on nearly every distro
   { id: "kubernetes", label: "Kubernetes / kubectl", category: "work", requirements: { stability: 8, easeOfUse: 2 } },
   { id: "virtualbox", label: "VirtualBox", category: "work", requirements: { stability: 6, driverFreshness: 3, easeOfUse: 4 } }, // vboxdrv is a kernel module, not a GPU driver; DKMS rebuilds it automatically on most distros, but very new kernels can briefly outpace VirtualBox's official support
@@ -114,7 +114,7 @@ export const items: Item[] = [
   { id: "mumble", label: "Mumble", category: "communication", requirements: { easeOfUse: 4, stability: 5 } },
   { id: "teamspeak", label: "TeamSpeak", category: "communication", requirements: { easeOfUse: 5, stability: 4 } },
   { id: "skype", label: "Skype", category: "communication", requirements: { easeOfUse: 5, stability: 3 } }, // legacy Electron app, historically flaky on Linux
-  { id: "irc", label: "IRC (WeeChat / HexChat)", category: "communication", requirements: { easeOfUse: 2, stability: 5 } }, // terminal-native, rock solid, steep learning curve
+  { id: "irc", label: "IRC (WeeChat / HexChat)", category: "communication", requirements: { stability: 5 } }, // terminal-native; desktop ease-of-use doesn't apply either way
   { id: "wireapp", label: "Wire", category: "communication", requirements: { easeOfUse: 6, isolation: 5 } },
   { id: "session", label: "Session messenger", category: "communication", requirements: { easeOfUse: 6, isolation: 6 } }, // onion-routed, more overhead
   { id: "rocketchat", label: "Rocket.Chat", category: "communication", requirements: { easeOfUse: 5, stability: 5 } },

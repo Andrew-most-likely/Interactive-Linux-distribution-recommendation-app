@@ -1,7 +1,7 @@
 import { dimensions, type DimensionId } from "../data/dimensions";
 import { distros, type Distro } from "../data/distros";
 import { items, type Item } from "../data/items";
-import { gpuHardwareItem, type GpuVendor } from "../data/hardware";
+import { gpuHardwareItem, formFactorHardwareItem, type GpuVendor, type FormFactor } from "../data/hardware";
 
 export interface Tradeoff {
   itemLabel: string;
@@ -38,14 +38,23 @@ function importanceForRank(index: number): number {
   return RANK_WEIGHTS[index] ?? BASELINE_WEIGHT;
 }
 
-export function scoreDistros(pickedItemIds: string[], gpuVendor: GpuVendor | null = null): DistroResult[] {
+export function scoreDistros(
+  pickedItemIds: string[],
+  gpuVendor: GpuVendor | null = null,
+  formFactor: FormFactor | null = null,
+): DistroResult[] {
   const picked = pickedItemIds
     .map((id) => items.find((i) => i.id === id))
     .filter((i): i is Item => Boolean(i));
-  // The hardware pick, if any, is always treated as top priority (it's
-  // foundational, nothing else works well if the GPU doesn't) rather than
-  // something the user manually ranks alongside their software picks.
-  const pickedItems = gpuVendor ? [gpuHardwareItem(gpuVendor), ...picked] : picked;
+  // Hardware picks, if any, are always treated as top priority (they're
+  // foundational, nothing else works well if the GPU or form factor doesn't
+  // fit) rather than something the user manually ranks alongside their
+  // software picks.
+  const hardwareItems = [
+    gpuVendor ? gpuHardwareItem(gpuVendor) : null,
+    formFactor ? formFactorHardwareItem(formFactor) : null,
+  ].filter((i): i is Item => Boolean(i));
+  const pickedItems = [...hardwareItems, ...picked];
 
   const results: DistroResult[] = distros.map((distro) => {
     let score = 0;

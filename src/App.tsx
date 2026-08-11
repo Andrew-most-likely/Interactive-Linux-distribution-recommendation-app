@@ -12,7 +12,7 @@ import { HardwareSelect } from "./components/HardwareSelect";
 import { FooterLinks } from "./components/FooterLinks";
 import { items, type Category } from "./data/items";
 import { distros } from "./data/distros";
-import type { GpuVendor } from "./data/hardware";
+import type { GpuVendor, FormFactor } from "./data/hardware";
 import { scoreDistros } from "./lib/scoring";
 import "./App.css";
 
@@ -29,15 +29,28 @@ export default function App() {
   const [pickedIds, setPickedIds] = useState<string[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [gpuVendor, setGpuVendor] = useState<GpuVendor | null>(null);
+  const [formFactor, setFormFactor] = useState<FormFactor | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const pickedItems = useMemo(
     () => pickedIds.map((id) => items.find((i) => i.id === id)!).filter(Boolean),
     [pickedIds],
   );
 
+  const categoryCounts = useMemo(() => {
+    const counts: Partial<Record<Category, number>> = {};
+    for (const item of pickedItems) {
+      counts[item.category] = (counts[item.category] ?? 0) + 1;
+    }
+    return counts;
+  }, [pickedItems]);
+
   const activeItem = useMemo(() => items.find((i) => i.id === activeId) ?? null, [activeId]);
 
-  const results = useMemo(() => scoreDistros(pickedIds, gpuVendor), [pickedIds, gpuVendor]);
+  const results = useMemo(
+    () => scoreDistros(pickedIds, gpuVendor, formFactor),
+    [pickedIds, gpuVendor, formFactor],
+  );
 
   function handleDragStart(event: DragStartEvent) {
     setActiveId(event.active.id as string);
@@ -86,6 +99,10 @@ export default function App() {
     setPickedIds((prev) => prev.filter((p) => p !== id));
   }
 
+  function handleClearAll() {
+    setPickedIds([]);
+  }
+
   function handleMove(id: string, direction: "up" | "down") {
     setPickedIds((prev) => {
       const index = prev.indexOf(id);
@@ -98,7 +115,10 @@ export default function App() {
   }
 
   const poolItems = items.filter(
-    (i) => i.category === activeCategory && !pickedIds.includes(i.id),
+    (i) =>
+      i.category === activeCategory &&
+      !pickedIds.includes(i.id) &&
+      i.label.toLowerCase().includes(searchQuery.trim().toLowerCase()),
   );
 
   return (
@@ -118,7 +138,12 @@ export default function App() {
         </div>
       </header>
 
-      <HardwareSelect value={gpuVendor} onChange={setGpuVendor} />
+      <HardwareSelect
+        gpuVendor={gpuVendor}
+        onGpuChange={setGpuVendor}
+        formFactor={formFactor}
+        onFormFactorChange={setFormFactor}
+      />
 
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="workspace">
@@ -127,7 +152,10 @@ export default function App() {
               {categories.map(({ id, label, Icon }) => (
                 <button
                   key={id}
-                  onClick={() => setActiveCategory(id)}
+                  onClick={() => {
+                    setActiveCategory(id);
+                    setSearchQuery("");
+                  }}
                   className={`tab${activeCategory === id ? " active" : ""}`}
                 >
                   {activeCategory === id && (
@@ -140,6 +168,7 @@ export default function App() {
                   <span className="tab-content">
                     <Icon size={15} strokeWidth={2.25} />
                     {label}
+                    {!!categoryCounts[id] && <span className="tab-count">{categoryCounts[id]}</span>}
                   </span>
                 </button>
               ))}
@@ -148,11 +177,25 @@ export default function App() {
             <div className="picker-columns">
               <div>
                 <p className="column-label">Available: click or drag to add</p>
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder={`Search ${categories.find((c) => c.id === activeCategory)?.label.toLowerCase()}…`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
                 <Pool items={poolItems} onAdd={handleAdd} />
               </div>
 
               <div>
-                <p className="column-label">Your setup</p>
+                <div className="column-label-row">
+                  <p className="column-label">Your setup</p>
+                  {pickedItems.length > 0 && (
+                    <button type="button" className="clear-all-btn" onClick={handleClearAll}>
+                      Clear all
+                    </button>
+                  )}
+                </div>
                 <DropZone pickedItems={pickedItems} onRemove={handleRemove} onMove={handleMove} />
               </div>
             </div>
@@ -170,7 +213,6 @@ export default function App() {
       </DndContext>
 
       <footer className="footer">
-        <p>No login, no tracking, no server. Everything above runs in your browser.</p>
         <FooterLinks />
       </footer>
     </div>
