@@ -1,17 +1,23 @@
 import { useDraggable } from "@dnd-kit/core";
 import { motion } from "framer-motion";
+import { Plus } from "lucide-react";
 import type { Item } from "../data/items";
 import { getItemIcon, iconTint } from "../data/icons";
 import { Icon } from "./Icon";
 
-export function DraggableItem({ item }: { item: Item }) {
+interface DraggableItemProps {
+  item: Item;
+  onAdd: (id: string) => void;
+}
+
+export function DraggableItem({ item, onAdd }: DraggableItemProps) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: item.id });
 
   const icon = getItemIcon(item.id);
   const isPhoto = icon.kind === "photo";
 
   return (
-    <div ref={setNodeRef} {...listeners} {...attributes}>
+    <div ref={setNodeRef} {...listeners} {...attributes} onClick={() => onAdd(item.id)}>
       <motion.div
         layout
         className={`item-card${isDragging ? " dragging" : ""}`}
@@ -29,6 +35,7 @@ export function DraggableItem({ item }: { item: Item }) {
           <Icon icon={icon} size={isPhoto ? 34 : 16} />
         </span>
         {item.label}
+        <Plus className="item-add-hint" size={15} strokeWidth={2.5} aria-hidden="true" />
       </motion.div>
     </div>
   );

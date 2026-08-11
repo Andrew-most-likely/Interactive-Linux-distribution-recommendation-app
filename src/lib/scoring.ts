@@ -1,6 +1,7 @@
 import { dimensions, type DimensionId } from "../data/dimensions";
 import { distros, type Distro } from "../data/distros";
 import { items, type Item } from "../data/items";
+import { gpuHardwareItem, type GpuVendor } from "../data/hardware";
 
 export interface Tradeoff {
   itemLabel: string;
@@ -25,10 +26,14 @@ const CARES_THRESHOLD = 6;
 const HARD_INCOMPATIBLE_REQUIREMENT = 9;
 const HARD_INCOMPATIBLE_ATTRIBUTE = 2;
 
-export function scoreDistros(pickedItemIds: string[]): DistroResult[] {
-  const pickedItems = pickedItemIds
+export function scoreDistros(pickedItemIds: string[], gpuVendor: GpuVendor | null = null): DistroResult[] {
+  const picked = pickedItemIds
     .map((id) => items.find((i) => i.id === id))
     .filter((i): i is Item => Boolean(i));
+  // The hardware pick, if any, is always treated as top priority (it's
+  // foundational — nothing else works well if the GPU doesn't) rather than
+  // something the user manually ranks alongside their software picks.
+  const pickedItems = gpuVendor ? [gpuHardwareItem(gpuVendor), ...picked] : picked;
   const count = pickedItems.length;
 
   const results: DistroResult[] = distros.map((distro) => {

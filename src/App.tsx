@@ -7,9 +7,11 @@ import { Pool } from "./components/Pool";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
 import { DragPreview } from "./components/DragPreview";
+import { HardwareSelect } from "./components/HardwareSelect";
 import { items, type Category } from "./data/items";
+import { distros } from "./data/distros";
+import type { GpuVendor } from "./data/hardware";
 import { scoreDistros } from "./lib/scoring";
-import heroImage from "./assets/hero/masthead.jpg";
 import "./App.css";
 
 const categories: { id: Category; label: string; Icon: typeof Gamepad2 }[] = [
@@ -23,6 +25,7 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState<Category>("games");
   const [pickedIds, setPickedIds] = useState<string[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [gpuVendor, setGpuVendor] = useState<GpuVendor | null>(null);
 
   const pickedItems = useMemo(
     () => pickedIds.map((id) => items.find((i) => i.id === id)!).filter(Boolean),
@@ -31,7 +34,7 @@ export default function App() {
 
   const activeItem = useMemo(() => items.find((i) => i.id === activeId) ?? null, [activeId]);
 
-  const results = useMemo(() => scoreDistros(pickedIds), [pickedIds]);
+  const results = useMemo(() => scoreDistros(pickedIds, gpuVendor), [pickedIds, gpuVendor]);
 
   function handleDragStart(event: DragStartEvent) {
     setActiveId(event.active.id as string);
@@ -49,6 +52,10 @@ export default function App() {
     } else if (over.id === "pool-dropzone") {
       setPickedIds((prev) => prev.filter((id) => id !== active.id));
     }
+  }
+
+  function handleAdd(id: string) {
+    setPickedIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
   }
 
   function handleRemove(id: string) {
@@ -72,12 +79,11 @@ export default function App() {
 
   return (
     <div className="page">
-      <header className="masthead" style={{ ["--hero-image" as string]: `url(${heroImage})` }}>
-        <div className="masthead-hero" aria-hidden="true" />
+      <header className="masthead">
         <div className="masthead-content">
           <h1 className="masthead-title">Steep</h1>
           <p className="masthead-sub">
-            Drag in what you actually use. Every pick re-scores all ten distros live.
+            Drag in what you actually use. Every pick re-scores all {distros.length} distros live.
           </p>
         </div>
         <div className="masthead-links">
@@ -87,6 +93,8 @@ export default function App() {
           <span className="masthead-tag">Phase 1 · MVP</span>
         </div>
       </header>
+
+      <HardwareSelect value={gpuVendor} onChange={setGpuVendor} />
 
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="workspace">
@@ -115,8 +123,8 @@ export default function App() {
 
             <div className="picker-columns">
               <div>
-                <p className="column-label">Available</p>
-                <Pool items={poolItems} />
+                <p className="column-label">Available — click or drag to add</p>
+                <Pool items={poolItems} onAdd={handleAdd} />
               </div>
 
               <div>

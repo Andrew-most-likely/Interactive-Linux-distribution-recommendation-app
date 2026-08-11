@@ -4,10 +4,12 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import "./theme.css";
 import App from "./App.tsx";
 import { CompatibilityPage } from "./CompatibilityPage.tsx";
+import { FloatingShapes } from "./components/FloatingShapes.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HashRouter>
+      <FloatingShapes />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/distros" element={<CompatibilityPage />} />

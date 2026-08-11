@@ -7,7 +7,8 @@ export type Family =
   | "debian-based"
   | "fedora-based"
   | "security-privacy"
-  | "immutable";
+  | "immutable"
+  | "independent";
 
 export interface Distro {
   id: string;
@@ -27,8 +28,8 @@ export const distros: Distro[] = [
     name: "Bazzite",
     family: "gaming",
     blurb:
-      "Built specifically for gaming handhelds and living-room PCs — a Steam Deck-like experience on any hardware, with an immutable base that resists breakage.",
-    attributes: { driverFreshness: 9, stability: 6, gamingPerf: 10, isolation: 3, easeOfUse: 7 },
+      "Built specifically for gaming handhelds and living-room PCs — the most complete out-of-box experience here, even if CachyOS edges it on raw benchmarks.",
+    attributes: { driverFreshness: 9, stability: 6, gamingPerf: 9, isolation: 3, easeOfUse: 8 },
   },
   {
     id: "nobara",
@@ -43,8 +44,8 @@ export const distros: Distro[] = [
     name: "CachyOS",
     family: "arch-based",
     blurb:
-      "Arch rebuilt with CPU-optimized (x86-64-v3/v4) packages — chases raw performance harder than any other distro here.",
-    attributes: { driverFreshness: 9, stability: 5, gamingPerf: 9, isolation: 3, easeOfUse: 5 },
+      "Arch rebuilt with CPU-optimized (x86-64-v3/v4) packages — the raw performance ceiling of this list, at the cost of Bazzite's out-of-box polish.",
+    attributes: { driverFreshness: 9, stability: 5, gamingPerf: 10, isolation: 3, easeOfUse: 5 },
   },
   {
     id: "popos",
@@ -140,7 +141,7 @@ export const distros: Distro[] = [
     family: "gaming",
     blurb:
       "A gaming-focused spin on Debian testing running a mainline kernel — the freshness Debian normally doesn't offer, aimed squarely at gamers.",
-    attributes: { driverFreshness: 8, stability: 6, gamingPerf: 9, isolation: 3, easeOfUse: 7 },
+    attributes: { driverFreshness: 8, stability: 6, gamingPerf: 8, isolation: 3, easeOfUse: 7 },
   },
   {
     id: "silverblue",
@@ -165,5 +166,61 @@ export const distros: Distro[] = [
     blurb:
       "Debian stripped down further and freed from systemd entirely — built to keep genuinely old hardware usable.",
     attributes: { driverFreshness: 2, stability: 8, gamingPerf: 2, isolation: 3, easeOfUse: 4 },
+  },
+  {
+    id: "ubuntu",
+    name: "Ubuntu",
+    family: "debian-based",
+    blurb:
+      "The distro that made desktop Linux mainstream — most tutorials, PPAs, and third-party .deb packages assume you're running this or something built on it.",
+    attributes: { driverFreshness: 6, stability: 8, gamingPerf: 6, isolation: 4, easeOfUse: 8 },
+  },
+  {
+    id: "opensuse",
+    name: "openSUSE Tumbleweed",
+    family: "independent",
+    blurb:
+      "openSUSE's rolling-release edition — YaST gives it best-in-class system configuration tooling that no other distro really matches.",
+    attributes: { driverFreshness: 8, stability: 6, gamingPerf: 7, isolation: 4, easeOfUse: 6 },
+  },
+  {
+    id: "nixos",
+    name: "NixOS",
+    family: "independent",
+    blurb:
+      "Your entire system is described in one declarative config file — a genuinely different model where 'it worked on my machine' actually travels with you.",
+    attributes: { driverFreshness: 7, stability: 8, gamingPerf: 6, isolation: 5, easeOfUse: 2 },
+  },
+  {
+    id: "voidlinux",
+    name: "Void Linux",
+    family: "independent",
+    blurb:
+      "An independent distro built around runit instead of systemd, with its own from-scratch package manager — for people who want something that isn't a derivative of anything.",
+    attributes: { driverFreshness: 7, stability: 6, gamingPerf: 5, isolation: 3, easeOfUse: 3 },
+  },
+  {
+    id: "gentoo",
+    name: "Gentoo",
+    family: "independent",
+    blurb:
+      "You compile virtually everything from source with your own chosen flags — the most control of any distro here, at the cost of install and update times measured in hours, not minutes.",
+    attributes: { driverFreshness: 8, stability: 6, gamingPerf: 8, isolation: 4, easeOfUse: 1 },
+  },
+  {
+    id: "kali",
+    name: "Kali Linux",
+    family: "security-privacy",
+    blurb:
+      "Debian repackaged with the penetration-testing toolkit pre-installed — built for security professionals running structured engagements, not general desktop use.",
+    attributes: { driverFreshness: 6, stability: 5, gamingPerf: 3, isolation: 5, easeOfUse: 4 },
+  },
+  {
+    id: "parrot",
+    name: "Parrot OS",
+    family: "security-privacy",
+    blurb:
+      "Debian-based like Kali, but built to double as a genuinely usable daily-driver desktop, with a lighter footprint and a broader privacy/anonymity toolkit.",
+    attributes: { driverFreshness: 6, stability: 6, gamingPerf: 4, isolation: 6, easeOfUse: 5 },
   },
 ];

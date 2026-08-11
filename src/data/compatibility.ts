@@ -249,4 +249,95 @@ export const compatibilityNotes: CompatibilityNote[] = [
       "Sparse, dated-looking desktop by default — function over polish",
     ],
   },
+  {
+    distroId: "ubuntu",
+    base: "Debian unstable, with its own 6-month/LTS release cadence",
+    nvidia: "Ubuntu's installer can offer to install the proprietary NVIDIA driver directly — no third-party repo needed.",
+    strengths: [
+      "Largest community and documentation base of any distro — almost every problem has already been solved somewhere",
+      "Regular non-LTS releases (every 6 months) keep hardware support fresher than pure Debian if you don't stick to LTS",
+    ],
+    caveats: [
+      "LTS releases prioritize stability over cutting-edge hardware support, a milder version of Debian's tradeoff",
+      "Canonical's own choices (Snap packages, occasional telemetry prompts) are a point of ongoing community friction",
+    ],
+  },
+  {
+    distroId: "opensuse",
+    base: "openSUSE (independent, RPM-based), rolling release",
+    nvidia: "NVIDIA's official repo is one zypper command away; the community wiki keeps exact steps current per release.",
+    strengths: [
+      "YaST is a genuinely unique, comprehensive system-configuration tool — network, users, services, and partitions in one place",
+      "Rolling release with a built-in snapshot/rollback system (Btrfs + Snapper) more mature than most distros' equivalent",
+    ],
+    caveats: [
+      "Smaller gaming-specific community than the Arch-based options, despite comparable technical freshness",
+      "YaST's depth is also a learning curve if you're used to simpler package managers",
+    ],
+  },
+  {
+    distroId: "nixos",
+    base: "Independent — Nix package manager and a declarative config model",
+    nvidia: "Enable the proprietary driver with one line in configuration.nix; the tradeoff is learning Nix's declarative syntax to get there.",
+    strengths: [
+      "Every generation of your system config is kept and instantly bootable — a bad change is a reboot away from undone",
+      "Reproducible builds mean your exact system config can be version-controlled and rebuilt identically elsewhere",
+    ],
+    caveats: [
+      "The Nix language and declarative model is a real learning curve unlike anything else on this list",
+      "Software assuming a traditional filesystem layout (some proprietary installers, certain games) sometimes needs workarounds",
+    ],
+  },
+  {
+    distroId: "voidlinux",
+    base: "Independent — its own xbps package manager, runit instead of systemd",
+    nvidia: "Manual driver install via xbps; a smaller community means fewer step-by-step guides than Arch or Debian derivatives.",
+    strengths: [
+      "Genuinely independent — not based on Debian, Arch, or Fedora, with its own package format and init system from the ground up",
+      "Rolling release that's historically been unusually stable for a rolling distro",
+    ],
+    caveats: [
+      "Much smaller community and package repo than Arch/Debian-based options — expect to build more from source",
+      "runit instead of systemd means some mainstream tooling and guides don't directly apply",
+    ],
+  },
+  {
+    distroId: "gentoo",
+    base: "Independent — source-based, built with Portage",
+    nvidia: "Manual driver build via Portage with USE flags; expect a real compile time, not a quick package install.",
+    strengths: [
+      "Portage's USE flags give genuinely granular control over what gets built into every package, not just which packages are installed",
+      "Compiling with CPU-specific optimizations can match or beat CachyOS's performance approach, taken to its logical extreme",
+    ],
+    caveats: [
+      "Compile times are real — installing or updating major packages can take hours on modest hardware",
+      "By far the steepest learning curve and highest maintenance burden of any distro on this list",
+    ],
+  },
+  {
+    distroId: "kali",
+    base: "Debian testing, with the penetration-testing toolkit layered on",
+    nvidia: "Manual driver install via Debian's non-free repo, same process as Debian itself.",
+    strengths: [
+      "Hundreds of penetration-testing and forensics tools pre-installed and pre-configured — the industry-standard toolkit distro",
+      "Purpose-built live-boot and forensics modes for engagement work",
+    ],
+    caveats: [
+      "Explicitly not designed as a daily-driver desktop OS — running it that way is common but discouraged even by its own maintainers",
+      "Its older reputation for running as root by default (since changed) still shapes how people talk about it",
+    ],
+  },
+  {
+    distroId: "parrot",
+    base: "Debian stable/testing, with security and privacy tooling layered on",
+    nvidia: "Manual driver install via Debian's non-free repo, similar process to Kali/Debian.",
+    strengths: [
+      "Lighter resource footprint than Kali, genuinely usable as a daily driver rather than just a toolkit boot",
+      "Ships anonymity/privacy tooling (AnonSurf, Tor integration) alongside the standard pentest toolkit — wider scope than Kali",
+    ],
+    caveats: [
+      "Smaller community and slower security-tool updates than Kali, which has Offensive Security's backing",
+      "Being usable as a daily driver cuts both ways — more attack surface than a single-purpose live-boot tool like Kali or Tails",
+    ],
+  },
 ];

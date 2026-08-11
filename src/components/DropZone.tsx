@@ -15,7 +15,7 @@ export function DropZone({ pickedItems, onRemove, onMove }: DropZoneProps) {
   return (
     <div ref={setNodeRef} className={`dropzone${isOver ? " over" : ""}`}>
       {pickedItems.length === 0 && (
-        <span className="dropzone-empty">Drag items here to build your setup</span>
+        <span className="dropzone-empty">Click or drag items here to build your setup</span>
       )}
       <AnimatePresence initial={false}>
         {pickedItems.map((item, index) => (

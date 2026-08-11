@@ -97,6 +97,13 @@ import pikaosLogo from "../assets/distros/pikaos.svg";
 import silverblueLogo from "../assets/distros/silverblue.png";
 import tailsLogo from "../assets/distros/tails.svg";
 import antixLogo from "../assets/distros/antix.png";
+import ubuntuLogo from "../assets/distros/ubuntu.png";
+import opensuseLogo from "../assets/distros/opensuse.svg";
+import nixosLogo from "../assets/distros/nixos.png";
+import voidlinuxLogo from "../assets/distros/voidlinux.svg";
+import gentooLogo from "../assets/distros/gentoo.png";
+import kaliLogo from "../assets/distros/kali.png";
+import parrotLogo from "../assets/distros/parrot.svg";
 
 export type IconDef =
   | { kind: "brand"; path: string; color: string; title: string }
@@ -251,4 +258,11 @@ export const distroIcons: Record<string, IconDef> = {
   silverblue: photo(silverblueLogo, "Fedora Silverblue", "contain"),
   tails: photo(tailsLogo, "Tails", "contain"),
   antix: photo(antixLogo, "antiX", "contain"),
+  ubuntu: photo(ubuntuLogo, "Ubuntu", "contain"),
+  opensuse: photo(opensuseLogo, "openSUSE Tumbleweed", "contain"),
+  nixos: photo(nixosLogo, "NixOS", "contain"),
+  voidlinux: photo(voidlinuxLogo, "Void Linux", "contain"),
+  gentoo: photo(gentooLogo, "Gentoo", "contain"),
+  kali: photo(kaliLogo, "Kali Linux", "contain"),
+  parrot: photo(parrotLogo, "Parrot OS", "contain"),
 };
