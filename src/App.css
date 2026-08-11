@@ -996,6 +996,91 @@
   line-height: 1.45;
 }
 
+.install-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 9px 0 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: color 0.2s var(--ease-out);
+}
+
+.install-toggle:hover {
+  color: var(--accent);
+}
+
+.install-chevron {
+  transition: transform 0.2s var(--ease-out);
+}
+
+.install-chevron.open {
+  transform: rotate(180deg);
+}
+
+.install-checklist {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.install-row-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.install-command {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 9px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-out);
+}
+
+.install-command:hover {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+}
+
+.install-command code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  white-space: nowrap;
+  overflow-x: auto;
+  text-align: left;
+}
+
+.install-command svg {
+  flex-shrink: 0;
+}
+
+.install-row-note {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+  font-style: italic;
+}
+
 /* ---------- Footer ---------- */
 
 .footer {

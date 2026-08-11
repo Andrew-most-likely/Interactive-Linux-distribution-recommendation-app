@@ -254,7 +254,7 @@ export default function App() {
                 anti-cheat blocks it on every distro below, not just some.
               </p>
             )}
-            <ScorePanel results={results} />
+            <ScorePanel results={results} pickedItems={pickedItems} />
           </aside>
         </div>
 

@@ -1,14 +1,55 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Copy, Check, Terminal } from "lucide-react";
 import { MatchMeter } from "./MatchMeter";
 import { scoreRange, type DistroResult } from "../lib/scoring";
+import { resolveInstall } from "../lib/installGuide";
 import { distroIcons } from "../data/icons";
 import { Icon } from "./Icon";
+import type { Item } from "../data/items";
 
 const VISIBLE_DEFAULT = 5;
 
-export function ScorePanel({ results }: { results: DistroResult[] }) {
+function CopyableCommand({ command }: { command: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    await navigator.clipboard.writeText(command);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
+
+  return (
+    <button type="button" className="install-command" onClick={handleCopy} title="Copy command">
+      <code>{command}</code>
+      {copied ? <Check size={13} strokeWidth={2.5} /> : <Copy size={13} strokeWidth={2} />}
+    </button>
+  );
+}
+
+function InstallChecklist({ items, packageManager }: { items: Item[]; packageManager: DistroResult["distro"]["packageManager"] }) {
+  const rows = items
+    .map((item) => ({ item, resolved: resolveInstall(item, packageManager) }))
+    .filter(({ resolved }) => resolved.command || resolved.note);
+
+  if (rows.length === 0) return null;
+
+  return (
+    <div className="install-checklist">
+      {rows.map(({ item, resolved }) => (
+        <div key={item.id} className="install-row">
+          <span className="install-row-label">{item.label}</span>
+          {resolved.command && <CopyableCommand command={resolved.command} />}
+          {resolved.note && <p className="install-row-note">{resolved.note}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; pickedItems: Item[] }) {
   const [showAll, setShowAll] = useState(false);
+  const [openInstallId, setOpenInstallId] = useState<string | null>(null);
   const range = scoreRange(results);
   const hasSignal = results.some((r) => r.score !== 0);
   const visible = showAll ? results : results.slice(0, VISIBLE_DEFAULT);
@@ -20,6 +61,7 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
         const percentage = 50 + (result.score / (range * 2)) * 50;
         const isIncompatible = result.incompatibleItems.length > 0;
         const isBest = hasSignal && i === 0 && !isIncompatible;
+        const installOpen = openInstallId === result.distro.id;
 
         return (
           <motion.div
@@ -59,6 +101,32 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
                   {t.text}
                 </p>
               ))}
+              {pickedItems.length > 0 && (
+                <>
+                  <button
+                    type="button"
+                    className="install-toggle"
+                    onClick={() => setOpenInstallId(installOpen ? null : result.distro.id)}
+                  >
+                    <Terminal size={12} strokeWidth={2.25} />
+                    Install commands
+                    <ChevronDown size={13} strokeWidth={2.25} className={`install-chevron${installOpen ? " open" : ""}`} />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {installOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ overflow: "hidden" }}
+                      >
+                        <InstallChecklist items={pickedItems} packageManager={result.distro.packageManager} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              )}
             </div>
           </motion.div>
         );
