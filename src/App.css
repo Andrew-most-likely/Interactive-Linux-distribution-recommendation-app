@@ -352,10 +352,6 @@
   gap: 12px;
 }
 
-.column-label-row .column-label {
-  margin-bottom: 0;
-}
-
 .clear-all-btn {
   margin-bottom: 12px;
   padding: 3px 10px;
@@ -564,7 +560,7 @@
   position: relative;
   flex: 1;
   min-height: 260px;
-  max-height: 520px;
+  max-height: 560px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 18px;
