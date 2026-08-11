@@ -45,7 +45,7 @@ export function SetupChip({ item, rank, isFirst, isLast, onRemove, onMove }: Set
         <GripVertical size={14} strokeWidth={2} />
       </span>
       <span className="setup-chip-label">
-        <span className="setup-chip-rank" title="Importance rank — higher on the list counts more">
+        <span className="setup-chip-rank" title="Importance rank: higher on the list counts more">
           {rank}
         </span>
         <span

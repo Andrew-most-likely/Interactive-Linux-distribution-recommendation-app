@@ -2,7 +2,7 @@ import type { Item } from "../data/items";
 import { getItemIcon, iconTint } from "../data/icons";
 import { Icon } from "./Icon";
 
-// Rendered inside dnd-kit's DragOverlay — the one visual copy that actually
+// Rendered inside dnd-kit's DragOverlay: the one visual copy that actually
 // follows the pointer, so the source card can just sit dimmed in place
 // instead of fighting for the same transform.
 export function DragPreview({ item }: { item: Item }) {

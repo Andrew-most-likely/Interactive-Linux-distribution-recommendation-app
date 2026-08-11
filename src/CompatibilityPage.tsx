@@ -16,7 +16,7 @@ export function CompatibilityPage() {
           <h1 className="masthead-title">Compatibility</h1>
           <p className="masthead-sub">
             What each distro actually ships with, where drivers come from, and the tradeoffs
-            worth knowing before you install — not a scientific benchmark, just an honest
+            worth knowing before you install, not a scientific benchmark, just an honest
             starting reference.
           </p>
         </div>
@@ -32,7 +32,11 @@ export function CompatibilityPage() {
               <div className="compat-card-header">
                 <Icon icon={distroIcons[distro.id]} size={22} />
                 <div>
-                  <h2 className="compat-card-title">{distro.name}</h2>
+                  <h2 className="compat-card-title">
+                    <a href={distro.website} target="_blank" rel="noopener noreferrer">
+                      {distro.name}
+                    </a>
+                  </h2>
                   <p className="compat-card-base">{note.base}</p>
                 </div>
               </div>
@@ -66,7 +70,7 @@ export function CompatibilityPage() {
       </div>
 
       <footer className="footer">
-        <p>General guidance, not live-sourced data — always check a distro's own release notes.</p>
+        <p>General guidance, not live-sourced data. Always check a distro's own release notes.</p>
       </footer>
     </div>
   );

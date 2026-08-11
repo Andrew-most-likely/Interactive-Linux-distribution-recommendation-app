@@ -46,6 +46,7 @@ import {
   siGooglechat,
   siMessenger,
   siZoom,
+  siSession,
 } from "simple-icons";
 import {
   Code2,
@@ -125,7 +126,7 @@ function relativeLuminance(hex: string): number {
 
 function brand(icon: { path: string; hex: string; title: string }): IconDef {
   // Some brand marks (Counter-Strike, Nobara, MX Linux) ship as pure black,
-  // which disappears against this app's dark surfaces — lighten those so
+  // which disappears against this app's dark surfaces, lighten those so
   // they stay legible instead of vanishing.
   const isNearBlack = relativeLuminance(icon.hex) < 60;
   const color = isNearBlack ? "#d6d5d2" : `#${icon.hex}`;
@@ -147,11 +148,11 @@ export function iconTint(icon: IconDef): string | undefined {
 }
 
 // Generic catch-all so a missing/typo'd id renders something instead of
-// crashing — see getItemIcon().
+// crashing, see getItemIcon().
 const fallbackIcon = lucide(Package, "#8b95a3");
 
 export const itemIcons: Record<string, IconDef> = {
-  // Games — real cover art or a real brand logo for every title except
+  // Games: real cover art or a real brand logo for every title except
   // World of Warcraft, which has neither available under a reusable license.
   cs2: brand(siCounterstrike),
   valorant: brand(siValorant),
@@ -235,7 +236,7 @@ export const itemIcons: Record<string, IconDef> = {
   skype: lucide(MessageCircle, "#4a90d9"), // no simple-icons brand mark
   irc: lucide(Terminal, "#d8d3c2"),
   wireapp: brand(siWire),
-  session: lucide(MessageCircle, "#c17c56"),
+  session: brand(siSession),
   rocketchat: brand(siRocketdotchat),
   googlechat: brand(siGooglechat),
   messenger: brand(siMessenger),

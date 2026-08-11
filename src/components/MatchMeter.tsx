@@ -3,7 +3,7 @@ interface MatchMeterProps {
 }
 
 // A terminal-style horizontal meter, standing in for a generic progress bar
-// or gauge — reads like a status line rather than decoration.
+// or gauge: reads like a status line rather than decoration.
 export function MatchMeter({ percentage }: MatchMeterProps) {
   const clamped = Math.max(0, Math.min(100, percentage));
 

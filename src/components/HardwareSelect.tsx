@@ -8,7 +8,7 @@ interface HardwareSelectProps {
 export function HardwareSelect({ value, onChange }: HardwareSelectProps) {
   return (
     <div className="hardware-select">
-      <p className="column-label">Your GPU (optional — changes results a lot)</p>
+      <p className="column-label">Your GPU (optional, changes results a lot)</p>
       <div className="hardware-options">
         {gpuOptions.map((opt) => (
           <button

@@ -53,7 +53,7 @@ export default function App() {
       const isSetupItem = prev.includes(activeId);
       // "setup" if dropped on the container itself or on an existing setup
       // chip; "pool" if dropped on the pool container or a still-available
-      // pool item — picked items never appear in the pool, so an id can't
+      // pool item: picked items never appear in the pool, so an id can't
       // be ambiguous between the two.
       const overIsSetup = overId === "setup-dropzone" || prev.includes(overId);
 
@@ -64,11 +64,11 @@ export default function App() {
           if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) return prev;
           return arrayMove(prev, oldIndex, newIndex);
         }
-        // dropped back onto the pool — remove it
+        // dropped back onto the pool: remove it
         return prev.filter((id) => id !== activeId);
       }
 
-      // dragging a fresh pool item — add it if dropped anywhere in setup
+      // dragging a fresh pool item: add it if dropped anywhere in setup
       if (overIsSetup) {
         return prev.includes(activeId) ? prev : [...prev, activeId];
       }
@@ -145,7 +145,7 @@ export default function App() {
 
             <div className="picker-columns">
               <div>
-                <p className="column-label">Available — click or drag to add</p>
+                <p className="column-label">Available: click or drag to add</p>
                 <Pool items={poolItems} onAdd={handleAdd} />
               </div>
 
@@ -168,7 +168,7 @@ export default function App() {
       </DndContext>
 
       <footer className="footer">
-        <p>No login, no tracking, no server — everything above runs in your browser.</p>
+        <p>No login, no tracking, no server. Everything above runs in your browser.</p>
       </footer>
     </div>
   );

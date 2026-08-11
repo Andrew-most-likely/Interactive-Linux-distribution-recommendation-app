@@ -82,7 +82,7 @@ export const items: Item[] = [
   // ---------- Communication ----------
   { id: "discord", label: "Discord", category: "communication", requirements: { easeOfUse: 7 } },
   { id: "slack", label: "Slack", category: "communication", requirements: { easeOfUse: 7, stability: 3 } },
-  { id: "msteams", label: "Microsoft Teams", category: "communication", requirements: { easeOfUse: 5, stability: 4 } }, // the weakest of the bunch on Linux — PWA-only now
+  { id: "msteams", label: "Microsoft Teams", category: "communication", requirements: { easeOfUse: 5, stability: 4 } }, // the weakest of the bunch on Linux, PWA-only now
   { id: "zoom", label: "Zoom", category: "communication", requirements: { easeOfUse: 6, driverFreshness: 3, stability: 3 } },
   { id: "googlemeet", label: "Google Meet", category: "communication", requirements: { easeOfUse: 8, stability: 3 } }, // browser-based, just works
   { id: "signal", label: "Signal", category: "communication", requirements: { easeOfUse: 7, isolation: 4 } }, // excellent native Linux app

@@ -17,19 +17,19 @@ export const gpuOptions: GpuOption[] = [
   {
     id: "nvidia",
     label: "NVIDIA",
-    description: "Proprietary driver — genuinely wants a current kernel",
+    description: "Proprietary driver, genuinely wants a current kernel",
     driverFreshness: 9,
   },
   {
     id: "amd",
     label: "AMD",
-    description: "Open-source driver, in-kernel — works almost anywhere",
+    description: "Open-source driver, in-kernel, works almost anywhere",
     driverFreshness: 3,
   },
   {
     id: "intel",
     label: "Intel",
-    description: "Open-source driver — newest Arc GPUs want a fresher kernel",
+    description: "Open-source driver, newest Arc GPUs want a fresher kernel",
     driverFreshness: 4,
   },
 ];

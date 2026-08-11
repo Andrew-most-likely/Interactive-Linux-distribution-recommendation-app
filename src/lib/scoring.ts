@@ -21,20 +21,31 @@ const WEAK_THRESHOLD = 4;
 const CARES_THRESHOLD = 6;
 
 // A distro is treated as flat-out incapable (not just weaker) when it's
-// nearly bottomed-out on a dimension an item critically depends on — e.g.
+// nearly bottomed-out on a dimension an item critically depends on, e.g.
 // Qubes OS (gamingPerf: 1) can't meaningfully run a game that needs 9.
 const HARD_INCOMPATIBLE_REQUIREMENT = 9;
 const HARD_INCOMPATIBLE_ATTRIBUTE = 2;
+
+// Fixed per-rank multipliers, independent of how many items are picked in
+// total. Rank #1 always carries the same weight whether it's the only pick
+// or the first of fifteen. Steeper than a simple linear taper so reordering
+// in "Your setup" visibly moves the results; anything past rank 6 settles
+// at a 1x floor.
+const RANK_WEIGHTS = [3, 2.4, 1.9, 1.5, 1.2, 1.05];
+const BASELINE_WEIGHT = 1;
+
+function importanceForRank(index: number): number {
+  return RANK_WEIGHTS[index] ?? BASELINE_WEIGHT;
+}
 
 export function scoreDistros(pickedItemIds: string[], gpuVendor: GpuVendor | null = null): DistroResult[] {
   const picked = pickedItemIds
     .map((id) => items.find((i) => i.id === id))
     .filter((i): i is Item => Boolean(i));
   // The hardware pick, if any, is always treated as top priority (it's
-  // foundational — nothing else works well if the GPU doesn't) rather than
+  // foundational, nothing else works well if the GPU doesn't) rather than
   // something the user manually ranks alongside their software picks.
   const pickedItems = gpuVendor ? [gpuHardwareItem(gpuVendor), ...picked] : picked;
-  const count = pickedItems.length;
 
   const results: DistroResult[] = distros.map((distro) => {
     let score = 0;
@@ -42,9 +53,9 @@ export function scoreDistros(pickedItemIds: string[], gpuVendor: GpuVendor | nul
     const incompatibleItems: string[] = [];
 
     pickedItems.forEach((item, index) => {
-      // Rank 0 (top of "Your setup") counts most; weight tapers toward 1x
-      // for the least-important, bottom-ranked pick.
-      const importance = 1 + (count - 1 - index) / count;
+      // Rank 0 (top of "Your setup") counts most; weight tapers toward the
+      // 1x baseline for lower-priority picks.
+      const importance = importanceForRank(index);
       let itemIsIncompatible = false;
 
       for (const dim of dimensions) {

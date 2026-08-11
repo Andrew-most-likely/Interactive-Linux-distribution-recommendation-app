@@ -33,7 +33,7 @@ interface LogoShapeConfig {
 }
 
 // Fixed, hand-placed rather than randomized so the layout is stable across
-// re-renders and reloads — real distro logos, desaturated and near-invisible,
+// re-renders and reloads: real distro logos, desaturated and near-invisible,
 // drifting slowly as ambient texture rather than content to read.
 const SHAPES: LogoShapeConfig[] = [
   { src: archLogo, size: 52, top: "6%", left: "10%", duration: 24, delay: 0, yRange: 18, rotateRange: 6 },

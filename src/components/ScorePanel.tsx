@@ -1,16 +1,22 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { MatchMeter } from "./MatchMeter";
 import { scoreRange, type DistroResult } from "../lib/scoring";
 import { distroIcons } from "../data/icons";
 import { Icon } from "./Icon";
 
+const VISIBLE_DEFAULT = 5;
+
 export function ScorePanel({ results }: { results: DistroResult[] }) {
+  const [showAll, setShowAll] = useState(false);
   const range = scoreRange(results);
   const hasSignal = results.some((r) => r.score !== 0);
+  const visible = showAll ? results : results.slice(0, VISIBLE_DEFAULT);
+  const hiddenCount = results.length - VISIBLE_DEFAULT;
 
   return (
     <div className="results-list">
-      {results.map((result, i) => {
+      {visible.map((result, i) => {
         const percentage = 50 + (result.score / (range * 2)) * 50;
         const isIncompatible = result.incompatibleItems.length > 0;
         const isBest = hasSignal && i === 0 && !isIncompatible;
@@ -26,8 +32,16 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
             <div className="result-body">
               <div className="result-top-row">
                 <span className="result-name">
-                  <Icon icon={distroIcons[result.distro.id]} size={24} />
-                  {result.distro.name}
+                  <a
+                    href={result.distro.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="result-name-link"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Icon icon={distroIcons[result.distro.id]} size={24} />
+                    {result.distro.name}
+                  </a>
                   {isBest && <span className="best-badge">best match</span>}
                   {isIncompatible && <span className="incompatible-badge">won't run everything</span>}
                 </span>
@@ -49,6 +63,11 @@ export function ScorePanel({ results }: { results: DistroResult[] }) {
           </motion.div>
         );
       })}
+      {hiddenCount > 0 && (
+        <button type="button" className="results-toggle" onClick={() => setShowAll(!showAll)}>
+          {showAll ? "Show fewer" : `Show ${hiddenCount} more distro${hiddenCount === 1 ? "" : "s"}`}
+        </button>
+      )}
     </div>
   );
 }

@@ -9,7 +9,7 @@
 An interactive, drag-and-drop Linux distro recommender. Instead of a
 text-based questionnaire, you drag in the specific games, tools, and
 preferences you actually use, pick your GPU, and watch match scores for 25
-distros update live — with honest, individually-reasoned explanations of
+distros update live, with honest, individually-reasoned explanations of
 the tradeoffs each one involves.
 
 No login, no tracking, no server. Everything runs client-side in your
@@ -20,12 +20,12 @@ browser.
 Most distro-picker sites ask abstract questions ("do you game?") and hand
 back a single flat verdict. Steep instead:
 
-- Lets you drag in **specific, named software** — not vague categories
+- Lets you drag in **specific, named software**, not vague categories
 - Lets you **rank picks by importance** so your top priorities actually
   move the results
 - Flags a distro **red** when something you picked genuinely won't run on
   it (e.g. gaming on Qubes OS), instead of quietly burying it in the score
-- Factors in your **actual GPU** — NVIDIA's proprietary driver cares about
+- Factors in your **actual GPU**, NVIDIA's proprietary driver cares about
   kernel freshness far more than AMD/Intel's open-source stack does
 - Explains *why* each distro landed where it did, not just a number
 
@@ -55,7 +55,7 @@ src/
     MatchMeter.tsx      # signature score visualization
     Pool.tsx            # droppable "Available" list (click or drag to add)
     DraggableItem.tsx
-    DropZone.tsx         # "Your setup" — rank, reorder, and remove picks
+    DropZone.tsx         # "Your setup": rank, reorder, and remove picks
     SetupChip.tsx
     DragPreview.tsx      # the visual shown in dnd-kit's DragOverlay
     HardwareSelect.tsx   # GPU vendor picker
@@ -82,7 +82,7 @@ fundamentally incompatible rather than just penalized.
 
 To add a new item: add it to `items.ts` with a requirements object. To add
 a new distro: add it to `distros.ts` with an attributes object and a blurb.
-No other code changes needed — scoring and tradeoffs are derived
+No other code changes needed. Scoring and tradeoffs are derived
 automatically.
 
 ## Deploying to GitHub Pages
@@ -95,8 +95,8 @@ every push. If you fork it:
 2. If your Pages site will live at `https://<user>.github.io/<repo>/` (not
    a custom domain at the root), update `base` in `vite.config.ts` to
    `'/<repo>/'`.
-3. Push to `main` — the workflow builds and deploys automatically.
+3. Push to `main`, the workflow builds and deploys automatically.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
