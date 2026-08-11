@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { gpuOptions, formFactorOptions, type GpuVendor, type FormFactor } from "../data/hardware";
 
 interface HardwareSelectProps {
@@ -14,39 +15,48 @@ export function HardwareSelect({
   onFormFactorChange,
 }: HardwareSelectProps) {
   return (
-    <div className="hardware-select">
-      <div className="hardware-row">
-        <p className="column-label">Your GPU (optional, changes results a lot)</p>
-        <div className="hardware-options">
-          {gpuOptions.map((opt) => (
-            <button
-              key={opt.id}
-              type="button"
-              className={`hardware-chip${gpuVendor === opt.id ? " active" : ""}`}
-              onClick={() => onGpuChange(gpuVendor === opt.id ? null : opt.id)}
-              title={opt.description}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="hardware-row">
-        <p className="column-label">Device (optional)</p>
-        <div className="hardware-options">
-          {formFactorOptions.map((opt) => (
-            <button
-              key={opt.id}
-              type="button"
-              className={`hardware-chip${formFactor === opt.id ? " active" : ""}`}
-              onClick={() => onFormFactorChange(formFactor === opt.id ? null : opt.id)}
-              title={opt.description}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+    <>
+      <nav className="tabs hardware-tabs">
+        {gpuOptions.map((opt) => (
+          <button
+            key={opt.id}
+            type="button"
+            onClick={() => onGpuChange(gpuVendor === opt.id ? null : opt.id)}
+            className={`tab${gpuVendor === opt.id ? " active" : ""}`}
+            title={opt.description}
+          >
+            {gpuVendor === opt.id && (
+              <motion.span
+                layoutId="tab-active-pill-gpu"
+                className="tab-active-pill"
+                transition={{ type: "spring", stiffness: 500, damping: 34 }}
+              />
+            )}
+            <span className="tab-content">{opt.label}</span>
+          </button>
+        ))}
+      </nav>
+
+      <nav className="tabs hardware-tabs">
+        {formFactorOptions.map((opt) => (
+          <button
+            key={opt.id}
+            type="button"
+            onClick={() => onFormFactorChange(formFactor === opt.id ? null : opt.id)}
+            className={`tab${formFactor === opt.id ? " active" : ""}`}
+            title={opt.description}
+          >
+            {formFactor === opt.id && (
+              <motion.span
+                layoutId="tab-active-pill-device"
+                className="tab-active-pill"
+                transition={{ type: "spring", stiffness: 500, damping: 34 }}
+              />
+            )}
+            <span className="tab-content">{opt.label}</span>
+          </button>
+        ))}
+      </nav>
+    </>
   );
 }

@@ -11,7 +11,6 @@ import { DragPreview } from "./components/DragPreview";
 import { HardwareSelect } from "./components/HardwareSelect";
 import { FooterLinks } from "./components/FooterLinks";
 import { items, type Category } from "./data/items";
-import { distros } from "./data/distros";
 import type { GpuVendor, FormFactor } from "./data/hardware";
 import { scoreDistros } from "./lib/scoring";
 import "./App.css";
@@ -44,6 +43,14 @@ export default function App() {
     }
     return counts;
   }, [pickedItems]);
+
+  // These don't run on Linux at all, on any distro, no matter how it's
+  // configured, kernel-level anti-cheat refuses to start. Surfaced up
+  // front so it isn't something you have to notice distro-by-distro.
+  const blockedItems = useMemo(
+    () => pickedItems.filter((i) => i.linuxSupport === "anticheat-blocked"),
+    [pickedItems],
+  );
 
   const activeItem = useMemo(() => items.find((i) => i.id === activeId) ?? null, [activeId]);
 
@@ -126,54 +133,51 @@ export default function App() {
       <header className="masthead">
         <div className="masthead-content">
           <h1 className="masthead-title">Steep</h1>
-          <p className="masthead-sub">
-            Drag in what you actually use. Every pick re-scores all {distros.length} distros live.
-          </p>
         </div>
         <div className="masthead-links">
           <Link to="/distros" className="masthead-link">
             Compatibility guide →
           </Link>
-          <span className="masthead-tag">Phase 1 · MVP</span>
         </div>
       </header>
 
-      <HardwareSelect
-        gpuVendor={gpuVendor}
-        onGpuChange={setGpuVendor}
-        formFactor={formFactor}
-        onFormFactorChange={setFormFactor}
-      />
+      <div className="controls-row">
+        <HardwareSelect
+          gpuVendor={gpuVendor}
+          onGpuChange={setGpuVendor}
+          formFactor={formFactor}
+          onFormFactorChange={setFormFactor}
+        />
+        <nav className="tabs">
+          {categories.map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              onClick={() => {
+                setActiveCategory(id);
+                setSearchQuery("");
+              }}
+              className={`tab${activeCategory === id ? " active" : ""}`}
+            >
+              {activeCategory === id && (
+                <motion.span
+                  layoutId="tab-active-pill"
+                  className="tab-active-pill"
+                  transition={{ type: "spring", stiffness: 500, damping: 34 }}
+                />
+              )}
+              <span className="tab-content">
+                <Icon size={15} strokeWidth={2.25} />
+                {label}
+                {!!categoryCounts[id] && <span className="tab-count">{categoryCounts[id]}</span>}
+              </span>
+            </button>
+          ))}
+        </nav>
+      </div>
 
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="workspace">
           <div className="picker">
-            <nav className="tabs">
-              {categories.map(({ id, label, Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => {
-                    setActiveCategory(id);
-                    setSearchQuery("");
-                  }}
-                  className={`tab${activeCategory === id ? " active" : ""}`}
-                >
-                  {activeCategory === id && (
-                    <motion.span
-                      layoutId="tab-active-pill"
-                      className="tab-active-pill"
-                      transition={{ type: "spring", stiffness: 500, damping: 34 }}
-                    />
-                  )}
-                  <span className="tab-content">
-                    <Icon size={15} strokeWidth={2.25} />
-                    {label}
-                    {!!categoryCounts[id] && <span className="tab-count">{categoryCounts[id]}</span>}
-                  </span>
-                </button>
-              ))}
-            </nav>
-
             <div className="picker-columns">
               <div className="picker-column">
                 <div className="column-header">
@@ -209,6 +213,13 @@ export default function App() {
             <div className="column-header">
               <p className="column-label">Live match</p>
             </div>
+            {blockedItems.length > 0 && (
+              <p className="blocked-banner">
+                {blockedItems.map((i) => i.label).join(", ")}{" "}
+                {blockedItems.length === 1 ? "doesn't" : "don't"} run on Linux at all, kernel-level
+                anti-cheat blocks it on every distro below, not just some.
+              </p>
+            )}
             <ScorePanel results={results} />
           </aside>
         </div>
