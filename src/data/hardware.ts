@@ -70,13 +70,13 @@ export const formFactorOptions: FormFactorOption[] = [
     id: "laptop",
     label: "Laptop",
     description: "Needs current kernel support for hybrid graphics, Wi-Fi/Bluetooth, and suspend/resume",
-    requirements: { driverFreshness: 6, easeOfUse: 6 },
+    requirements: { driverFreshness: 4, easeOfUse: 4 },
   },
   {
     id: "handheld",
     label: "Handheld",
     description: "Needs a distro genuinely tuned for controller-first, no-keyboard operation (Bazzite-style), not just one that runs games well",
-    requirements: { gamingPerf: 9, easeOfUse: 9 },
+    requirements: { gamingPerf: 5, easeOfUse: 5 },
   },
 ];
 

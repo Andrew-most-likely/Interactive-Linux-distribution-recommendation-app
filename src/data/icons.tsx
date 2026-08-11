@@ -52,6 +52,8 @@ import {
   siVivaldi,
   siLibrewolf,
   siOpera,
+  siFloorp,
+  siZenbrowser,
 } from "simple-icons";
 import {
   Code2,
@@ -214,6 +216,11 @@ export const itemIcons: Record<string, IconDef> = {
   vivaldi: brand(siVivaldi),
   librewolf: brand(siLibrewolf),
   opera: brand(siOpera),
+  chromium: lucide(Globe, "#4a90d9"), // no simple-icons brand mark
+  gnomeweb: lucide(Globe, "#4a90d9"), // no simple-icons brand mark
+  floorp: brand(siFloorp),
+  zenbrowser: brand(siZenbrowser),
+  qutebrowser: lucide(Terminal, "#d8d3c2"), // no simple-icons brand mark; keyboard-driven, terminal-adjacent identity
 
   // Security
   sandboxing: lucide(ShieldCheck, "#7c93a8"),

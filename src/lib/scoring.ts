@@ -38,6 +38,13 @@ function importanceForRank(index: number): number {
   return RANK_WEIGHTS[index] ?? BASELINE_WEIGHT;
 }
 
+// Hardware picks get their own modest, fixed weight rather than the top of
+// RANK_WEIGHTS. They used to be prepended ahead of every software pick,
+// which combined with a distro that happens to be strong on exactly the
+// hardware item's dimensions (e.g. Bazzite on the handheld profile) let a
+// single hardware pick overwhelm everything else you actually chose.
+const HARDWARE_WEIGHT = 1.4;
+
 export function scoreDistros(
   pickedItemIds: string[],
   gpuVendor: GpuVendor | null = null,
@@ -46,26 +53,17 @@ export function scoreDistros(
   const picked = pickedItemIds
     .map((id) => items.find((i) => i.id === id))
     .filter((i): i is Item => Boolean(i));
-  // Hardware picks, if any, are always treated as top priority (they're
-  // foundational, nothing else works well if the GPU or form factor doesn't
-  // fit) rather than something the user manually ranks alongside their
-  // software picks.
   const hardwareItems = [
     gpuVendor ? gpuHardwareItem(gpuVendor) : null,
     formFactor ? formFactorHardwareItem(formFactor) : null,
   ].filter((i): i is Item => Boolean(i));
-  const pickedItems = [...hardwareItems, ...picked];
 
   const results: DistroResult[] = distros.map((distro) => {
     let score = 0;
     const tradeoffs: Tradeoff[] = [];
     const incompatibleItems: string[] = [];
 
-    pickedItems.forEach((item, index) => {
-      // Rank 0 (top of "Your setup") counts most; weight tapers toward the
-      // 1x baseline for lower-priority picks.
-      const importance = importanceForRank(index);
-
+    const scoreItem = (item: Item, importance: number) => {
       // An anti-cheat block is a fact about the game, not about any
       // particular distro: Vanguard/EAC refuses to run on Linux entirely,
       // so every distro is equally incompatible here, unlike a dimension
@@ -98,7 +96,10 @@ export function scoreDistros(
       }
 
       if (itemIsIncompatible) incompatibleItems.push(item.label);
-    });
+    };
+
+    hardwareItems.forEach((item) => scoreItem(item, HARDWARE_WEIGHT));
+    picked.forEach((item, index) => scoreItem(item, importanceForRank(index)));
 
     return {
       distro,

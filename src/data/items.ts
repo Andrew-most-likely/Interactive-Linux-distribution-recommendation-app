@@ -76,6 +76,11 @@ export const items: Item[] = [
   { id: "vivaldi", label: "Vivaldi", category: "browsers", requirements: { easeOfUse: 6, stability: 3 } }, // Chromium-based, official Linux builds, denser power-user UI than most
   { id: "librewolf", label: "LibreWolf", category: "browsers", requirements: { easeOfUse: 5, isolation: 5 } }, // hardened Firefox fork; distributed via Flatpak/AUR/manual repo rather than every distro's main repos
   { id: "opera", label: "Opera", category: "browsers", requirements: { easeOfUse: 7, stability: 3 } }, // Chromium-based, official .deb/.rpm builds, ships a built-in VPN feature
+  { id: "chromium", label: "Chromium", category: "browsers", requirements: { easeOfUse: 7, stability: 4 } }, // the open-source upstream Chrome is built on; in nearly every distro's default repos, often the path of least resistance where Chrome itself needs a manual repo add
+  { id: "gnomeweb", label: "GNOME Web (Epiphany)", category: "browsers", requirements: { easeOfUse: 6, stability: 4 } }, // GNOME's own WebKit-based browser, ships by default on GNOME desktops like Fedora Workstation
+  { id: "floorp", label: "Floorp", category: "browsers", requirements: { easeOfUse: 6, stability: 4 } }, // Firefox-based fork with extra customization, official Linux builds (AppImage/Flatpak/.deb)
+  { id: "zenbrowser", label: "Zen Browser", category: "browsers", requirements: { easeOfUse: 6, stability: 3 } }, // Firefox-based, workspace/vertical-tab focused, distributed via Flatpak/AppImage; newer project, less battle-tested
+  { id: "qutebrowser", label: "qutebrowser", category: "browsers", requirements: { easeOfUse: 2, stability: 4 } }, // keyboard-driven, vim-style browsing built on Python + QtWebEngine; popular with terminal-first Linux users, real learning curve
 
   // ---------- Security ----------
   { id: "sandboxing", label: "Strong sandboxing / isolation", category: "security", requirements: { isolation: 10, easeOfUse: 2 } },

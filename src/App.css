@@ -226,10 +226,6 @@
 .results-panel {
   position: sticky;
   top: 24px;
-  /* .picker has a tabs bar above its column headers that .results-panel
-     doesn't; this offsets the "Live match" header to start at the same Y
-     as "Available" / "Your setup" instead of sitting above them. */
-  margin-top: 66px;
   animation: fade-in-up 0.5s var(--ease-out) 0.08s both;
 }
 
