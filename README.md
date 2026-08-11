@@ -67,18 +67,3 @@ a new distro: add it to `distros.ts` with an attributes object, package
 manager, and a blurb. No other code changes needed. Scoring and tradeoffs
 are derived automatically.
 
-## Deploying to GitHub Pages
-
-This repo already ships a GitHub Actions workflow
-(`.github/workflows/deploy.yml`) that builds and deploys `main` to Pages on
-every push. If you fork it:
-
-1. In your fork's Settings → Pages, set the source to "GitHub Actions."
-2. If your Pages site will live at `https://<user>.github.io/<repo>/` (not
-   a custom domain at the root), update `base` in `vite.config.ts` to
-   `'/<repo>/'`.
-3. Push to `main`, the workflow builds and deploys automatically.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
