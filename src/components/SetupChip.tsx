@@ -1,15 +1,20 @@
 import { useDraggable } from "@dnd-kit/core";
 import { motion } from "framer-motion";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import type { Item } from "../data/items";
-import { itemIcons } from "../data/icons";
+import { getItemIcon, iconTint } from "../data/icons";
 import { Icon } from "./Icon";
 
 interface SetupChipProps {
   item: Item;
+  rank: number;
+  isFirst: boolean;
+  isLast: boolean;
   onRemove: (id: string) => void;
+  onMove: (id: string, direction: "up" | "down") => void;
 }
 
-export function SetupChip({ item, onRemove }: SetupChipProps) {
+export function SetupChip({ item, rank, isFirst, isLast, onRemove, onMove }: SetupChipProps) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: item.id,
   });
@@ -27,17 +32,45 @@ export function SetupChip({ item, onRemove }: SetupChipProps) {
       className={`setup-chip${isDragging ? " dragging" : ""}`}
     >
       <span className="setup-chip-label">
-        <Icon icon={itemIcons[item.id]} size={16} />
+        <span className="setup-chip-rank" title="Importance rank — higher on the list counts more">
+          {rank}
+        </span>
+        <span
+          className="setup-chip-icon"
+          style={{ ["--icon-tint" as string]: iconTint(getItemIcon(item.id)) }}
+        >
+          <Icon icon={getItemIcon(item.id)} size={20} />
+        </span>
         {item.label}
       </span>
-      <button
-        aria-label={`Remove ${item.label}`}
-        onClick={() => onRemove(item.id)}
-        onPointerDown={(e) => e.stopPropagation()}
-        className="chip-remove"
-      >
-        ×
-      </button>
+      <span className="setup-chip-controls">
+        <button
+          aria-label={`Move ${item.label} up in importance`}
+          onClick={() => onMove(item.id, "up")}
+          onPointerDown={(e) => e.stopPropagation()}
+          disabled={isFirst}
+          className="chip-move"
+        >
+          <ChevronUp size={13} strokeWidth={2.5} />
+        </button>
+        <button
+          aria-label={`Move ${item.label} down in importance`}
+          onClick={() => onMove(item.id, "down")}
+          onPointerDown={(e) => e.stopPropagation()}
+          disabled={isLast}
+          className="chip-move"
+        >
+          <ChevronDown size={13} strokeWidth={2.5} />
+        </button>
+        <button
+          aria-label={`Remove ${item.label}`}
+          onClick={() => onRemove(item.id)}
+          onPointerDown={(e) => e.stopPropagation()}
+          className="chip-remove"
+        >
+          ×
+        </button>
+      </span>
     </motion.div>
   );
 }

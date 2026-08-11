@@ -2,19 +2,21 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { motion } from "framer-motion";
-import { Gamepad2, Briefcase, ShieldCheck } from "lucide-react";
+import { Gamepad2, Briefcase, ShieldCheck, MessageCircle } from "lucide-react";
 import { Pool } from "./components/Pool";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
 import { DragPreview } from "./components/DragPreview";
 import { items, type Category } from "./data/items";
 import { scoreDistros } from "./lib/scoring";
+import heroImage from "./assets/hero/masthead.jpg";
 import "./App.css";
 
 const categories: { id: Category; label: string; Icon: typeof Gamepad2 }[] = [
   { id: "games", label: "Games", Icon: Gamepad2 },
   { id: "work", label: "Work", Icon: Briefcase },
   { id: "security", label: "Security", Icon: ShieldCheck },
+  { id: "communication", label: "Communication", Icon: MessageCircle },
 ];
 
 export default function App() {
@@ -53,12 +55,26 @@ export default function App() {
     setPickedIds((prev) => prev.filter((p) => p !== id));
   }
 
-  const poolItems = items.filter((i) => i.category === activeCategory);
+  function handleMove(id: string, direction: "up" | "down") {
+    setPickedIds((prev) => {
+      const index = prev.indexOf(id);
+      const target = direction === "up" ? index - 1 : index + 1;
+      if (index === -1 || target < 0 || target >= prev.length) return prev;
+      const next = [...prev];
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  }
+
+  const poolItems = items.filter(
+    (i) => i.category === activeCategory && !pickedIds.includes(i.id),
+  );
 
   return (
     <div className="page">
-      <header className="masthead">
-        <div>
+      <header className="masthead" style={{ ["--hero-image" as string]: `url(${heroImage})` }}>
+        <div className="masthead-hero" aria-hidden="true" />
+        <div className="masthead-content">
           <h1 className="masthead-title">Steep</h1>
           <p className="masthead-sub">
             Drag in what you actually use. Every pick re-scores all ten distros live.
@@ -105,7 +121,7 @@ export default function App() {
 
               <div>
                 <p className="column-label">Your setup</p>
-                <DropZone pickedItems={pickedItems} onRemove={handleRemove} />
+                <DropZone pickedItems={pickedItems} onRemove={handleRemove} onMove={handleMove} />
               </div>
             </div>
           </div>

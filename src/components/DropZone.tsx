@@ -6,9 +6,10 @@ import { SetupChip } from "./SetupChip";
 interface DropZoneProps {
   pickedItems: Item[];
   onRemove: (id: string) => void;
+  onMove: (id: string, direction: "up" | "down") => void;
 }
 
-export function DropZone({ pickedItems, onRemove }: DropZoneProps) {
+export function DropZone({ pickedItems, onRemove, onMove }: DropZoneProps) {
   const { setNodeRef, isOver } = useDroppable({ id: "setup-dropzone" });
 
   return (
@@ -17,8 +18,16 @@ export function DropZone({ pickedItems, onRemove }: DropZoneProps) {
         <span className="dropzone-empty">Drag items here to build your setup</span>
       )}
       <AnimatePresence initial={false}>
-        {pickedItems.map((item) => (
-          <SetupChip key={item.id} item={item} onRemove={onRemove} />
+        {pickedItems.map((item, index) => (
+          <SetupChip
+            key={item.id}
+            item={item}
+            rank={index + 1}
+            isFirst={index === 0}
+            isLast={index === pickedItems.length - 1}
+            onRemove={onRemove}
+            onMove={onMove}
+          />
         ))}
       </AnimatePresence>
     </div>

@@ -9,6 +9,8 @@
   --accent-deep: #93583a;
   --accent-dim: rgba(193, 124, 86, 0.13);
   --border-soft: rgba(230, 229, 226, 0.07);
+  --error: #d9695f;
+  --error-dim: rgba(217, 105, 95, 0.14);
 
   --radius-lg: 18px;
   --radius-md: 12px;

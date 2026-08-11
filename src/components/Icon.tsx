@@ -10,6 +10,19 @@ export function Icon({ icon, size = 18 }: { icon: IconDef; size?: number }) {
     );
   }
 
+  if (icon.kind === "photo") {
+    return (
+      <img
+        src={icon.src}
+        alt={icon.alt}
+        width={size}
+        height={size}
+        className="icon-photo"
+        style={{ objectFit: icon.fit ?? "cover" }}
+      />
+    );
+  }
+
   const { Component, color } = icon;
   return <Component size={size} color={color} strokeWidth={2} aria-hidden="true" />;
 }
