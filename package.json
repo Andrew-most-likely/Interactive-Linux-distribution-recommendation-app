@@ -1,13 +1,13 @@
 {
-  "name": "steep",
+  "name": "always-recommend-linux",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "oxlint",
-    "preview": "vite preview"
+    "dev": "vite --config config/vite.config.ts",
+    "build": "tsc -b && vite build --config config/vite.config.ts",
+    "lint": "oxlint -c config/.oxlintrc.json",
+    "preview": "vite preview --config config/vite.config.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
