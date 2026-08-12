@@ -17,7 +17,7 @@ function nativeInstallCommand(pm: PackageManager, pkg: string): string | undefin
     default:
       // Package names for zypper/xbps/emerge/eopkg/nix/rpm-ostree/manual
       // aren't authored per-item (naming conventions diverge too much to
-      // guess reliably) — Flatpak is the honest fallback for those below.
+      // guess reliably); Flatpak is the honest fallback for those below.
       return undefined;
   }
 }
@@ -51,9 +51,9 @@ function resolveGameInstall(item: Item, pm: PackageManager): ResolvedInstall {
     case "proton-playable":
       return { command: steam.command, note: "No native build; enable Steam Play/Proton in Settings → Compatibility. Playable, but more sensitive to driver/kernel freshness" };
     case "wine-workaround":
-      return { note: "Not distributed via Steam or Proton — install through Lutris or a manual Wine prefix instead" };
+      return { note: "Not distributed via Steam or Proton. Install through Lutris or a manual Wine prefix instead" };
     case "anticheat-blocked":
-      return { note: "Blocked by kernel-level anti-cheat on Linux — there's no working install path on any distro" };
+      return { note: "Blocked by kernel-level anti-cheat on Linux. There's no working install path on any distro" };
     default:
       return steam;
   }
@@ -80,5 +80,5 @@ export function resolveInstall(item: Item, packageManager: PackageManager): Reso
   if (install.flatpak) {
     return { command: flatpakInstallCommand(install.flatpak), note: install.note };
   }
-  return { note: install.note ?? "No verified install path — check your distro's package manager or the vendor's website" };
+  return { note: install.note ?? "No verified install path. Check your distro's package manager or the vendor's website" };
 }

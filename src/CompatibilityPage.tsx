@@ -8,7 +8,7 @@ import "./App.css";
 
 export function CompatibilityPage() {
   return (
-    <div className="page">
+    <div className="page compat-page">
       <header className="masthead">
         <div>
           <Link to="/" className="compat-back-link">

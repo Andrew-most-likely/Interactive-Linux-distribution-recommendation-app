@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 interface MatchMeterProps {
   percentage: number; // 0-100, clamped by caller
 }
@@ -10,7 +12,12 @@ export function MatchMeter({ percentage }: MatchMeterProps) {
   return (
     <div className="match-meter" aria-hidden="true">
       <div className="match-meter-track">
-        <div className="match-meter-fill" style={{ width: `${clamped}%` }} />
+        <motion.div
+          className="match-meter-fill"
+          initial={{ width: 0 }}
+          animate={{ width: `${clamped}%` }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        />
       </div>
     </div>
   );

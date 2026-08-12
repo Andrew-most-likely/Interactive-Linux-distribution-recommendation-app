@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState, type UIEvent } from "react";
+import { motion, AnimatePresence, animate } from "framer-motion";
 import { ChevronDown, Copy, Check, Terminal, ClipboardCopy } from "lucide-react";
 import { MatchMeter } from "./MatchMeter";
 import { ratingOutOf10, type DistroResult } from "../lib/scoring";
@@ -8,7 +8,26 @@ import { distroIcons } from "../data/icons";
 import { Icon } from "./Icon";
 import type { Item } from "../data/items";
 
-const VISIBLE_DEFAULT = 5;
+const PAGE_SIZE = 10;
+
+// Tweens the displayed rating between its old and new value instead of
+// snapping, so the number visibly counts up/down in step with the bar fill.
+function AnimatedRating({ value }: { value: number }) {
+  const [display, setDisplay] = useState(value);
+  const prevRef = useRef(value);
+
+  useEffect(() => {
+    const controls = animate(prevRef.current, value, {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: setDisplay,
+    });
+    prevRef.current = value;
+    return () => controls.stop();
+  }, [value]);
+
+  return <span className="result-score">{display.toFixed(1)}</span>;
+}
 
 function CopyableCommand({ command }: { command: string }) {
   const [copied, setCopied] = useState(false);
@@ -69,14 +88,22 @@ function InstallChecklist({ items, packageManager }: { items: Item[]; packageMan
 }
 
 export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; pickedItems: Item[] }) {
-  const [showAll, setShowAll] = useState(false);
   const [openInstallId, setOpenInstallId] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const hasSignal = results.some((r) => r.score !== 0);
-  const visible = showAll ? results : results.slice(0, VISIBLE_DEFAULT);
-  const hiddenCount = results.length - VISIBLE_DEFAULT;
+  const visible = results.slice(0, visibleCount);
+
+  // Load another page once the scroll position nears the bottom, rather
+  // than requiring a click; the panel is a fixed-height scroll area, so
+  // this is the only way to reach distros past the first page.
+  function handleScroll(e: UIEvent<HTMLDivElement>) {
+    const el = e.currentTarget;
+    if (el.scrollTop + el.clientHeight < el.scrollHeight - 120) return;
+    setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, results.length));
+  }
 
   return (
-    <div className="results-list">
+    <div className="results-list" onScroll={handleScroll}>
       {visible.map((result, i) => {
         const rating = ratingOutOf10(result.score, results);
         const percentage = rating * 10;
@@ -108,7 +135,7 @@ export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; 
                   {isBest && <span className="best-badge">best match</span>}
                   {isIncompatible && <span className="incompatible-badge">won't run everything</span>}
                 </span>
-                <span className="result-score">{rating.toFixed(1)}</span>
+                <AnimatedRating value={rating} />
               </div>
               <MatchMeter percentage={percentage} />
               <p className="distro-blurb">{result.distro.blurb}</p>
@@ -152,11 +179,6 @@ export function ScorePanel({ results, pickedItems }: { results: DistroResult[]; 
           </motion.div>
         );
       })}
-      {hiddenCount > 0 && (
-        <button type="button" className="results-toggle" onClick={() => setShowAll(!showAll)}>
-          {showAll ? "Show fewer" : `Show ${hiddenCount} more distro${hiddenCount === 1 ? "" : "s"}`}
-        </button>
-      )}
     </div>
   );
 }

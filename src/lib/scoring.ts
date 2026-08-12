@@ -130,7 +130,10 @@ export function ratingOutOf10(score: number, results: DistroResult[]): number {
   const scores = results.map((r) => r.score);
   const min = Math.min(...scores);
   const max = Math.max(...scores);
-  if (max === min) return 10;
+  // A tie at 0 means nothing picked has distinguished any distro yet (the
+  // pre-input state), so the meter should read empty rather than full; a
+  // tie above 0 is a genuine plateau where every distro matches equally well.
+  if (max === min) return min === 0 ? 0 : 10;
   return ((score - min) / (max - min)) * 10;
 }
 

@@ -63,6 +63,14 @@ export const items: Item[] = [
   { id: "rocketleague", label: "Rocket League", category: "games", linuxSupport: "proton-playable", requirements: { gamingPerf: 6, driverFreshness: 7, easeOfUse: 4 } }, // lost its native Linux build when Epic acquired Psyonix in 2020; Proton-only since
   { id: "hades", label: "Hades", category: "games", linuxSupport: "native", requirements: { gamingPerf: 2, driverFreshness: 1, easeOfUse: 7 } }, // official native Linux build
   { id: "forzahorizon5", label: "Forza Horizon 5", category: "games", linuxSupport: "proton-playable", requirements: { gamingPerf: 8, driverFreshness: 8, easeOfUse: 4 } }, // no native Linux build, Xbox Play Anywhere title, generally good but less bulletproof than Steam Deck Verified titles
+  { id: "dota2", label: "Dota 2", category: "games", linuxSupport: "native", requirements: { gamingPerf: 4, driverFreshness: 2, easeOfUse: 6 } }, // native Linux build since 2013, one of Valve's original SteamOS titles
+  { id: "tf2", label: "Team Fortress 2", category: "games", linuxSupport: "native", requirements: { gamingPerf: 2, driverFreshness: 1, easeOfUse: 7 } }, // native Linux build since 2013
+  { id: "portal2", label: "Portal 2", category: "games", linuxSupport: "native", requirements: { gamingPerf: 2, driverFreshness: 1, easeOfUse: 7 } }, // native Linux build, day-one SteamOS title
+  { id: "l4d2", label: "Left 4 Dead 2", category: "games", linuxSupport: "native", requirements: { gamingPerf: 3, driverFreshness: 2, easeOfUse: 6 } }, // native Linux build via the Source engine
+  { id: "nomanssky", label: "No Man's Sky", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 7, driverFreshness: 6, easeOfUse: 4 } }, // Steam Deck Verified, actively maintained Proton support from Hello Games
+  { id: "hogwartslegacy", label: "Hogwarts Legacy", category: "games", linuxSupport: "proton-playable", requirements: { gamingPerf: 8, driverFreshness: 7, easeOfUse: 4 } }, // single-player only, no anti-cheat; Steam Deck rated Playable over minor UI issues rather than Verified
+  { id: "destiny2", label: "Destiny 2", category: "games", linuxSupport: "anticheat-blocked", requirements: { gamingPerf: 7, easeOfUse: 2 } }, // Bungie's BattlEye configuration explicitly blocks Linux/Proton and Steam Deck since 2022
+  { id: "helldivers2", label: "Helldivers 2", category: "games", linuxSupport: "proton-verified", requirements: { gamingPerf: 7, driverFreshness: 6, easeOfUse: 4 } }, // Steam Deck Verified, no kernel-level anti-cheat
 
   // ---------- Work ----------
   { id: "vscode", label: "VS Code", category: "work", requirements: { easeOfUse: 6, stability: 4 }, install: { flatpak: "com.visualstudio.code", note: "Or add Microsoft's own apt/dnf/zypper repo from code.visualstudio.com for the vendor build" } },
@@ -84,6 +92,14 @@ export const items: Item[] = [
   { id: "nextcloud", label: "Nextcloud", category: "work", requirements: { stability: 8, easeOfUse: 4 }, install: { flatpak: "com.nextcloud.desktopclient.nextcloud", note: "Desktop sync client; the server itself is typically run via Docker" } },
   { id: "plex", label: "Plex Media Server", category: "work", requirements: { stability: 8, driverFreshness: 5, easeOfUse: 5 }, install: { note: "Official .deb/.rpm from plex.tv/media-server-downloads (not in default repos)" } }, // hardware transcoding (VAAPI on Intel/AMD, NVENC on NVIDIA) needs current enough drivers to recognize the specific GPU generation; falls back to slower CPU transcoding otherwise
   { id: "nginx", label: "Nginx", category: "work", requirements: { stability: 7, easeOfUse: 3 }, install: { packages: { apt: "nginx", dnf: "nginx", pacman: "nginx" } } },
+  { id: "gimp", label: "GIMP", category: "work", requirements: { easeOfUse: 4, stability: 4 }, install: { packages: { apt: "gimp", dnf: "gimp", pacman: "gimp" }, flatpak: "org.gimp.GIMP" } },
+  { id: "inkscape", label: "Inkscape", category: "work", requirements: { easeOfUse: 5, stability: 4 }, install: { packages: { apt: "inkscape", dnf: "inkscape", pacman: "inkscape" }, flatpak: "org.inkscape.Inkscape" } },
+  { id: "audacity", label: "Audacity", category: "work", requirements: { easeOfUse: 5, stability: 4 }, install: { packages: { apt: "audacity", dnf: "audacity", pacman: "audacity" }, flatpak: "org.audacityteam.Audacity" } },
+  { id: "kdenlive", label: "Kdenlive", category: "work", requirements: { gamingPerf: 3, driverFreshness: 3, easeOfUse: 4, stability: 3 }, install: { packages: { apt: "kdenlive", dnf: "kdenlive", pacman: "kdenlive" }, flatpak: "org.kde.kdenlive" } },
+  { id: "davinciresolve", label: "DaVinci Resolve", category: "work", requirements: { gamingPerf: 8, driverFreshness: 8, easeOfUse: 2 }, install: { note: "Official installer only from blackmagicdesign.com, no repo or Flatpak; the free version's dependency resolution is famously fussy outside Ubuntu-based distros" } }, // GPU-accelerated render pipeline wants current CUDA (NVIDIA) or ROCm (AMD), same class of requirement as Blender's Cycles
+  { id: "ansible", label: "Ansible", category: "work", requirements: { stability: 5, easeOfUse: 5 }, install: { packages: { apt: "ansible", dnf: "ansible", pacman: "ansible" } } },
+  { id: "terraform", label: "Terraform", category: "work", requirements: { stability: 6, easeOfUse: 4 }, install: { note: "Official releases only from developer.hashicorp.com/terraform/downloads; HashiCorp's 2023 license change pulled it from most distro repos" } },
+  { id: "golang", label: "Go development", category: "work", requirements: { stability: 5, easeOfUse: 5 }, install: { packages: { apt: "golang-go", dnf: "golang", pacman: "go" } } },
 
   // ---------- Browsers ----------
   { id: "firefox", label: "Firefox", category: "browsers", requirements: { easeOfUse: 8, stability: 4 }, install: { packages: { apt: "firefox", dnf: "firefox", pacman: "firefox" }, flatpak: "org.mozilla.firefox" } }, // Mozilla's own project, best-in-class native Linux support
@@ -97,6 +113,13 @@ export const items: Item[] = [
   { id: "floorp", label: "Floorp", category: "browsers", requirements: { easeOfUse: 6, stability: 4 }, install: { flatpak: "one.ablaze.floorp" } }, // Firefox-based fork with extra customization, official Linux builds (AppImage/Flatpak/.deb)
   { id: "zenbrowser", label: "Zen Browser", category: "browsers", requirements: { easeOfUse: 6, stability: 3 }, install: { flatpak: "app.zen_browser.zen" } }, // Firefox-based, workspace/vertical-tab focused, distributed via Flatpak/AppImage; newer project, less battle-tested
   { id: "qutebrowser", label: "qutebrowser", category: "browsers", requirements: { easeOfUse: 2, stability: 4 }, install: { packages: { apt: "qutebrowser", dnf: "qutebrowser", pacman: "qutebrowser" }, flatpak: "org.qutebrowser.qutebrowser" } }, // keyboard-driven, vim-style browsing built on Python + QtWebEngine; popular with terminal-first Linux users, real learning curve
+  { id: "msedge", label: "Microsoft Edge", category: "browsers", requirements: { easeOfUse: 7, stability: 4 }, install: { note: "Official .deb/.rpm from microsoft.com/edge (not in default repos)" } }, // Chromium-based, genuinely solid Linux support since 2020
+  { id: "ungoogledchromium", label: "Ungoogled Chromium", category: "browsers", requirements: { easeOfUse: 5, isolation: 4 }, install: { note: "Community Flatpak/AUR builds only; no official vendor repo, since it's a community de-Googled fork" } },
+  { id: "waterfox", label: "Waterfox", category: "browsers", requirements: { easeOfUse: 6, stability: 3 }, install: { note: "Official AppImage/tar builds from waterfox.net/download (not in default repos)" } },
+  { id: "falkon", label: "Falkon", category: "browsers", requirements: { easeOfUse: 5, stability: 4 }, install: { packages: { apt: "falkon", dnf: "falkon", pacman: "falkon" }, flatpak: "org.kde.falkon" } }, // KDE's own QtWebEngine browser, ships by default on some Plasma spins
+  { id: "konqueror", label: "Konqueror", category: "browsers", requirements: { easeOfUse: 3, stability: 4 }, install: { packages: { apt: "konqueror", dnf: "konqueror", pacman: "konqueror" } } }, // KDE's original browser/file-manager hybrid, still maintained though niche today
+  { id: "minbrowser", label: "Min", category: "browsers", requirements: { easeOfUse: 6, stability: 3 }, install: { note: "Official AppImage/tar builds from minbrowser.org (not in default repos)" } }, // minimalist browser built around a distraction-free reading/browsing UI
+  { id: "thorium", label: "Thorium", category: "browsers", requirements: { easeOfUse: 4, gamingPerf: 3, driverFreshness: 2 }, install: { note: "No repo; official builds are GitHub releases (.deb/.AppImage) from the Thorium project, not Flathub" } }, // performance-tuned Chromium fork with extra CPU optimizations, community project not Google
 
   // ---------- Security ----------
   { id: "sandboxing", label: "Strong sandboxing / isolation", category: "security", requirements: { isolation: 10, easeOfUse: 2 } },
@@ -119,6 +142,12 @@ export const items: Item[] = [
   { id: "gpg", label: "GPG / PGP encryption", category: "security", requirements: { isolation: 5, easeOfUse: 2 }, install: { packages: { apt: "gnupg", dnf: "gnupg2", pacman: "gnupg" } } }, // famously unfriendly UX
   { id: "luks", label: "LUKS disk encryption", category: "security", requirements: { isolation: 6, easeOfUse: 3 }, install: { packages: { apt: "cryptsetup", dnf: "cryptsetup", pacman: "cryptsetup" } } }, // installer-integrated, but recovery is manual
   { id: "apparmor", label: "AppArmor profiles", category: "security", requirements: { isolation: 7, easeOfUse: 2 }, install: { packages: { apt: "apparmor", pacman: "apparmor" }, note: "Enabled by default on Debian/Ubuntu; Fedora uses SELinux instead" } }, // on by default on some distro families, manual on others
+  { id: "clamav", label: "ClamAV", category: "security", requirements: { isolation: 3, easeOfUse: 3 }, install: { packages: { apt: "clamav", dnf: "clamav", pacman: "clamav" } } },
+  { id: "fail2ban", label: "Fail2ban", category: "security", requirements: { isolation: 5, stability: 5, easeOfUse: 3 }, install: { packages: { apt: "fail2ban", dnf: "fail2ban", pacman: "fail2ban" } } },
+  { id: "ufw", label: "UFW firewall", category: "security", requirements: { isolation: 5, easeOfUse: 4 }, install: { packages: { apt: "ufw", pacman: "ufw" }, note: "Fedora favors firewalld instead; ufw isn't in Fedora's default repos" } },
+  { id: "firejail", label: "Firejail", category: "security", requirements: { isolation: 7, easeOfUse: 3 }, install: { packages: { apt: "firejail", dnf: "firejail", pacman: "firejail" } } }, // per-app sandboxing via Linux namespaces, lighter-weight than a full container
+  { id: "onepassword", label: "1Password", category: "security", requirements: { isolation: 3, easeOfUse: 7 }, install: { packages: { apt: "1password", dnf: "1password" }, note: "Arch only via the AUR, not the official repos" } }, // official Linux app since 2021 with system-wide unlock/autofill via a background agent
+  { id: "onionshare", label: "OnionShare", category: "security", requirements: { isolation: 7, easeOfUse: 4 }, install: { flatpak: "org.onionshare.OnionShare" } }, // anonymous file sharing/hosting over Tor
 
   // ---------- Communication ----------
   { id: "discord", label: "Discord", category: "communication", requirements: { easeOfUse: 7 }, install: { flatpak: "com.discordapp.Discord", note: "Or official .deb from discord.com/download" } },
@@ -141,4 +170,9 @@ export const items: Item[] = [
   { id: "rocketchat", label: "Rocket.Chat", category: "communication", requirements: { easeOfUse: 5, stability: 5 }, install: { note: "Official .deb/.rpm from rocket.chat/install (desktop client; server is typically run via Docker)" } },
   { id: "googlechat", label: "Google Chat", category: "communication", requirements: { easeOfUse: 7, stability: 3 }, install: { note: "Browser-based, no install needed (chat.google.com)" } },
   { id: "messenger", label: "Facebook Messenger", category: "communication", requirements: { easeOfUse: 8 }, install: { note: "No official Linux app; use the web app at messenger.com or an unofficial Electron wrapper" } },
+  { id: "zulip", label: "Zulip", category: "communication", requirements: { easeOfUse: 6, stability: 4 }, install: { flatpak: "org.zulip.Zulip" } },
+  { id: "jitsimeet", label: "Jitsi Meet", category: "communication", requirements: { easeOfUse: 8, stability: 3 }, install: { note: "Browser-based, no install needed (meet.jit.si)" } },
+  { id: "viber", label: "Viber", category: "communication", requirements: { easeOfUse: 5, stability: 3 }, install: { flatpak: "com.viber.Viber" } },
+  { id: "jami", label: "Jami", category: "communication", requirements: { easeOfUse: 4, isolation: 6 }, install: { packages: { apt: "jami", dnf: "jami" } } }, // decentralized/P2P messaging and calls, no central server
+  { id: "webex", label: "Webex", category: "communication", requirements: { easeOfUse: 5, stability: 4 }, install: { note: "Official .deb from webex.com/downloads.html (not in default repos)" } },
 ];

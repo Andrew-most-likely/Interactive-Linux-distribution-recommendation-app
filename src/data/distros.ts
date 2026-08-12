@@ -22,6 +22,7 @@ export type PackageManager =
   | "xbps"
   | "emerge"
   | "eopkg"
+  | "apk"
   | "nix"
   | "rpm-ostree"
   | "manual";
@@ -448,5 +449,159 @@ export const distros: Distro[] = [
       "Debian-based and extremely lightweight, built around the Trinity desktop, another solid option for keeping old hardware usable.",
     attributes: { driverFreshness: 4, stability: 8, gamingPerf: 3, isolation: 3, easeOfUse: 7 },
     popularityRank: 18.5,
+  },
+  {
+    id: "steamos",
+    name: "SteamOS",
+    website: "https://store.steampowered.com/steamos",
+    family: "gaming",
+    packageManager: "pacman",
+    blurb:
+      "Valve's own Arch-based OS that ships on Steam Deck, the reference platform Proton is built for; official hardware support is narrow, Bazzite chases the same experience on generic PCs.",
+    attributes: { driverFreshness: 8, stability: 7, gamingPerf: 9, isolation: 4, easeOfUse: 8 },
+    popularityRank: 9.7,
+  },
+  {
+    id: "ubuntumate",
+    name: "Ubuntu MATE",
+    website: "https://ubuntu-mate.org",
+    family: "debian-based",
+    packageManager: "apt",
+    blurb:
+      "The official Ubuntu flavor built around the traditional, lightweight MATE desktop, same Ubuntu base and driver story as Kubuntu/Xubuntu, just a different desktop by default.",
+    attributes: { driverFreshness: 6, stability: 8, gamingPerf: 5, isolation: 4, easeOfUse: 8 },
+    popularityRank: 7.5,
+  },
+  {
+    id: "ubuntubudgie",
+    name: "Ubuntu Budgie",
+    website: "https://ubuntubudgie.org",
+    family: "debian-based",
+    packageManager: "apt",
+    blurb:
+      "The official Ubuntu flavor built around the modern Budgie desktop, same Ubuntu base and driver story as the other flavors, with a more contemporary default look.",
+    attributes: { driverFreshness: 6, stability: 8, gamingPerf: 5, isolation: 4, easeOfUse: 8 },
+    popularityRank: 7.8,
+  },
+  {
+    id: "opensuseleap",
+    name: "openSUSE Leap",
+    website: "https://get.opensuse.org/leap/",
+    family: "independent",
+    packageManager: "zypper",
+    blurb:
+      "Tumbleweed's stable, point-release sibling, built on SUSE Linux Enterprise sources, for people who want YaST's tooling without living on the rolling edge.",
+    attributes: { driverFreshness: 5, stability: 8, gamingPerf: 5, isolation: 4, easeOfUse: 6 },
+    popularityRank: 11.2,
+  },
+  {
+    id: "raspberrypios",
+    name: "Raspberry Pi OS",
+    website: "https://www.raspberrypi.com/software/",
+    family: "debian-based",
+    packageManager: "apt",
+    blurb:
+      "Debian rebuilt for Raspberry Pi's ARM hardware, the default OS for the whole Pi ecosystem and a huge share of the maker/education world, not a general-purpose desktop pick.",
+    attributes: { driverFreshness: 4, stability: 7, gamingPerf: 1, isolation: 4, easeOfUse: 7 },
+    popularityRank: 13.7,
+  },
+  {
+    id: "alpine",
+    name: "Alpine Linux",
+    website: "https://www.alpinelinux.org",
+    family: "independent",
+    packageManager: "apk",
+    blurb:
+      "Built on musl libc and BusyBox instead of glibc/GNU coreutils, the default base for a huge share of Docker images; a real desktop exists but expects you to assemble it yourself.",
+    attributes: { driverFreshness: 5, stability: 7, gamingPerf: 2, isolation: 5, easeOfUse: 2 },
+    popularityRank: 15.5,
+  },
+  {
+    id: "centosstream",
+    name: "CentOS Stream",
+    website: "https://www.centos.org/centos-stream/",
+    family: "independent",
+    packageManager: "dnf",
+    blurb:
+      "The rolling-preview upstream of RHEL, what lands here ships in Red Hat Enterprise Linux later, built for testing against that pipeline, not typical desktop use.",
+    attributes: { driverFreshness: 5, stability: 6, gamingPerf: 2, isolation: 5, easeOfUse: 4 },
+    popularityRank: 16.5,
+  },
+  {
+    id: "devuan",
+    name: "Devuan",
+    website: "https://www.devuan.org",
+    family: "debian-based",
+    packageManager: "apt",
+    blurb:
+      "Debian with systemd surgically removed in favor of sysvinit/OpenRC, for people who specifically object to systemd rather than to Debian itself.",
+    attributes: { driverFreshness: 3, stability: 8, gamingPerf: 3, isolation: 5, easeOfUse: 4 },
+    popularityRank: 19.5,
+  },
+  {
+    id: "puppylinux",
+    name: "Puppy Linux",
+    website: "https://puppylinux-woof-ce.github.io",
+    family: "independent",
+    packageManager: "manual",
+    blurb:
+      "Small enough to run entirely from RAM, boots in seconds even on genuinely ancient hardware, at the cost of an unusual package model and a default setup that runs mostly as root.",
+    attributes: { driverFreshness: 3, stability: 6, gamingPerf: 2, isolation: 2, easeOfUse: 5 },
+    popularityRank: 20.7,
+  },
+  {
+    id: "pclinuxos",
+    name: "PCLinuxOS",
+    website: "https://www.pclinuxos.com",
+    family: "independent",
+    packageManager: "manual",
+    blurb:
+      "An independent rolling release with its own apt-rpm hybrid packaging, one of the longest-running community distros still around, built to just work out of the box.",
+    attributes: { driverFreshness: 5, stability: 6, gamingPerf: 4, isolation: 3, easeOfUse: 6 },
+    popularityRank: 22.5,
+  },
+  {
+    id: "peppermint",
+    name: "Peppermint OS",
+    website: "https://peppermintos.com",
+    family: "debian-based",
+    packageManager: "apt",
+    blurb:
+      "A lightweight Devuan-based distro with Ice, its own tool for turning web apps into desktop launchers, aimed at keeping modest hardware fast.",
+    attributes: { driverFreshness: 4, stability: 7, gamingPerf: 3, isolation: 4, easeOfUse: 7 },
+    popularityRank: 23.5,
+  },
+  {
+    id: "fedorakinoite",
+    name: "Fedora Kinoite",
+    website: "https://fedoraproject.org/atomic-desktops/kinoite/",
+    family: "immutable",
+    packageManager: "rpm-ostree",
+    blurb:
+      "Silverblue's KDE Plasma sibling, same atomic, image-based updates that apply as a whole and roll back instantly, just a different desktop on top.",
+    attributes: { driverFreshness: 8, stability: 8, gamingPerf: 6, isolation: 6, easeOfUse: 5 },
+    popularityRank: 24.5,
+  },
+  {
+    id: "bodhilinux",
+    name: "Bodhi Linux",
+    website: "https://www.bodhilinux.com",
+    family: "debian-based",
+    packageManager: "apt",
+    blurb:
+      "Ubuntu underneath the Moksha desktop (a maintained fork of Enlightenment), a minimalist philosophy with a genuinely different, lightweight desktop paradigm.",
+    attributes: { driverFreshness: 5, stability: 6, gamingPerf: 3, isolation: 3, easeOfUse: 5 },
+    popularityRank: 25.5,
+  },
+  {
+    id: "kaos",
+    name: "KaOS",
+    website: "https://kaosx.us",
+    family: "independent",
+    packageManager: "pacman",
+    blurb:
+      "An independent rolling release built from scratch around KDE Plasma exclusively, no other desktop option, a small, curated repo instead of Arch's vast one.",
+    attributes: { driverFreshness: 7, stability: 6, gamingPerf: 5, isolation: 3, easeOfUse: 5 },
+    popularityRank: 25.8,
   },
 ];

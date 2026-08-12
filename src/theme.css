@@ -88,6 +88,14 @@ button {
   font-family: inherit;
 }
 
+/* Kills the gray flash Android/iOS paint on every tap; buttons already get
+   their own hover/active feedback, so the browser's default just doubles
+   up and reads as a glitch rather than a response. */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;

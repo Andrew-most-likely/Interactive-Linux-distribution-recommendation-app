@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type UIEvent } from "react";
 import { Link } from "react-router-dom";
 import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
-import { Gamepad2, Briefcase, Globe, ShieldCheck, MessageCircle } from "lucide-react";
+import { Gamepad2, Briefcase, Globe, ShieldCheck, MessageCircle, HelpCircle } from "lucide-react";
 import { Pool } from "./components/Pool";
 import { DropZone } from "./components/DropZone";
 import { ScorePanel } from "./components/ScorePanel";
@@ -11,38 +11,41 @@ import { DragPreview } from "./components/DragPreview";
 import { HardwareSelect } from "./components/HardwareSelect";
 import { FooterLinks } from "./components/FooterLinks";
 import { SponsorAds } from "./components/SponsorAd";
-import { items, type Category, type Item } from "./data/items";
-import { Plus } from "lucide-react";
+import { Tour } from "./components/Tour";
+import { items, type Category } from "./data/items";
 import type { GpuVendor, FormFactor } from "./data/hardware";
 import { scoreDistros } from "./lib/scoring";
 import "./App.css";
 
-const categories: { id: Category; label: string; Icon: typeof Gamepad2 }[] = [
+const categories: { id: Category; label: string; shortLabel?: string; Icon: typeof Gamepad2 }[] = [
   { id: "games", label: "Games", Icon: Gamepad2 },
   { id: "work", label: "Work", Icon: Briefcase },
   { id: "browsers", label: "Browsers", Icon: Globe },
   { id: "security", label: "Security", Icon: ShieldCheck },
-  { id: "communication", label: "Communication", Icon: MessageCircle },
+  { id: "communication", label: "Communication", shortLabel: "Comms", Icon: MessageCircle },
 ];
+
+const shrinkableCategories = categories.filter((c) => c.shortLabel);
+// Large enough that a page of items reliably overflows the grid's
+// max-height and produces a scrollbar; otherwise there's nothing to
+// scroll and the rest of a category can never be reached.
+const POOL_PAGE_SIZE = 15;
 
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<Category>("games");
   const [pickedIds, setPickedIds] = useState<string[]>([]);
-  const [customItems, setCustomItems] = useState<Item[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [gpuVendor, setGpuVendor] = useState<GpuVendor | null>(null);
   const [formFactor, setFormFactor] = useState<FormFactor | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  // Curated items plus anything typed in through search that wasn't in the
-  // list. Custom items get empty requirements (no scoring effect either
-  // way) since we have no real way to verify Linux support for arbitrary
-  // free-text without a backend — see SetupChip's "unverified" tag.
-  const allItems = useMemo(() => [...items, ...customItems], [customItems]);
+  const [poolVisibleCount, setPoolVisibleCount] = useState(POOL_PAGE_SIZE);
+  const [abbreviated, setAbbreviated] = useState<Set<Category>>(new Set());
+  const categoryTabsRef = useRef<HTMLElement>(null);
+  const labelRefs = useRef<Partial<Record<Category, HTMLSpanElement | null>>>({});
+  const probeRefs = useRef<Partial<Record<Category, HTMLSpanElement | null>>>({});
 
   const pickedItems = useMemo(
-    () => pickedIds.map((id) => allItems.find((i) => i.id === id)!).filter(Boolean),
-    [pickedIds, allItems],
+    () => pickedIds.map((id) => items.find((i) => i.id === id)!).filter(Boolean),
+    [pickedIds],
   );
 
   const categoryCounts = useMemo(() => {
@@ -53,6 +56,36 @@ export default function App() {
     return counts;
   }, [pickedItems]);
 
+  // Swap a category's label for its short form only once its tab has
+  // actually shrunk too far to hold the full word, measured against a
+  // same-font, unclipped probe span rather than a guessed pixel breakpoint,
+  // so it tracks real font metrics and layout (sponsor ad toggling, hardware
+  // filters, viewport width) instead of drifting out of sync with any of them.
+  useEffect(() => {
+    if (shrinkableCategories.length === 0) return;
+
+    const check = () => {
+      setAbbreviated((prev) => {
+        const next = new Set<Category>();
+        for (const { id } of shrinkableCategories) {
+          const label = labelRefs.current[id];
+          const probe = probeRefs.current[id];
+          if (label && probe && probe.scrollWidth > label.clientWidth) {
+            next.add(id);
+          }
+        }
+        if (next.size === prev.size && [...next].every((id) => prev.has(id))) return prev;
+        return next;
+      });
+    };
+
+    check();
+    const nav = categoryTabsRef.current;
+    const ro = new ResizeObserver(check);
+    if (nav) ro.observe(nav);
+    return () => ro.disconnect();
+  }, [categoryCounts]);
+
   // These don't run on Linux at all, on any distro, no matter how it's
   // configured, kernel-level anti-cheat refuses to start. Surfaced up
   // front so it isn't something you have to notice distro-by-distro.
@@ -61,11 +94,11 @@ export default function App() {
     [pickedItems],
   );
 
-  const activeItem = useMemo(() => allItems.find((i) => i.id === activeId) ?? null, [activeId, allItems]);
+  const activeItem = useMemo(() => items.find((i) => i.id === activeId) ?? null, [activeId]);
 
   const results = useMemo(
-    () => scoreDistros(pickedIds, customItems, gpuVendor, formFactor),
-    [pickedIds, customItems, gpuVendor, formFactor],
+    () => scoreDistros(pickedIds, [], gpuVendor, formFactor),
+    [pickedIds, gpuVendor, formFactor],
   );
 
   function handleDragStart(event: DragStartEvent) {
@@ -111,16 +144,6 @@ export default function App() {
     setPickedIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
   }
 
-  function handleAddCustom(label: string) {
-    const trimmed = label.trim();
-    if (!trimmed) return;
-    const id = `custom-${activeCategory}-${trimmed.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${Date.now()}`;
-    const customItem: Item = { id, label: trimmed, category: activeCategory, requirements: {}, custom: true };
-    setCustomItems((prev) => [...prev, customItem]);
-    setPickedIds((prev) => [...prev, id]);
-    setSearchQuery("");
-  }
-
   function handleRemove(id: string) {
     setPickedIds((prev) => prev.filter((p) => p !== id));
   }
@@ -140,16 +163,24 @@ export default function App() {
     });
   }
 
-  const poolItems = allItems.filter(
-    (i) =>
-      i.category === activeCategory &&
-      !pickedIds.includes(i.id) &&
-      i.label.toLowerCase().includes(searchQuery.trim().toLowerCase()),
-  );
+  const poolItemsAll = items.filter((i) => i.category === activeCategory && !pickedIds.includes(i.id));
+  const poolItems = poolItemsAll.slice(0, poolVisibleCount);
+
+  // A different category resets which page we're on; switching categories
+  // is a new list, not a continuation of the old scroll position.
+  useEffect(() => {
+    setPoolVisibleCount(POOL_PAGE_SIZE);
+  }, [activeCategory]);
+
+  function handlePoolScroll(e: UIEvent<HTMLDivElement>) {
+    const el = e.currentTarget;
+    if (el.scrollTop + el.clientHeight < el.scrollHeight - 120) return;
+    setPoolVisibleCount((prev) => Math.min(prev + POOL_PAGE_SIZE, poolItemsAll.length));
+  }
 
   return (
     <div className="page">
-      <header className="masthead">
+      <header className="masthead" data-tour="masthead">
         <div className="masthead-content">
           <h1 className="masthead-title">
             ARL<span className="masthead-mark-dot">.</span>
@@ -157,29 +188,35 @@ export default function App() {
           </h1>
         </div>
         <div className="masthead-links">
+          <button
+            type="button"
+            className="masthead-help"
+            aria-label="Replay tour"
+            title="Replay tour"
+            onClick={() => window.dispatchEvent(new Event("arl:start-tour"))}
+          >
+            <HelpCircle size={16} strokeWidth={2} />
+          </button>
           <Link to="/distros" className="masthead-link">
             Compatibility guide →
           </Link>
         </div>
       </header>
 
-      <div className="controls-row">
+      <div className="controls-row" data-tour="controls">
         <HardwareSelect
           gpuVendor={gpuVendor}
           onGpuChange={setGpuVendor}
           formFactor={formFactor}
           onFormFactorChange={setFormFactor}
         />
-        <div className="control-group">
+        <div className="control-group category-group">
           <span className="control-group-label">Category</span>
-          <nav className="tabs">
-            {categories.map(({ id, label, Icon }) => (
+          <nav className="tabs category-tabs" ref={categoryTabsRef}>
+            {categories.map(({ id, label, shortLabel, Icon }) => (
               <button
                 key={id}
-                onClick={() => {
-                  setActiveCategory(id);
-                  setSearchQuery("");
-                }}
+                onClick={() => setActiveCategory(id)}
                 className={`tab${activeCategory === id ? " active" : ""}`}
               >
                 {activeCategory === id && (
@@ -191,8 +228,26 @@ export default function App() {
                 )}
                 <span className="tab-content">
                   <Icon size={15} strokeWidth={2.25} />
-                  {label}
+                  <span
+                    className="tab-label"
+                    ref={(el) => {
+                      labelRefs.current[id] = el;
+                    }}
+                  >
+                    {shortLabel && abbreviated.has(id) ? shortLabel : label}
+                  </span>
                   {!!categoryCounts[id] && <span className="tab-count">{categoryCounts[id]}</span>}
+                  {shortLabel && (
+                    <span
+                      className="tab-label-probe"
+                      aria-hidden="true"
+                      ref={(el) => {
+                        probeRefs.current[id] = el;
+                      }}
+                    >
+                      {label}
+                    </span>
+                  )}
                 </span>
               </button>
             ))}
@@ -206,32 +261,14 @@ export default function App() {
         <div className="workspace">
           <div className="picker">
             <div className="picker-columns">
-              <div className="picker-column">
+              <div className="picker-column" data-tour="available">
                 <div className="column-header">
                   <p className="column-label">Available</p>
-                  <input
-                    type="text"
-                    className="search-input"
-                    aria-label={`Search ${categories.find((c) => c.id === activeCategory)?.label.toLowerCase()}`}
-                    placeholder={`Search ${categories.find((c) => c.id === activeCategory)?.label.toLowerCase()}…`}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
                 </div>
-                {poolItems.length === 0 && searchQuery.trim() && (
-                  <button
-                    type="button"
-                    className="add-custom-btn"
-                    onClick={() => handleAddCustom(searchQuery)}
-                  >
-                    <Plus size={15} strokeWidth={2.5} />
-                    Add "{searchQuery.trim()}" (unverified Linux support)
-                  </button>
-                )}
-                <Pool items={poolItems} onAdd={handleAdd} />
+                <Pool items={poolItems} onAdd={handleAdd} onScroll={handlePoolScroll} />
               </div>
 
-              <div className="picker-column">
+              <div className="picker-column" data-tour="setup">
                 <div className="column-header">
                   <div className="column-label-row">
                     <p className="column-label">Your setup</p>
@@ -247,7 +284,7 @@ export default function App() {
             </div>
           </div>
 
-          <aside className="results-panel">
+          <aside className="results-panel" data-tour="results">
             <div className="column-header">
               <p className="column-label">Live match</p>
             </div>
@@ -270,6 +307,8 @@ export default function App() {
       <footer className="footer">
         <FooterLinks />
       </footer>
+
+      <Tour />
     </div>
   );
 }

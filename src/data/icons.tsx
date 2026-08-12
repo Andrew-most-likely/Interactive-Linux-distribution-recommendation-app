@@ -54,6 +54,27 @@ import {
   siOpera,
   siFloorp,
   siZenbrowser,
+  siDota2,
+  siSteam,
+  siGimp,
+  siInkscape,
+  siAudacity,
+  siKdenlive,
+  siDavinciresolve,
+  siAnsible,
+  siTerraform,
+  siGo,
+  siKde,
+  siWebex,
+  siJitsi,
+  siViber,
+  siZulip,
+  si1password,
+  siRaspberrypi,
+  siCentos,
+  siAlpinelinux,
+  siDevuan,
+  siUbuntumate,
 } from "simple-icons";
 import {
   Code2,
@@ -69,6 +90,24 @@ import {
   Crosshair,
   MessageCircle,
   Package,
+  Rocket,
+  Wand2,
+  Swords,
+  Skull,
+  Droplet,
+  Minimize2,
+  Zap,
+  Bug,
+  Ban,
+  Flame,
+  Box,
+  Share2,
+  Radio,
+  Dog,
+  Cpu,
+  Candy,
+  Leaf,
+  Atom,
 } from "lucide-react";
 
 import bg3Cover from "../assets/games/bg3.jpg";
@@ -187,6 +226,14 @@ export const itemIcons: Record<string, IconDef> = {
   rocketleague: photo(rocketleagueCover, "Rocket League"),
   hades: photo(hadesCover, "Hades"),
   forzahorizon5: photo(forzahorizon5Cover, "Forza Horizon 5"),
+  dota2: brand(siDota2),
+  tf2: brand(siSteam), // no dedicated Team Fortress 2 mark in simple-icons; Valve/Steam-native like Portal 2 and L4D2 below
+  portal2: brand(siSteam),
+  l4d2: brand(siSteam),
+  nomanssky: lucide(Rocket, "#5fa8d3"), // no simple-icons brand mark
+  hogwartslegacy: lucide(Wand2, "#8a6fae"), // no simple-icons brand mark
+  destiny2: lucide(Swords, "#5c9fe0"), // no simple-icons brand mark
+  helldivers2: lucide(Skull, "#d8c9a3"), // no simple-icons brand mark
 
   // Work
   vscode: lucide(Code2, "#007acc"), // VS Code isn't in simple-icons; this is their brand blue
@@ -208,6 +255,14 @@ export const itemIcons: Record<string, IconDef> = {
   nextcloud: brand(siNextcloud),
   plex: brand(siPlex),
   nginx: brand(siNginx),
+  gimp: brand(siGimp),
+  inkscape: brand(siInkscape),
+  audacity: brand(siAudacity),
+  kdenlive: brand(siKdenlive),
+  davinciresolve: brand(siDavinciresolve),
+  ansible: brand(siAnsible),
+  terraform: brand(siTerraform),
+  golang: brand(siGo),
 
   // Browsers
   firefox: brand(siFirefoxbrowser),
@@ -221,6 +276,13 @@ export const itemIcons: Record<string, IconDef> = {
   floorp: brand(siFloorp),
   zenbrowser: brand(siZenbrowser),
   qutebrowser: lucide(Terminal, "#d8d3c2"), // no simple-icons brand mark; keyboard-driven, terminal-adjacent identity
+  msedge: lucide(Globe, "#0078d7"), // no simple-icons brand mark; Edge's brand blue
+  ungoogledchromium: lucide(Globe, "#5f6368"), // no simple-icons brand mark; muted grey to read as de-branded Chromium
+  waterfox: lucide(Droplet, "#2ba9e0"), // no simple-icons brand mark
+  falkon: brand(siKde), // official KDE application
+  konqueror: brand(siKde), // official KDE application
+  minbrowser: lucide(Minimize2, "#8b95a3"), // no simple-icons brand mark
+  thorium: lucide(Zap, "#e0883a"), // no simple-icons brand mark; performance-focused fork
 
   // Security
   sandboxing: lucide(ShieldCheck, "#7c93a8"),
@@ -243,6 +305,12 @@ export const itemIcons: Record<string, IconDef> = {
   gpg: brand(siGnuprivacyguard),
   luks: lucide(Lock, "#a39c86"),
   apparmor: lucide(ShieldCheck, "#7c93a8"), // no simple-icons brand mark
+  clamav: lucide(Bug, "#e05252"), // no simple-icons brand mark
+  fail2ban: lucide(Ban, "#d97757"), // no simple-icons brand mark
+  ufw: lucide(Flame, "#e0883a"), // no simple-icons brand mark; "Uncomplicated FireWall"
+  firejail: lucide(Box, "#a39c86"), // no simple-icons brand mark
+  onepassword: brand(si1password),
+  onionshare: lucide(Share2, "#7d4698"), // no simple-icons brand mark; Tor-purple accent
 
   // Communication
   discord: brand(siDiscord),
@@ -265,6 +333,11 @@ export const itemIcons: Record<string, IconDef> = {
   rocketchat: brand(siRocketdotchat),
   googlechat: brand(siGooglechat),
   messenger: brand(siMessenger),
+  zulip: brand(siZulip),
+  jitsimeet: brand(siJitsi),
+  viber: brand(siViber),
+  jami: lucide(Radio, "#5c9fe0"), // no simple-icons brand mark; decentralized/P2P
+  webex: brand(siWebex),
 };
 
 export function getItemIcon(id: string): IconDef {
@@ -309,4 +382,18 @@ export const distroIcons: Record<string, IconDef> = {
   almalinux: photo(almalinuxLogo, "AlmaLinux", "contain"),
   artix: photo(artixLogo, "Artix Linux", "contain"),
   q4os: photo(q4osLogo, "Q4OS", "contain"),
+  steamos: brand(siSteam),
+  ubuntumate: brand(siUbuntumate),
+  ubuntubudgie: photo(ubuntuLogo, "Ubuntu Budgie", "contain"), // no distinct simple-icons mark for this flavor; same publisher/logo as Ubuntu
+  opensuseleap: photo(opensuseLogo, "openSUSE Leap", "contain"), // same openSUSE geeko as Tumbleweed above
+  raspberrypios: brand(siRaspberrypi),
+  alpine: brand(siAlpinelinux),
+  centosstream: brand(siCentos),
+  devuan: brand(siDevuan),
+  puppylinux: lucide(Dog, "#e0883a"), // no simple-icons brand mark
+  pclinuxos: lucide(Cpu, "#8b95a3"), // no simple-icons brand mark
+  peppermint: lucide(Candy, "#e0526b"), // no simple-icons brand mark
+  fedorakinoite: photo(fedoraLogo, "Fedora Kinoite", "contain"), // same Fedora infinity mark as Fedora/Silverblue above
+  bodhilinux: lucide(Leaf, "#7fae6f"), // no simple-icons brand mark
+  kaos: lucide(Atom, "#5c9fe0"), // no simple-icons brand mark
 };
